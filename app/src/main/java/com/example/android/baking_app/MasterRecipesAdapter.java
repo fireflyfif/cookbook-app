@@ -34,42 +34,34 @@
 
 package com.example.android.baking_app;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdapter.RecipesViewHolder> {
 
-public class MasterRecipesFragment extends Fragment {
 
-    @BindView(R.id.recipes_rv)
-    RecyclerView mRecipesRv;
-
-    // Mandatory empty constructor
-    public MasterRecipesFragment() {}
-
+    @NonNull
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public RecipesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_master_recipes, container, false);
+    public void onBindViewHolder(@NonNull RecipesViewHolder holder, int position) {
 
-        ButterKnife.bind(this, rootView);
+    }
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mRecipesRv.setLayoutManager(layoutManager);
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
 
-        return rootView;
+    public class RecipesViewHolder extends RecyclerView.ViewHolder {
+
+        public RecipesViewHolder(View itemView) {
+            super(itemView);
+        }
     }
 }
