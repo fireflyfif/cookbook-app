@@ -32,36 +32,10 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app;
+package com.example.android.baking_app.utilities;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
+public class NetworkUtils {
 
-public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdapter.RecipesViewHolder> {
-
-
-    @NonNull
-    @Override
-    public RecipesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecipesViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
-    public class RecipesViewHolder extends RecyclerView.ViewHolder {
-
-        public RecipesViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
+    public static final String RECIPES_URL =
+            "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/";
 }

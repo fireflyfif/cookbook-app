@@ -32,44 +32,45 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app;
+package com.example.android.baking_app.remote;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.example.android.baking_app.models.RecipesResponse;
+import com.example.android.baking_app.utilities.NetworkUtils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MasterRecipesFragment extends Fragment {
+public class RecipesJsonManager {
 
-    @BindView(R.id.recipes_rv)
-    RecyclerView mRecipesRv;
+    private static Retrofit sRetrofit = null;
+    private static RecipesJsonManager sManager;
+    private static RecipesJsonInterface sRecipesInterface;
 
-    // Mandatory empty constructor
-    public MasterRecipesFragment() {}
+    private RecipesJsonManager() {
+        if (sRetrofit == null) {
+            sRetrofit = new Retrofit.Builder()
+                    .baseUrl(NetworkUtils.RECIPES_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        sRecipesInterface = sRetrofit.create(RecipesJsonInterface.class);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_master_recipes, container, false);
+    public static RecipesJsonManager getInstance() {
+        if (sManager == null) {
+            sManager = new RecipesJsonManager();
+        }
 
-        ButterKnife.bind(this, rootView);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mRecipesRv.setLayoutManager(layoutManager);
-
-        return rootView;
+        return sManager;
     }
+
+    public void getRecipes(Callback<RecipesResponse> callback) {
+
+        Call<RecipesResponse> recipesCall = sRecipesInterface.getRecipes();
+        recipesCall.enqueue(callback);
+    }
+
 }
