@@ -34,13 +34,16 @@
 
 package com.example.android.baking_app.remote;
 
-import com.example.android.baking_app.models.RecipesResponse;
+import com.example.android.baking_app.model.JSONResponse;
+import com.example.android.baking_app.model.RecipesResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface RecipesJsonInterface {
 
-    @GET("/59121517_baking/baking.json")
-    Call<RecipesResponse> getRecipes();
+    @GET("/topher/2017/May/59121517_baking/baking.json")
+    Call<List<RecipesResponse>> getRecipes();
 }

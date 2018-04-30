@@ -41,5 +41,12 @@ import android.app.Application;
  */
 public class MainApplication extends Application {
 
+    public static RecipesJsonManager sManager;
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        sManager = RecipesJsonManager.getInstance();
+    }
 }

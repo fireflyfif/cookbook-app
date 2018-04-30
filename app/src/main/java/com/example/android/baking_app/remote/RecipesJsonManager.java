@@ -34,8 +34,13 @@
 
 package com.example.android.baking_app.remote;
 
-import com.example.android.baking_app.models.RecipesResponse;
+import android.util.Log;
+
+import com.example.android.baking_app.model.JSONResponse;
+import com.example.android.baking_app.model.RecipesResponse;
 import com.example.android.baking_app.utilities.NetworkUtils;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,10 +72,9 @@ public class RecipesJsonManager {
         return sManager;
     }
 
-    public void getRecipes(Callback<RecipesResponse> callback) {
+    public void getRecipes(Callback<List<RecipesResponse>> callback) {
 
-        Call<RecipesResponse> recipesCall = sRecipesInterface.getRecipes();
+        Call<List<RecipesResponse>> recipesCall = sRecipesInterface.getRecipes();
         recipesCall.enqueue(callback);
     }
-
 }
