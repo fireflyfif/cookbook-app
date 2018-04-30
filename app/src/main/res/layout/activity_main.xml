@@ -70,5 +70,4 @@
     android:id="@+id/master_recipes_fragment"
     android:name="com.example.android.baking_app.ui.MasterRecipesFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity" />
+    android:layout_height="match_parent" />

@@ -38,10 +38,14 @@ import java.util.List;
 
 public class JSONResponse {
 
-    List<RecipesResponse> recipesList;
+    private List<RecipesResponse> mRecipesList;
+
+    public JSONResponse(List<RecipesResponse> recipesList) {
+        mRecipesList = recipesList;
+    }
 
     public List<RecipesResponse> getRecipesList() {
-        return recipesList;
+        return mRecipesList;
     }
 
 //    private RecipesResponse[] mRecipes;

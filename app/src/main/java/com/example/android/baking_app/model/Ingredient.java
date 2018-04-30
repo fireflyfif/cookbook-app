@@ -41,7 +41,7 @@ public class Ingredient {
 
     @SerializedName("quantity")
     @Expose
-    private Integer quantity;
+    private double quantity;
     @SerializedName("measure")
     @Expose
     private String measure;
@@ -49,7 +49,7 @@ public class Ingredient {
     @Expose
     private String ingredient;
 
-    public Integer getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 

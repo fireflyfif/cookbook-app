@@ -60,7 +60,7 @@
             android:layout_centerHorizontal="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             tools:text="Name of the Recipe"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/black"/>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

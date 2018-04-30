@@ -80,13 +80,13 @@ public class MasterRecipesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_master_recipes, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_master_recipes, container, false);
 
         ButterKnife.bind(this, rootView);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecipesRv.setLayoutManager(layoutManager);
+        mRecipeList = new ArrayList<>();
 
         loadRecipes();
 
@@ -105,10 +105,12 @@ public class MasterRecipesFragment extends Fragment {
                     // mRecipeList = new ArrayList<>(Arrays.asList(jsonResponse.getRecipes()));
 
                     // mRecipeList = new ArrayList<>(Arrays.asList(response.body()));
+
                     mRecipeList = response.body();
 
                     if (mAdapter == null) {
                         mAdapter = new MasterRecipesAdapter(getActivity(), mRecipeList);
+                        mRecipesRv.setHasFixedSize(true);
                         mRecipesRv.setAdapter(mAdapter);
 
                     } else {
