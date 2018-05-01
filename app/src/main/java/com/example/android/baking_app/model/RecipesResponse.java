@@ -34,12 +34,16 @@
 
 package com.example.android.baking_app.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecipesResponse {
+public class RecipesResponse implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -108,5 +112,46 @@ public class RecipesResponse {
         this.image = image;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeList(this.ingredients);
+        dest.writeList(this.steps);
+        dest.writeInt(this.servings);
+        dest.writeString(this.image);
+    }
+
+    public RecipesResponse() {
+    }
+
+    protected RecipesResponse(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.name = in.readString();
+        this.ingredients = new ArrayList<Ingredient>();
+        in.readList(this.ingredients, Ingredient.class.getClassLoader());
+        this.steps = new ArrayList<Step>();
+        in.readList(this.steps, Step.class.getClassLoader());
+        this.servings = in.readInt();
+        this.image = in.readString();
+    }
+
+    public static final Parcelable.Creator<RecipesResponse> CREATOR = new Parcelable.Creator<RecipesResponse>() {
+        @Override
+        public RecipesResponse createFromParcel(Parcel source) {
+            return new RecipesResponse(source);
+        }
+
+        @Override
+        public RecipesResponse[] newArray(int size) {
+            return new RecipesResponse[size];
+        }
+    };
 }
 
