@@ -101,11 +101,6 @@ public class MasterRecipesFragment extends Fragment {
             public void onResponse(Call<List<RecipesResponse>> call, Response<List<RecipesResponse>> response) {
                 if (response.isSuccessful()) {
 
-                    // JSONResponse jsonResponse = response.body();
-                    // mRecipeList = new ArrayList<>(Arrays.asList(jsonResponse.getRecipes()));
-
-                    // mRecipeList = new ArrayList<>(Arrays.asList(response.body()));
-
                     mRecipeList = response.body();
 
                     if (mAdapter == null) {

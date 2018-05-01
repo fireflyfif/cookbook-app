@@ -45,6 +45,7 @@ import android.widget.TextView;
 
 import com.example.android.baking_app.R;
 import com.example.android.baking_app.model.RecipesResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -72,7 +73,26 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
 
         RecipesResponse currentRecipe = mRecipeList.get(position);
         holder.recipeName.setText(currentRecipe.getName());
+
+        String recipeServing = String.valueOf(currentRecipe.getServings());
+        holder.recipeServings.setText(recipeServing);
+
         // TODO: Prepare the image to display recipe picture if any
+        if (!currentRecipe.getImage().equals("")) {
+            String recipeImage = currentRecipe.getImage();
+
+            Picasso.with(mContext)
+                    .load(recipeImage)
+                    .placeholder(R.drawable.temp)
+                    .error(R.drawable.temp)
+                    .into(holder.recipeImage);
+        } else {
+            Picasso.with(mContext)
+                    .load(R.drawable.temp)
+                    .placeholder(R.drawable.temp)
+                    .error(R.drawable.temp)
+                    .into(holder.recipeImage);
+        }
 
     }
 
@@ -88,12 +108,14 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
     public class RecipesViewHolder extends RecyclerView.ViewHolder {
 
         TextView recipeName;
+        TextView recipeServings;
         ImageView recipeImage;
 
         public RecipesViewHolder(View itemView) {
             super(itemView);
 
             recipeName = itemView.findViewById(R.id.recipe_name_tv);
+            recipeServings = itemView.findViewById(R.id.recipe_serving_tv);
             recipeImage = itemView.findViewById(R.id.recipe_picture_iv);
         }
     }

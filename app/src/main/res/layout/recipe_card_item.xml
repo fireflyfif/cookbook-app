@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ PROJECT LICENSE
   ~
   ~ This project was submitted by Iva Ivanova as part of the Nanodegree at Udacity.
@@ -35,32 +34,63 @@
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recipe_cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:padding="6dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:padding="6dp">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="6dp">
 
         <ImageView
             android:id="@+id/recipe_picture_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/temp"/>
+            android:src="@drawable/temp" />
 
         <TextView
             android:id="@+id/recipe_name_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            tools:text="Name of the Recipe"
-            android:textColor="@android:color/black"/>
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            app:fontFamily="sans-serif-smallcaps"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/recipe_serving_tv"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.04000002"
+            tools:text="Name of the Recipe" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/recipe_serving_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:drawableLeft="@drawable/ic_tag_faces_black_24dp"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_tag_faces_black_24dp"
+            android:drawableTint="@android:color/white"
+            android:backgroundTint="@android:color/white"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/recipe_name_tv"
+            tools:text="8" />
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

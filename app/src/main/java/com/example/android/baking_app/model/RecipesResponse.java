@@ -55,7 +55,7 @@ public class RecipesResponse {
     private List<Step> steps;
     @SerializedName("servings")
     @Expose
-    private Integer servings;
+    private int servings;
     @SerializedName("image")
     @Expose
     private String image;
@@ -92,11 +92,11 @@ public class RecipesResponse {
         this.steps = steps;
     }
 
-    public Integer getServings() {
+    public int getServings() {
         return servings;
     }
 
-    public void setServings(Integer servings) {
+    public void setServings(int servings) {
         this.servings = servings;
     }
 
