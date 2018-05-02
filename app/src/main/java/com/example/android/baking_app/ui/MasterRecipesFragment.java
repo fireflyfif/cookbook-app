@@ -34,6 +34,8 @@
 
 package com.example.android.baking_app.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -61,14 +63,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MasterRecipesFragment extends Fragment {
+public class MasterRecipesFragment extends Fragment implements MasterRecipesAdapter.OnRecipeClickListener {
 
     private static final String LOG_TAG = "MasterRecipesFragment";
+    private static final String RECIPE_PARCEL_KEY = "recipe_key";
+
     private MasterRecipesAdapter mAdapter;
     private List<RecipesResponse> mRecipeList;
+    private RecipesResponse mRecipe;
 
     @BindView(R.id.recipes_rv)
     RecyclerView mRecipesRv;
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+    }
 
     // Mandatory empty constructor
     public MasterRecipesFragment() {}
@@ -104,7 +116,8 @@ public class MasterRecipesFragment extends Fragment {
                     mRecipeList = response.body();
 
                     if (mAdapter == null) {
-                        mAdapter = new MasterRecipesAdapter(getActivity(), mRecipeList);
+                        mAdapter = new MasterRecipesAdapter(getContext(), mRecipeList,
+                                MasterRecipesFragment.this);
                         mRecipesRv.setHasFixedSize(true);
                         mRecipesRv.setAdapter(mAdapter);
 
@@ -128,5 +141,13 @@ public class MasterRecipesFragment extends Fragment {
                 Log.d(LOG_TAG, t.toString());
             }
         });
+    }
+
+    @Override
+    public void onRecipeClick(RecipesResponse recipe) {
+        mRecipe = recipe;
+        Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+        intent.putExtra(RECIPE_PARCEL_KEY, mRecipe);
+        getContext().startActivity(intent);
     }
 }

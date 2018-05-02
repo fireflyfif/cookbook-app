@@ -54,9 +54,23 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
     private List<RecipesResponse> mRecipeList;
     private Context mContext;
 
-    public MasterRecipesAdapter(Context context, List<RecipesResponse> recipeList) {
+    private OnRecipeClickListener mClickHandler;
+
+        public interface OnRecipeClickListener {
+        void onRecipeClick(RecipesResponse recipe);
+    }
+
+    /**
+     *
+     * @param context
+     * @param recipeList
+     * @param clickHandler
+     */
+    public MasterRecipesAdapter(Context context, List<RecipesResponse> recipeList,
+                                OnRecipeClickListener clickHandler) {
         mContext = context;
         mRecipeList = recipeList;
+        mClickHandler = clickHandler;
     }
 
     @NonNull
@@ -105,7 +119,7 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
         }
     }
 
-    public class RecipesViewHolder extends RecyclerView.ViewHolder {
+    public class RecipesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView recipeName;
         TextView recipeServings;
@@ -114,9 +128,17 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
         public RecipesViewHolder(View itemView) {
             super(itemView);
 
+            itemView.setOnClickListener(this);
+
             recipeName = itemView.findViewById(R.id.recipe_name_tv);
             recipeServings = itemView.findViewById(R.id.recipe_serving_tv);
             recipeImage = itemView.findViewById(R.id.recipe_picture_iv);
+        }
+
+        @Override
+        public void onClick(View view) {
+            RecipesResponse currentRecipe = mRecipeList.get(getAdapterPosition());
+            mClickHandler.onRecipeClick(currentRecipe);
         }
     }
 

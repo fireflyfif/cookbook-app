@@ -47,7 +47,7 @@ public class RecipesResponse implements Parcelable {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -64,11 +64,11 @@ public class RecipesResponse implements Parcelable {
     @Expose
     private String image;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -120,7 +120,7 @@ public class RecipesResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
+        dest.writeInt(this.id);
         dest.writeString(this.name);
         dest.writeList(this.ingredients);
         dest.writeList(this.steps);
@@ -132,7 +132,7 @@ public class RecipesResponse implements Parcelable {
     }
 
     protected RecipesResponse(Parcel in) {
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.id = in.readInt();
         this.name = in.readString();
         this.ingredients = new ArrayList<Ingredient>();
         in.readList(this.ingredients, Ingredient.class.getClassLoader());
