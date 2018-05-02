@@ -34,7 +34,47 @@
 
 package com.example.android.baking_app.ui;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.android.baking_app.R;
+import com.example.android.baking_app.model.RecipesResponse;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class IngredientsFragment extends Fragment {
+
+    private static final String RECIPE_PARCEL_KEY = "recipe_key";
+
+    private static RecipesResponse sRecipes;
+
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_ingredients, container, false);
+
+        ButterKnife.bind(this, rootView);
+
+        Intent receiveIntent = getActivity().getIntent();
+        if (receiveIntent != null) {
+            if (receiveIntent.hasExtra(RECIPE_PARCEL_KEY)) {
+                sRecipes = receiveIntent.getParcelableExtra(RECIPE_PARCEL_KEY);
+
+            }
+        }
+
+        return rootView;
+    }
 }

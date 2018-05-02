@@ -44,6 +44,8 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.android.baking_app.R;
 import com.example.android.baking_app.model.RecipesResponse;
@@ -54,6 +56,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Detail Activity for a selected Recipe
+ *
+ * The XML Layout with the ViewPager is made with the help of this Tutorial by Codelabs:
+ * https://codelabs.developers.google.com/codelabs/material-design-style/index.html?index=..%2F..%2Findex#0
+ */
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
@@ -67,6 +75,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.tabs)
     TabLayout tabs;
+    @BindView(R.id.recipe_name)
+    TextView recipeTitle;
+    @BindView(R.id.servings_tv)
+    TextView servingsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +92,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             if (receiveIntent.hasExtra(RECIPE_PARCEL_KEY)) {
                 sRecipes = receiveIntent.getParcelableExtra(RECIPE_PARCEL_KEY);
 
+                recipeTitle.setText(sRecipes.getName());
+                String recipeServing = String.valueOf(sRecipes.getServings());
+                servingsTextView.setText(recipeServing);
             }
         }
 
@@ -92,10 +107,13 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new IngredientsFragment(), "Ingredients");
-        adapter.addFragment(new StepsFragment(), "Steps");
+        adapter.addFragment(new DirectionsFragment(), "Directions");
         viewPager.setAdapter(adapter);
     }
 
+    /**
+     * Class Adapter for the Fragments
+     */
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentLst = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

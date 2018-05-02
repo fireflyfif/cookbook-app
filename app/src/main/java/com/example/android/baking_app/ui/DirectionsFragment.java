@@ -42,7 +42,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class StepsFragment extends Fragment {
+public class DirectionsFragment extends Fragment {
 
     @Nullable
     @Override

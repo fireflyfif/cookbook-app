@@ -38,6 +38,7 @@ import android.app.Application;
 
 /**
  * This Class will guarantee that the retrofit instance is created only once
+ * Requires to be registered in the Manifest: android:name=".remote.MainApplication"
  */
 public class MainApplication extends Application {
 
