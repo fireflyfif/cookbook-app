@@ -48,6 +48,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.baking_app.R;
+import com.example.android.baking_app.model.Ingredient;
 import com.example.android.baking_app.model.RecipesResponse;
 
 import java.util.ArrayList;
@@ -65,8 +66,10 @@ import butterknife.ButterKnife;
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
+    private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
 
     private static RecipesResponse sRecipes;
+    private List<Ingredient> mIngredientsList;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -87,16 +90,22 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Intent receiveIntent = this.getIntent();
-        if (receiveIntent != null) {
-            if (receiveIntent.hasExtra(RECIPE_PARCEL_KEY)) {
-                sRecipes = receiveIntent.getParcelableExtra(RECIPE_PARCEL_KEY);
+        if (getIntent().getExtras().get(RECIPE_PARCEL_KEY) != null) {
 
-                recipeTitle.setText(sRecipes.getName());
-                String recipeServing = String.valueOf(sRecipes.getServings());
-                servingsTextView.setText(recipeServing);
+            Bundle bundle = getIntent().getExtras();
+
+            sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
+
+            if (bundle.get(INGREDIENT_PARCEL_KEY) != null) {
+                mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
+                mIngredientsList = sRecipes.getIngredients();
             }
+
+            recipeTitle.setText(sRecipes.getName());
+            servingsTextView.setText(String.valueOf(sRecipes.getServings()));
         }
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setSupportActionBar(toolbar);
         setupViewPager(viewPager);
@@ -105,7 +114,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
+        Adapter adapter = new Adapter(getSupportFragmentManager(), sRecipes);
         adapter.addFragment(new IngredientsFragment(), "Ingredients");
         adapter.addFragment(new DirectionsFragment(), "Directions");
         viewPager.setAdapter(adapter);
@@ -117,9 +126,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentLst = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
+        private RecipesResponse mRecipes;
 
-        public Adapter(FragmentManager fm) {
+        public Adapter(FragmentManager fm, RecipesResponse recipes) {
             super(fm);
+            mRecipes = recipes;
         }
 
         @Override

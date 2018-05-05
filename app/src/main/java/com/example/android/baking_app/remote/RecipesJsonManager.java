@@ -36,6 +36,7 @@ package com.example.android.baking_app.remote;
 
 import android.util.Log;
 
+import com.example.android.baking_app.model.Ingredient;
 import com.example.android.baking_app.model.JSONResponse;
 import com.example.android.baking_app.model.RecipesResponse;
 import com.example.android.baking_app.utilities.NetworkUtils;

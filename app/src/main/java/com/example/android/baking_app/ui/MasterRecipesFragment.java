@@ -37,6 +37,7 @@ package com.example.android.baking_app.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,6 +49,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.baking_app.R;
+import com.example.android.baking_app.model.Ingredient;
 import com.example.android.baking_app.model.JSONResponse;
 import com.example.android.baking_app.model.RecipesResponse;
 import com.example.android.baking_app.remote.MainApplication;
@@ -67,10 +69,13 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
 
     private static final String LOG_TAG = "MasterRecipesFragment";
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
+    private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
 
     private MasterRecipesAdapter mAdapter;
     private List<RecipesResponse> mRecipeList;
+    private ArrayList<Ingredient> mIngredientsList;
     private RecipesResponse mRecipe;
+    private Ingredient mIngredient;
 
     @BindView(R.id.recipes_rv)
     RecyclerView mRecipesRv;
@@ -99,6 +104,7 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecipesRv.setLayoutManager(layoutManager);
         mRecipeList = new ArrayList<>();
+        mIngredientsList = new ArrayList<>();
 
         loadRecipes();
 
@@ -146,8 +152,13 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
     @Override
     public void onRecipeClick(RecipesResponse recipe) {
         mRecipe = recipe;
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RECIPE_PARCEL_KEY, mRecipe);
+        bundle.putParcelableArrayList(INGREDIENT_PARCEL_KEY, mIngredientsList);
+
         Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
-        intent.putExtra(RECIPE_PARCEL_KEY, mRecipe);
+        intent.putExtras(bundle);
         getContext().startActivity(intent);
     }
 }
