@@ -57,20 +57,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
         app:fontFamily="sans-serif-smallcaps"
         app:layout_constraintBaseline_toBaselineOf="@+id/measure_tv"
         app:layout_constraintEnd_toStartOf="@+id/measure_tv"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         tools:text="1.5" />
 
     <TextView
         android:id="@+id/ingredient_name_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:fontFamily="sans-serif-smallcaps"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -81,7 +86,7 @@
 
     <TextView
         android:id="@+id/measure_tv"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"

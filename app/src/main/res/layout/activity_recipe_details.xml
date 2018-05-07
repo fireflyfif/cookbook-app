@@ -55,7 +55,8 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="?android:attr/colorAccent"
+            android:background="?android:attr/colorPrimary"
+            app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 

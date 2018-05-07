@@ -38,15 +38,79 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.baking_app.R;
+import com.example.android.baking_app.model.RecipesResponse;
+import com.example.android.baking_app.model.Step;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DirectionsFragment extends Fragment {
+
+    private static final String RECIPE_PARCEL_KEY = "recipe_key";
+    private static final String DIRECTION_PARCEL_KEY = "direction_key";
+
+    private static RecipesResponse sRecipes;
+    private List<Step> mDirectionsList;
+    private DirectionsAdapter mDirectionsAdapter;
+
+    @BindView(R.id.directions_rv)
+    RecyclerView mDirectionsRv;
+    @BindView(R.id.directions_card_view)
+    CardView mDirectionsCard;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        View rootView = inflater.inflate(R.layout.fragment_directions, container, false);
+
+        ButterKnife.bind(this, rootView);
+
+        if (getActivity().getIntent().getExtras() != null) {
+            Bundle bundle = getActivity().getIntent().getExtras();
+
+            sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
+            mDirectionsList = bundle.getParcelableArrayList(DIRECTION_PARCEL_KEY);
+
+            mDirectionsList = sRecipes.getSteps();
+
+            loadDirections();
+        }
+
+        return rootView;
+    }
+
+    private void loadDirections() {
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mDirectionsRv.setLayoutManager(layoutManager);
+
+        // Add divider between each item in the RecyclerView,
+        // help from this SO post: https://stackoverflow.com/a/40217754/8132331
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                mDirectionsRv.getContext(),
+                layoutManager.getOrientation());
+
+        if (mDirectionsAdapter == null) {
+            mDirectionsAdapter = new DirectionsAdapter(getContext(), mDirectionsList);
+            mDirectionsRv.setHasFixedSize(true);
+            mDirectionsRv.setAdapter(mDirectionsAdapter);
+            mDirectionsRv.addItemDecoration(dividerItemDecoration);
+        } else {
+            mDirectionsAdapter.setDirectionsList(mDirectionsList);
+            mDirectionsAdapter.notifyDataSetChanged();
+        }
+
     }
 }

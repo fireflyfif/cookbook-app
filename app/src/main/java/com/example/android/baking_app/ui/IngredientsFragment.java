@@ -34,7 +34,6 @@
 
 package com.example.android.baking_app.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -46,23 +45,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.android.baking_app.R;
 import com.example.android.baking_app.model.Ingredient;
 import com.example.android.baking_app.model.RecipesResponse;
-import com.example.android.baking_app.remote.MainApplication;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class IngredientsFragment extends Fragment {
 
@@ -108,6 +99,8 @@ public class IngredientsFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mIngredientsRv.setLayoutManager(layoutManager);
 
+        // Add divider between each item in the RecyclerView,
+        // help from this SO post: https://stackoverflow.com/a/40217754/8132331
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                 mIngredientsRv.getContext(),
                 layoutManager.getOrientation());

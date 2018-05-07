@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ PROJECT LICENSE
   ~
   ~ This project was submitted by Iva Ivanova as part of the Nanodegree at Udacity.
@@ -32,28 +33,20 @@
   ~ SOFTWARE.
   -->
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ingredients_card_view"
+    <TextView
+        android:id="@+id/step_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:padding="10dp">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/ingredients_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="6dp"
-            android:scrollbars="vertical" />
-
-    </android.support.v7.widget.CardView>
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:fontFamily="sans-serif-smallcaps"
+        tools:text="Starting Prep" />
 
 </LinearLayout>
