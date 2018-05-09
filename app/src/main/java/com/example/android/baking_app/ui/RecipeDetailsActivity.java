@@ -44,12 +44,15 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.baking_app.R;
 import com.example.android.baking_app.model.Ingredient;
 import com.example.android.baking_app.model.RecipesResponse;
+import com.example.android.baking_app.model.Step;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +96,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         if (getIntent().getExtras().get(RECIPE_PARCEL_KEY) != null) {
 
             Bundle bundle = getIntent().getExtras();
-
             sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
 
             if (bundle.get(INGREDIENT_PARCEL_KEY) != null) {
@@ -105,16 +107,16 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             servingsTextView.setText(String.valueOf(sRecipes.getServings()));
         }
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         setSupportActionBar(toolbar);
         setupViewPager(viewPager);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tabs.setupWithViewPager(viewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager(), sRecipes);
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), sRecipes);
         adapter.addFragment(new IngredientsFragment(), "Ingredients");
         adapter.addFragment(new DirectionsFragment(), "Directions");
         viewPager.setAdapter(adapter);
@@ -123,19 +125,31 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     /**
      * Class Adapter for the Fragments
      */
-    static class Adapter extends FragmentPagerAdapter {
+    static class PagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentLst = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
         private RecipesResponse mRecipes;
+        // Not sure about those variables
+        private ArrayList<Ingredient> mIngredientsList;
+        private ArrayList<Step> mStepsList;
 
-        public Adapter(FragmentManager fm, RecipesResponse recipes) {
+        public PagerAdapter(FragmentManager fm, RecipesResponse recipes) {
             super(fm);
             mRecipes = recipes;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return mFragmentLst.get(position);
+            switch (position) {
+                case 0:
+                    return IngredientsFragment.newInstance(mRecipes, mIngredientsList);
+                case 1:
+                    return DirectionsFragment.newInstance(mRecipes, mStepsList);
+                default:
+                    return IngredientsFragment.newInstance(mRecipes, mIngredientsList);
+            }
+
+            // return mFragmentLst.get(position);
         }
 
         @Override
@@ -153,5 +167,23 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                return false;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

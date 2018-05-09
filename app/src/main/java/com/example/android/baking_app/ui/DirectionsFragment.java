@@ -50,6 +50,7 @@ import com.example.android.baking_app.R;
 import com.example.android.baking_app.model.RecipesResponse;
 import com.example.android.baking_app.model.Step;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,6 +69,26 @@ public class DirectionsFragment extends Fragment {
     RecyclerView mDirectionsRv;
     @BindView(R.id.directions_card_view)
     CardView mDirectionsCard;
+
+    public static DirectionsFragment newInstance(RecipesResponse recipes, ArrayList<Step> stepsList) {
+        DirectionsFragment directionsFragment = new DirectionsFragment();
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
+        arguments.putParcelableArrayList(DIRECTION_PARCEL_KEY, stepsList);
+        directionsFragment.setArguments(arguments);
+
+        return directionsFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
+            mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_PARCEL_KEY);
+        }
+    }
 
     @Nullable
     @Override

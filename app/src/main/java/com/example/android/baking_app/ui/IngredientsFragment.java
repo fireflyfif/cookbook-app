@@ -50,6 +50,7 @@ import com.example.android.baking_app.R;
 import com.example.android.baking_app.model.Ingredient;
 import com.example.android.baking_app.model.RecipesResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,6 +72,35 @@ public class IngredientsFragment extends Fragment {
     RecyclerView mIngredientsRv;
     @BindView(R.id.ingredients_card_view)
     CardView mIngredientCardView;
+
+    /**
+     * New Instance constructor for creating Fragment with arguments
+     *
+     * Followed example from Codepath: https://guides.codepath.com/android/viewpager-with-fragmentpageradapter
+     *
+     * @param recipes
+     * @return
+     */
+    public static IngredientsFragment newInstance(RecipesResponse recipes, ArrayList<Ingredient> ingredientsList) {
+        IngredientsFragment ingredientsFragment = new IngredientsFragment();
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
+        arguments.putParcelableArrayList(INGREDIENT_PARCEL_KEY, ingredientsList);
+        ingredientsFragment.setArguments(arguments);
+
+        return ingredientsFragment;
+    }
+
+    // Store instance variables based on arguments passed
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
+            mIngredientsList = getArguments().getParcelableArrayList(INGREDIENT_PARCEL_KEY);
+        }
+    }
 
     @Nullable
     @Override
