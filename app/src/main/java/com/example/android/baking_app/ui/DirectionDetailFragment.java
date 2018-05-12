@@ -34,7 +34,44 @@
 
 package com.example.android.baking_app.ui;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.android.baking_app.R;
+import com.example.android.baking_app.model.Step;
+
+import java.util.ArrayList;
 
 public class DirectionDetailFragment extends Fragment {
+
+    private static final String RECIPE_PARCEL_KEY = "recipe_key";
+    private static final String DIRECTION_PARCEL_KEY = "direction_key";
+    private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
+
+    private Step mDirections;
+    private ArrayList<Step> mDirectionList;
+
+    // Mandatory empty constructor
+    public DirectionDetailFragment() {}
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_direction_detail, container, false);
+
+        if (getActivity().getIntent().getExtras() != null) {
+            Bundle bundle = getActivity().getIntent().getExtras();
+            mDirectionList = bundle.getParcelableArrayList(DIRECTION_PARCEL_KEY);
+            mDirections = bundle.getParcelable(DIRECTION_CURRENT_KEY);
+        }
+
+
+        return rootView;
+    }
 }

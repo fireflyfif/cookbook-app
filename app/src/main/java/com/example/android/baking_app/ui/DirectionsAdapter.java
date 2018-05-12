@@ -48,17 +48,26 @@ import com.example.android.baking_app.model.Step;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.DirectionsViewHolder> {
 
     private ArrayList<Step> mDirectionsList;
     private Context mContext;
-    private DirectionsListFragment.StepOnClickHandler mStepOnClickHandler;
+
+    private StepOnClickHandler mCallback;
+
+    public interface StepOnClickHandler {
+        void onStepClick (Step step, ArrayList<Step> stepList);
+    }
 
 
-    public DirectionsAdapter(ArrayList<Step> directionsList, DirectionsListFragment.StepOnClickHandler stepOnClickHandler) {
+
+    public DirectionsAdapter(Context context, ArrayList<Step> directionsList, StepOnClickHandler callback) {
+        mContext = context;
         mDirectionsList = directionsList;
-        mStepOnClickHandler = stepOnClickHandler;
-        //mCallback = callback;
+        mCallback = callback;
     }
 
     @NonNull
@@ -86,32 +95,24 @@ public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.Di
         }
     }
 
-    public class DirectionsViewHolder extends RecyclerView.ViewHolder {
+    public class DirectionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.step_title)
         TextView directionTitle;
-        //DirectionsListFragment.StepOnClickHandler mCallback;
 
         public DirectionsViewHolder(View itemView) {
             super(itemView);
 
-            directionTitle = itemView.findViewById(R.id.step_title);
-            //mStepOnClickHandler = callback;
-            itemView.setOnClickListener(mLocalClickListener);
+            ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
         }
 
-        private View.OnClickListener mLocalClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Step currentStep = mDirectionsList.get(getAdapterPosition());
-                mStepOnClickHandler.onStepClick(currentStep, mDirectionsList);
-            }
-        };
-
-        /*@Override
+        @Override
         public void onClick(View v) {
             Step currentStep = mDirectionsList.get(getAdapterPosition());
-            mStepOnClickHandler.onStepClick(currentStep, mDirectionsList);
-        }*/
+            mCallback.onStepClick(currentStep, mDirectionsList);
+        }
     }
 
     public void setDirectionsList (ArrayList<Step> stepList) {

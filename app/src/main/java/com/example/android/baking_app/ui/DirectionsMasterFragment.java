@@ -59,15 +59,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DirectionsMasterFragment extends Fragment implements DirectionsListFragment.StepOnClickHandler{
+public class DirectionsMasterFragment extends Fragment {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String DIRECTION_PARCEL_KEY = "direction_key";
-    private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
+
 
     private static RecipesResponse sRecipes;
     private ArrayList<Step> mDirectionsList;
-    private DirectionsAdapter mDirectionsAdapter;
 
     @BindView(R.id.directions_rv)
     RecyclerView mDirectionsRv;
@@ -112,56 +111,8 @@ public class DirectionsMasterFragment extends Fragment implements DirectionsList
             mDirectionsList = bundle.getParcelableArrayList(DIRECTION_PARCEL_KEY);
 
             mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
-
-            //loadDirections();
         }
 
         return rootView;
-    }
-
-    /*private void loadDirections() {
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mDirectionsRv.setLayoutManager(layoutManager);
-
-        // Add divider between each item in the RecyclerView,
-        // help from this SO post: https://stackoverflow.com/a/40217754/8132331
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                mDirectionsRv.getContext(),
-                layoutManager.getOrientation());
-
-        if (mDirectionsAdapter == null) {
-            mDirectionsAdapter = new DirectionsAdapter(getContext(), mDirectionsList, this);
-            mDirectionsRv.setHasFixedSize(true);
-            mDirectionsRv.setAdapter(mDirectionsAdapter);
-            mDirectionsRv.addItemDecoration(dividerItemDecoration);
-        } else {
-            mDirectionsAdapter.setDirectionsList(mDirectionsList);
-            mDirectionsAdapter.notifyDataSetChanged();
-        }
-
-    }*/
-
-    /*@Override
-    public void onStepClick(Step step) {
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.directions_container, new DirectionDetailFragment());
-    }*/
-
-    @Override
-    public void onStepClick(Step step, ArrayList<Step> stepList) {
-        Toast.makeText(getContext(), "Clicked Step ", Toast.LENGTH_SHORT).show();
-
-        /*Bundle arguments = new Bundle();
-        //arguments.putParcelable(RECIPE_PARCEL_KEY, sRecipes);
-        arguments.putParcelableArrayList(DIRECTION_PARCEL_KEY, stepList);
-        arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
-
-        Intent intent = new Intent(getActivity(), DirectionDetailActivity.class);
-        intent.putExtras(arguments);
-        if (getActivity() != null) {
-            getActivity().startActivity(intent);
-        }*/
     }
 }
