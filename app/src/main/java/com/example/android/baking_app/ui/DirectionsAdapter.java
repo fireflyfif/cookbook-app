@@ -45,22 +45,26 @@ import android.widget.TextView;
 import com.example.android.baking_app.R;
 import com.example.android.baking_app.model.Step;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.DirectionsViewHolder> {
 
-    private List<Step> mDirectionsList;
+    private ArrayList<Step> mDirectionsList;
     private Context mContext;
+    private DirectionsListFragment.StepOnClickHandler mStepOnClickHandler;
 
-    public DirectionsAdapter(Context context, List<Step> directionsList) {
-        mContext = context;
+
+    public DirectionsAdapter(ArrayList<Step> directionsList, DirectionsListFragment.StepOnClickHandler stepOnClickHandler) {
         mDirectionsList = directionsList;
+        mStepOnClickHandler = stepOnClickHandler;
+        //mCallback = callback;
     }
 
     @NonNull
     @Override
     public DirectionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext)
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.direction_item, parent, false);
 
         return new DirectionsViewHolder(view);
@@ -85,15 +89,32 @@ public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.Di
     public class DirectionsViewHolder extends RecyclerView.ViewHolder {
 
         TextView directionTitle;
+        //DirectionsListFragment.StepOnClickHandler mCallback;
 
         public DirectionsViewHolder(View itemView) {
             super(itemView);
 
             directionTitle = itemView.findViewById(R.id.step_title);
+            //mStepOnClickHandler = callback;
+            itemView.setOnClickListener(mLocalClickListener);
         }
+
+        private View.OnClickListener mLocalClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Step currentStep = mDirectionsList.get(getAdapterPosition());
+                mStepOnClickHandler.onStepClick(currentStep, mDirectionsList);
+            }
+        };
+
+        /*@Override
+        public void onClick(View v) {
+            Step currentStep = mDirectionsList.get(getAdapterPosition());
+            mStepOnClickHandler.onStepClick(currentStep, mDirectionsList);
+        }*/
     }
 
-    public void setDirectionsList (List<Step> stepList) {
+    public void setDirectionsList (ArrayList<Step> stepList) {
         mDirectionsList = stepList;
         notifyDataSetChanged();
     }

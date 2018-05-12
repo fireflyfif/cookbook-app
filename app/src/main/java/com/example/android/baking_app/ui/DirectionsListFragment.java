@@ -34,10 +34,13 @@
 
 package com.example.android.baking_app.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,13 +59,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DirectionsFragment extends Fragment {
+/*
+Dynamic Fragment that displays the list of Steps
+ */
+public class DirectionsListFragment extends Fragment {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String DIRECTION_PARCEL_KEY = "direction_key";
 
     private static RecipesResponse sRecipes;
-    private List<Step> mDirectionsList;
+    private static Step sDirections;
+    private ArrayList<Step> mDirectionsList;
     private DirectionsAdapter mDirectionsAdapter;
 
     @BindView(R.id.directions_rv)
@@ -70,14 +77,36 @@ public class DirectionsFragment extends Fragment {
     @BindView(R.id.directions_card_view)
     CardView mDirectionsCard;
 
-    public static DirectionsFragment newInstance(RecipesResponse recipes, ArrayList<Step> stepsList) {
-        DirectionsFragment directionsFragment = new DirectionsFragment();
+    private StepOnClickHandler mCallback;
+
+    public interface StepOnClickHandler {
+        void onStepClick (Step step, ArrayList<Step> stepList);
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+
+        // Make sure the host activity has implemented the callback interface
+        // if not - throws an exception
+        try {
+            mCallback = (StepOnClickHandler) childFragment;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(childFragment.toString() + " must implement StepOnClickHandler");
+        }
+    }
+
+    // Mandatory empty constructor
+    public DirectionsListFragment() {}
+
+    public static DirectionsListFragment newInstance(RecipesResponse recipes, ArrayList<Step> stepsList) {
+        DirectionsListFragment directionsListFragment = new DirectionsListFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
         arguments.putParcelableArrayList(DIRECTION_PARCEL_KEY, stepsList);
-        directionsFragment.setArguments(arguments);
+        directionsListFragment.setArguments(arguments);
 
-        return directionsFragment;
+        return directionsListFragment;
     }
 
     @Override
@@ -94,7 +123,7 @@ public class DirectionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_directions, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_directions_list, container, false);
 
         ButterKnife.bind(this, rootView);
 
@@ -104,7 +133,7 @@ public class DirectionsFragment extends Fragment {
             sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
             mDirectionsList = bundle.getParcelableArrayList(DIRECTION_PARCEL_KEY);
 
-            mDirectionsList = sRecipes.getSteps();
+            mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
 
             loadDirections();
         }
@@ -124,7 +153,7 @@ public class DirectionsFragment extends Fragment {
                 layoutManager.getOrientation());
 
         if (mDirectionsAdapter == null) {
-            mDirectionsAdapter = new DirectionsAdapter(getContext(), mDirectionsList);
+            mDirectionsAdapter = new DirectionsAdapter(mDirectionsList, mCallback);
             mDirectionsRv.setHasFixedSize(true);
             mDirectionsRv.setAdapter(mDirectionsAdapter);
             mDirectionsRv.addItemDecoration(dividerItemDecoration);
@@ -132,6 +161,18 @@ public class DirectionsFragment extends Fragment {
             mDirectionsAdapter.setDirectionsList(mDirectionsList);
             mDirectionsAdapter.notifyDataSetChanged();
         }
-
     }
+
+   /* @Override
+    public void onStepClick(Step step) {
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(RECIPE_PARCEL_KEY, sRecipes);
+        arguments.putParcelableArrayList(DIRECTION_PARCEL_KEY, mDirectionsList);
+
+        Intent intent = new Intent(getActivity(), DirectionDetailActivity.class);
+        intent.putExtras(arguments);
+        if (getActivity() != null) {
+            getActivity().startActivity(intent);
+        }
+    }*/
 }

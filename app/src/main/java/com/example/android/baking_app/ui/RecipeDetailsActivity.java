@@ -34,7 +34,6 @@
 
 package com.example.android.baking_app.ui;
 
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -46,7 +45,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.baking_app.R;
@@ -86,6 +84,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     @BindView(R.id.servings_tv)
     TextView servingsTextView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +117,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), sRecipes);
         adapter.addFragment(new IngredientsFragment(), "Ingredients");
-        adapter.addFragment(new DirectionsFragment(), "Directions");
+        adapter.addFragment(new DirectionsMasterFragment(), "Directions");
         viewPager.setAdapter(adapter);
     }
 
@@ -144,7 +143,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 case 0:
                     return IngredientsFragment.newInstance(mRecipes, mIngredientsList);
                 case 1:
-                    return DirectionsFragment.newInstance(mRecipes, mStepsList);
+                    return DirectionsMasterFragment.newInstance(mRecipes, mStepsList);
                 default:
                     return IngredientsFragment.newInstance(mRecipes, mIngredientsList);
             }

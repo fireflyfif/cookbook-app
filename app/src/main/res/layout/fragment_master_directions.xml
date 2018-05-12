@@ -32,24 +32,8 @@
   ~ SOFTWARE.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/master_directions_container"
+    android:name="com.example.android.baking_app.ui.DirectionsListFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/directions_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:padding="10dp">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/directions_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="6dp"
-            android:scrollbars="vertical" />
-
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+    android:layout_height="match_parent" />
