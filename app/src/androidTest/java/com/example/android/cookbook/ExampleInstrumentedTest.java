@@ -1,4 +1,4 @@
-package com.example.android.baking_app;
+package com.example.android.cookbook;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

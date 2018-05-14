@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.ui;
+package com.example.android.cookbook.ui;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -43,8 +43,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.baking_app.R;
-import com.example.android.baking_app.model.RecipesResponse;
+import com.example.android.cookbook.R;
+import com.example.android.cookbook.model.RecipesResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

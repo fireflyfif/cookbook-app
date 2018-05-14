@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.model;
+package com.example.android.cookbook.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -40,62 +40,40 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Step implements Parcelable {
+public class Ingredient implements Parcelable {
 
-    @SerializedName("id")
+    @SerializedName("quantity")
     @Expose
-    private int id;
-    @SerializedName("shortDescription")
+    private double quantity;
+    @SerializedName("measure")
     @Expose
-    private String shortDescription;
-    @SerializedName("description")
+    private String measure;
+    @SerializedName("ingredient")
     @Expose
-    private String description;
-    @SerializedName("videoURL")
-    @Expose
-    private String videoURL;
-    @SerializedName("thumbnailURL")
-    @Expose
-    private String thumbnailURL;
+    private String ingredient;
 
-    public int getId() {
-        return id;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public String getMeasure() {
+        return measure;
     }
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+    public void setMeasure(String measure) {
+        this.measure = measure;
     }
 
-    public String getDescription() {
-        return description;
+    public String getIngredient() {
+        return ingredient;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getVideoURL() {
-        return videoURL;
-    }
-
-    public void setVideoURL(String videoURL) {
-        this.videoURL = videoURL;
-    }
-
-    public String getThumbnailURL() {
-        return thumbnailURL;
-    }
-
-    public void setThumbnailURL(String thumbnailURL) {
-        this.thumbnailURL = thumbnailURL;
+    public void setIngredient(String ingredient) {
+        this.ingredient = ingredient;
     }
 
 
@@ -106,33 +84,30 @@ public class Step implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.shortDescription);
-        dest.writeString(this.description);
-        dest.writeString(this.videoURL);
-        dest.writeString(this.thumbnailURL);
+        dest.writeDouble(this.quantity);
+        dest.writeString(this.measure);
+        dest.writeString(this.ingredient);
     }
 
-    public Step() {
+    public Ingredient() {
     }
 
-    protected Step(Parcel in) {
-        this.id = in.readInt();
-        this.shortDescription = in.readString();
-        this.description = in.readString();
-        this.videoURL = in.readString();
-        this.thumbnailURL = in.readString();
+    protected Ingredient(Parcel in) {
+        this.quantity = in.readDouble();
+        this.measure = in.readString();
+        this.ingredient = in.readString();
     }
 
-    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
+    public static final Parcelable.Creator<Ingredient> CREATOR = new Parcelable.Creator<Ingredient>() {
         @Override
-        public Step createFromParcel(Parcel source) {
-            return new Step(source);
+        public Ingredient createFromParcel(Parcel source) {
+            return new Ingredient(source);
         }
 
         @Override
-        public Step[] newArray(int size) {
-            return new Step[size];
+        public Ingredient[] newArray(int size) {
+            return new Ingredient[size];
         }
     };
 }
+

@@ -32,25 +32,18 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.model;
+package com.example.android.cookbook.ui;
 
-import java.util.List;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-public class JSONResponse {
+import com.example.android.cookbook.R;
 
-    private List<RecipesResponse> mRecipesList;
+public class MainActivity extends AppCompatActivity {
 
-    public JSONResponse(List<RecipesResponse> recipesList) {
-        mRecipesList = recipesList;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
     }
-
-    public List<RecipesResponse> getRecipesList() {
-        return mRecipesList;
-    }
-
-//    private RecipesResponse[] mRecipes;
-//
-//    public RecipesResponse[] getRecipes() {
-//        return mRecipes;
-//    }
 }

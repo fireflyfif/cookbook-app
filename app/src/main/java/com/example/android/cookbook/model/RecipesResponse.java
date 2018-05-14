@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.model;
+package com.example.android.cookbook.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -32,9 +32,10 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.ui;
+package com.example.android.cookbook.ui;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -43,14 +44,15 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.android.baking_app.R;
-import com.example.android.baking_app.model.Ingredient;
-import com.example.android.baking_app.model.RecipesResponse;
-import com.example.android.baking_app.model.Step;
+import com.example.android.cookbook.R;
+import com.example.android.cookbook.model.Ingredient;
+import com.example.android.cookbook.model.RecipesResponse;
+import com.example.android.cookbook.model.Step;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,8 @@ import butterknife.ButterKnife;
  * https://codelabs.developers.google.com/codelabs/material-design-style/index.html?index=..%2F..%2Findex#0
  */
 public class RecipeDetailsActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = RecipeDetailsActivity.class.getSimpleName();
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
@@ -92,6 +96,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
+        setupViewPager(viewPager);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tabs.setupWithViewPager(viewPager);
+
         if (getIntent().getExtras().get(RECIPE_PARCEL_KEY) != null) {
 
             Bundle bundle = getIntent().getExtras();
@@ -102,16 +112,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 mIngredientsList = sRecipes.getIngredients();
             }
 
-            recipeTitle.setText(sRecipes.getName());
+            //recipeTitle.setText(sRecipes.getName());
             servingsTextView.setText(String.valueOf(sRecipes.getServings()));
+            // Set the Title of the Recipe
+
+            Log.d(LOG_TAG, "Name of the Recipe: " + sRecipes.getName());
+            recipeTitle.setText(sRecipes.getName());
         }
 
-        setSupportActionBar(toolbar);
-        setupViewPager(viewPager);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        tabs.setupWithViewPager(viewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {

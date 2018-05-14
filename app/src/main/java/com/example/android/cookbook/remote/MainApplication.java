@@ -32,10 +32,22 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.utilities;
+package com.example.android.cookbook.remote;
 
-public class NetworkUtils {
+import android.app.Application;
 
-    public static final String RECIPES_URL =
-            "https://d17h27t6h515a5.cloudfront.net";
+/**
+ * This Class will guarantee that the retrofit instance is created only once
+ * Requires to be registered in the Manifest: android:name=".remote.MainApplication"
+ */
+public class MainApplication extends Application {
+
+    public static RecipesJsonManager sManager;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        sManager = RecipesJsonManager.getInstance();
+    }
 }

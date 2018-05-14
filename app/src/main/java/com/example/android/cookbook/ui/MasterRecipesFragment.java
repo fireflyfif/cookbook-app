@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.ui;
+package com.example.android.cookbook.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -48,11 +48,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.baking_app.R;
-import com.example.android.baking_app.model.Ingredient;
-import com.example.android.baking_app.model.JSONResponse;
-import com.example.android.baking_app.model.RecipesResponse;
-import com.example.android.baking_app.remote.MainApplication;
+import com.example.android.cookbook.R;
+import com.example.android.cookbook.model.Ingredient;
+import com.example.android.cookbook.model.JSONResponse;
+import com.example.android.cookbook.model.RecipesResponse;
+import com.example.android.cookbook.remote.MainApplication;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

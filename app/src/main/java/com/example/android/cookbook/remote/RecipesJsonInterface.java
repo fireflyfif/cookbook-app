@@ -32,22 +32,18 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.remote;
+package com.example.android.cookbook.remote;
 
-import android.app.Application;
+import com.example.android.cookbook.model.JSONResponse;
+import com.example.android.cookbook.model.RecipesResponse;
 
-/**
- * This Class will guarantee that the retrofit instance is created only once
- * Requires to be registered in the Manifest: android:name=".remote.MainApplication"
- */
-public class MainApplication extends Application {
+import java.util.List;
 
-    public static RecipesJsonManager sManager;
+import retrofit2.Call;
+import retrofit2.http.GET;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+public interface RecipesJsonInterface {
 
-        sManager = RecipesJsonManager.getInstance();
-    }
+    @GET("/topher/2017/May/59121517_baking/baking.json")
+    Call<List<RecipesResponse>> getRecipes();
 }

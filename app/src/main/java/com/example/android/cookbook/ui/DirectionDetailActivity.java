@@ -32,50 +32,19 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.remote;
+package com.example.android.cookbook.ui;
 
-import android.util.Log;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
-import com.example.android.baking_app.model.Ingredient;
-import com.example.android.baking_app.model.JSONResponse;
-import com.example.android.baking_app.model.RecipesResponse;
-import com.example.android.baking_app.utilities.NetworkUtils;
+import com.example.android.cookbook.R;
 
-import java.util.List;
+public class DirectionDetailActivity extends AppCompatActivity {
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class RecipesJsonManager {
-
-    private static Retrofit sRetrofit = null;
-    private static RecipesJsonManager sManager;
-    private static RecipesJsonInterface sRecipesInterface;
-
-    private RecipesJsonManager() {
-        if (sRetrofit == null) {
-            sRetrofit = new Retrofit.Builder()
-                    .baseUrl(NetworkUtils.RECIPES_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-
-        sRecipesInterface = sRetrofit.create(RecipesJsonInterface.class);
-    }
-
-    public static RecipesJsonManager getInstance() {
-        if (sManager == null) {
-            sManager = new RecipesJsonManager();
-        }
-
-        return sManager;
-    }
-
-    public void getRecipes(Callback<List<RecipesResponse>> callback) {
-
-        Call<List<RecipesResponse>> recipesCall = sRecipesInterface.getRecipes();
-        recipesCall.enqueue(callback);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_direction_detail);
     }
 }

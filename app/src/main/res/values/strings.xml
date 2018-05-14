@@ -33,6 +33,7 @@
   -->
 
 <resources>
-    <string name="app_name">baking-app</string>
+    <string name="app_name">Cook Book</string>
+    <string name="step_label">Step</string>
 
 </resources>

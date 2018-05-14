@@ -32,18 +32,10 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.remote;
+package com.example.android.cookbook.utilities;
 
-import com.example.android.baking_app.model.JSONResponse;
-import com.example.android.baking_app.model.RecipesResponse;
+public class NetworkUtils {
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.http.GET;
-
-public interface RecipesJsonInterface {
-
-    @GET("/topher/2017/May/59121517_baking/baking.json")
-    Call<List<RecipesResponse>> getRecipes();
+    public static final String RECIPES_URL =
+            "https://d17h27t6h515a5.cloudfront.net";
 }

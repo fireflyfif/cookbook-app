@@ -32,18 +32,50 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.ui;
+package com.example.android.cookbook.remote;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 
-import com.example.android.baking_app.R;
+import com.example.android.cookbook.model.Ingredient;
+import com.example.android.cookbook.model.JSONResponse;
+import com.example.android.cookbook.model.RecipesResponse;
+import com.example.android.cookbook.utilities.NetworkUtils;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class RecipesJsonManager {
+
+    private static Retrofit sRetrofit = null;
+    private static RecipesJsonManager sManager;
+    private static RecipesJsonInterface sRecipesInterface;
+
+    private RecipesJsonManager() {
+        if (sRetrofit == null) {
+            sRetrofit = new Retrofit.Builder()
+                    .baseUrl(NetworkUtils.RECIPES_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        sRecipesInterface = sRetrofit.create(RecipesJsonInterface.class);
+    }
+
+    public static RecipesJsonManager getInstance() {
+        if (sManager == null) {
+            sManager = new RecipesJsonManager();
+        }
+
+        return sManager;
+    }
+
+    public void getRecipes(Callback<List<RecipesResponse>> callback) {
+
+        Call<List<RecipesResponse>> recipesCall = sRecipesInterface.getRecipes();
+        recipesCall.enqueue(callback);
     }
 }

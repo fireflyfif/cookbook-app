@@ -32,18 +32,20 @@
  * SOFTWARE.
  */
 
-package com.example.android.baking_app.ui;
+package com.example.android.cookbook.ui;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.baking_app.R;
-import com.example.android.baking_app.model.Step;
+import com.example.android.cookbook.R;
+import com.example.android.cookbook.model.Step;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +65,6 @@ public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.Di
     }
 
 
-
     public DirectionsAdapter(Context context, ArrayList<Step> directionsList, StepOnClickHandler callback) {
         mContext = context;
         mDirectionsList = directionsList;
@@ -73,7 +74,7 @@ public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.Di
     @NonNull
     @Override
     public DirectionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.direction_item, parent, false);
 
         return new DirectionsViewHolder(view);
@@ -83,7 +84,19 @@ public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.Di
     public void onBindViewHolder(@NonNull DirectionsViewHolder holder, int position) {
         Step currentStep = mDirectionsList.get(position);
 
-        holder.directionTitle.setText(currentStep.getShortDescription());
+        if (currentStep.getId() < 1) {
+            holder.directionLabel.setVisibility(View.GONE);
+            holder.directionNumber.setText("");
+            TextViewCompat
+                    .setTextAppearance(holder.directionShortDescr,
+                    android.R.style.TextAppearance_DeviceDefault_Large);
+            holder.directionShortDescr.setTypeface(
+                    Typeface.create("sans-serif-smallcaps", Typeface.NORMAL));
+        } else {
+            holder.directionNumber.setText(String.valueOf(currentStep.getId()));
+        }
+
+        holder.directionShortDescr.setText(currentStep.getShortDescription());
     }
 
     @Override
@@ -97,8 +110,12 @@ public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.Di
 
     public class DirectionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.step_title)
-        TextView directionTitle;
+        @BindView(R.id.step_title_label)
+        TextView directionLabel;
+        @BindView(R.id.step_number_tv)
+        TextView directionNumber;
+        @BindView(R.id.step_short_description_tv)
+        TextView directionShortDescr;
 
         public DirectionsViewHolder(View itemView) {
             super(itemView);

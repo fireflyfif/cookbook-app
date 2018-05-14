@@ -1,4 +1,4 @@
-package com.example.android.baking_app;
+package com.example.android.cookbook;
 
 import org.junit.Test;
 
