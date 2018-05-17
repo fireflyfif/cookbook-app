@@ -35,12 +35,14 @@
 package com.example.android.cookbook.ui;
 
 import android.app.NotificationManager;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,10 +83,19 @@ import butterknife.ButterKnife;
 
 public class DirectionDetailFragment extends Fragment implements PlayerControlView.VisibilityListener, PlaybackPreparer, Player.EventListener {
 
-    private static final String RECIPE_PARCEL_KEY = "recipe_key";
-    private static final String DIRECTION_PARCEL_KEY = "direction_key";
-    private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
     private static final String LOG_TAG = DirectionDetailFragment.class.getSimpleName();
+
+    // Saved instance state keys
+    private static final String RECIPE_PARCEL_KEY = "recipe_key";
+    private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
+    private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
+    private static final String KEY_POSITION = "position";
+    private static final String KEY_WINDOW = "window";
+    private static final String KEY_PLAY_WHEN_READY = "play_when_ready";
+
+    private long mPlaybackPosition;
+    private int mCurrentWindow;
+    private boolean mPlayWhenReady = true;
 
     private Step mDirections;
     private ArrayList<Step> mDirectionList;
@@ -106,6 +117,30 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     // Mandatory empty constructor
     public DirectionDetailFragment() {}
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mDirections = savedInstanceState.getParcelable(DIRECTION_CURRENT_KEY);
+            mPlaybackPosition = savedInstanceState.getLong(KEY_POSITION);
+            mCurrentWindow = savedInstanceState.getInt(KEY_WINDOW);
+            mPlayWhenReady = savedInstanceState.getBoolean(KEY_PLAY_WHEN_READY);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        updateStartPosition();
+
+        outState.putParcelable(DIRECTION_CURRENT_KEY, mDirections);
+        outState.putLong(KEY_POSITION, mPlaybackPosition);
+        outState.putInt(KEY_WINDOW, mCurrentWindow);
+        outState.putBoolean(KEY_PLAY_WHEN_READY, mPlayWhenReady);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -116,7 +151,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
         if (getActivity().getIntent().getExtras() != null) {
             Bundle bundle = getActivity().getIntent().getExtras();
-            mDirectionList = bundle.getParcelableArrayList(DIRECTION_PARCEL_KEY);
+            mDirectionList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
             mDirections = bundle.getParcelable(DIRECTION_CURRENT_KEY);
 
             if (mDirections != null) {
@@ -135,16 +170,19 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
 
         if (Util.SDK_INT > 23) {
-            if (mVideoUrl != null) {
+            if (mExoPlayer != null) {
                 initializePlayer(Uri.parse(mVideoUrl));
-            } else {
-                // Load default image as a background image if there is no video
-                mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(
-                        getResources(), R.drawable.temp));
             }
         }
     }
@@ -153,8 +191,19 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     public void onResume() {
         super.onResume();
 
-        if (Util.SDK_INT > 23 || mExoPlayer == null) {
+        if ((Util.SDK_INT <= 23 || mExoPlayer == null)) {
             initializePlayer(Uri.parse(mVideoUrl));
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (Util.SDK_INT <= 23) {
+            if (mExoPlayer != null) {
+                releasePlayer();
+            }
         }
     }
 
@@ -163,7 +212,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         super.onStop();
 
         if (Util.SDK_INT > 23) {
-            if (mVideoUrl != null) {
+            if (mExoPlayer != null) {
                 releasePlayer();
             }
         }
@@ -171,7 +220,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
     private void initializePlayer(Uri mediaUri) {
 
-        if (mVideoUrl != null) {
+        // Check if the video url is empty
+        if (!TextUtils.isEmpty(mVideoUrl)) {
             if (mExoPlayer == null) {
 
                 // Create an instance of the ExoPlayer
@@ -196,16 +246,32 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
                         .createMediaSource(mediaUri);
 
                 mExoPlayer.prepare(mediaSource);
-                mExoPlayer.setPlayWhenReady(true);
+                mExoPlayer.setPlayWhenReady(mPlayWhenReady);
+                mExoPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
 
             }
         } else {
+            // If the video URL is empty, check if there is a thumbnail and show it,
+            // if not show the image placeholder for no video
+
+            // Hide the video player
+            mPlayerView.setVisibility(View.GONE);
+
+            String videoThumbnailUrlString = mDirections.getThumbnailURL();
+
+            // Check if there is a video Thumbnail Url
+            if (!TextUtils.isEmpty(videoThumbnailUrlString)) {
+                Picasso.with(getContext())
+                        .load(mDirections.getThumbnailURL())
+                        .placeholder(R.drawable.temp)
+                        .error(R.drawable.temp)
+                        .into(mNoVideoImage);
+            }
+
+            // Show the Image for no video available
             mNoVideoImage.setVisibility(View.VISIBLE);
-            Picasso.with(getContext())
-                    .load(mDirections.getThumbnailURL())
-                    .placeholder(R.drawable.temp)
-                    .error(R.drawable.temp)
-                    .into(mNoVideoImage);
+            mNoVideoImage.setImageResource(R.drawable.temp);
+
         }
     }
 
@@ -214,10 +280,27 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
      */
     private void releasePlayer() {
 
-        //mNotificationManager.cancelAll();
-        mExoPlayer.stop();
-        mExoPlayer.release();
-        mExoPlayer = null;
+        if (mExoPlayer != null) {
+            //mNotificationManager.cancelAll();
+
+            updateStartPosition();
+            // Get the current position
+            mPlaybackPosition = mExoPlayer.getCurrentPosition();
+            mCurrentWindow = mExoPlayer.getCurrentWindowIndex();
+            mPlayWhenReady = mExoPlayer.getPlayWhenReady();
+
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
+    }
+
+    private void updateStartPosition() {
+        if (mExoPlayer != null) {
+            mPlayWhenReady = mExoPlayer.getPlayWhenReady();
+            mCurrentWindow = mExoPlayer.getCurrentWindowIndex();
+            mPlaybackPosition = Math.max(0, mExoPlayer.getContentPosition());
+        }
     }
 
     // PlaybackControlView.VisibilityListener implementation

@@ -66,7 +66,7 @@ Dynamic Fragment that displays the list of Steps
 public class DirectionsListFragment extends Fragment implements DirectionsAdapter.StepOnClickHandler {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
-    private static final String DIRECTION_PARCEL_KEY = "direction_key";
+    private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
     private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
 
     private static RecipesResponse sRecipes;
@@ -88,7 +88,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
         DirectionsListFragment directionsListFragment = new DirectionsListFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
-        arguments.putParcelableArrayList(DIRECTION_PARCEL_KEY, stepsList);
+        arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepsList);
         directionsListFragment.setArguments(arguments);
 
         return directionsListFragment;
@@ -100,7 +100,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
 
         if (getArguments() != null) {
             sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
-            mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_PARCEL_KEY);
+            mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
         }
     }
 
@@ -116,7 +116,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
             Bundle bundle = getActivity().getIntent().getExtras();
 
             sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
-            mDirectionsList = bundle.getParcelableArrayList(DIRECTION_PARCEL_KEY);
+            mDirectionsList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
 
             mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
 
@@ -162,7 +162,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
         // Start new Activity via Intent with arguments
         Bundle arguments = new Bundle();
         //arguments.putParcelable(RECIPE_PARCEL_KEY, sRecipes);
-        arguments.putParcelableArrayList(DIRECTION_PARCEL_KEY, stepList);
+        arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepList);
         arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
 
         Intent intent = new Intent(getActivity(), DirectionDetailActivity.class);

@@ -30,8 +30,11 @@
                 android:value=".ui.MainActivity"/>
         </activity>
 
+        <!-- Saving the state of the media position upon configuration changes  -->
         <activity android:name=".ui.DirectionDetailActivity"
-            android:parentActivityName=".ui.RecipeDetailsActivity">
+            android:parentActivityName=".ui.RecipeDetailsActivity"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.RecipeDetailsActivity"/>

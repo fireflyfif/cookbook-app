@@ -46,5 +46,8 @@ public class DirectionDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_direction_detail);
+
+        // TODO: Set the Toolbar first
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
