@@ -34,6 +34,7 @@
 
 package com.example.android.cookbook.ui;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
@@ -42,11 +43,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -106,6 +109,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     ImageView mNoVideoImage;
     @BindView(R.id.short_description_tv)
     TextView mShortDescription;
+    @BindView(R.id.description_card_view)
+    CardView mDescriptionCardView;
 
     // Media Player Views
     @BindView(R.id.player_view)
@@ -173,7 +178,43 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Hide System UI components
+            hideSystemUi();
 
+            // Hide elements that we don't need on Landscape
+            mDescriptionCardView.setVisibility(View.GONE);
+
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mPlayerView.getLayoutParams();
+            params.width = params.MATCH_PARENT;
+            params.height = params.MATCH_PARENT;
+            mPlayerView.setLayoutParams(params);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mPlayerView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+             mDescriptionCardView.setVisibility(View.VISIBLE);
+
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mPlayerView.getLayoutParams();
+            params.width = params.MATCH_PARENT;
+            // The size here is in pixels, so in order to have 300dp for xhdpi screens
+            params.height = 600;
+            mPlayerView.setLayoutParams(params);
+        }
+    }
+
+    /**
+     * Hide System UI for immersive full screen media play
+     */
+    @SuppressLint("InlinedApi")
+    private void hideSystemUi() {
+        mPlayerView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
     }
 
     @Override

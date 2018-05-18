@@ -42,12 +42,12 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/player_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="300dp" />
 
         <ImageView
             android:id="@+id/no_video_iv"
@@ -58,6 +58,7 @@
     </FrameLayout>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/description_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp">
