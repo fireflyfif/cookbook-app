@@ -47,6 +47,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
@@ -79,6 +81,10 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
 
     @BindView(R.id.recipes_rv)
     RecyclerView mRecipesRv;
+    @BindView(R.id.error_message_tv)
+    TextView mErrorMessage;
+    @BindView(R.id.loading_indicator)
+    ProgressBar mLoadingIndicator;
 
 
     @Override
@@ -106,6 +112,9 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
         mRecipeList = new ArrayList<>();
         mIngredientsList = new ArrayList<>();
 
+        // Show the Progress Bar
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+
         loadRecipes();
 
         return rootView;
@@ -118,6 +127,8 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
             @Override
             public void onResponse(Call<List<RecipesResponse>> call, Response<List<RecipesResponse>> response) {
                 if (response.isSuccessful()) {
+                    // Hide the Progress Bar
+                    mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                     mRecipeList = response.body();
 
@@ -143,10 +154,25 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
 
             @Override
             public void onFailure(Call<List<RecipesResponse>> call, Throwable t) {
+                // Hide the Progress Bar
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
 
+                // Show the error message for no Connectivity
+                showErrorMessage();
                 Log.d(LOG_TAG, t.toString());
             }
         });
+    }
+
+    /**
+     * Method that shows error message when there is a problem fetching the data or
+     * there is no internet connection
+     */
+    private void showErrorMessage() {
+        // Hide the list with recipes
+        mRecipesRv.setVisibility(View.INVISIBLE);
+        // Show the error message
+        mErrorMessage.setVisibility(View.VISIBLE);
     }
 
     @Override

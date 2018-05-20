@@ -37,7 +37,6 @@ package com.example.android.cookbook.ui;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.res.Configuration;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,16 +48,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.cookbook.R;
+import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.model.Step;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -79,6 +79,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -102,6 +103,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
     private Step mDirections;
     private ArrayList<Step> mDirectionList;
+    private int mDirectionNumber;
 
     @BindView(R.id.direction_description_tv)
     TextView mLongDescription;
@@ -111,6 +113,10 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     TextView mShortDescription;
     @BindView(R.id.description_card_view)
     CardView mDescriptionCardView;
+    @BindView(R.id.button_previous)
+    Button mPreviousStep;
+    @BindView(R.id.button_next)
+    Button mNextStep;
 
     // Media Player Views
     @BindView(R.id.player_view)
@@ -121,6 +127,18 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
     // Mandatory empty constructor
     public DirectionDetailFragment() {}
+
+    public static DirectionDetailFragment newInstance(ArrayList<Step> stepsList) {
+
+        DirectionDetailFragment videoFragment = new DirectionDetailFragment();
+
+        Bundle arguments = new Bundle();
+        //arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
+        arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepsList);
+        videoFragment.setArguments(arguments);
+
+        return videoFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -163,6 +181,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
                 mShortDescription.setText(mDirections.getShortDescription());
                 mLongDescription.setText(mDirections.getDescription());
                 mVideoUrl = mDirections.getVideoURL();
+
+                //mVideoUrl = (mDirectionList.get(mDirectionNumber).getVideoURL());
             }
             Log.d(LOG_TAG, "videoUrl: " + mVideoUrl);
 
@@ -171,6 +191,21 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         mPlayerView.setControllerVisibilityListener(this);
         mPlayerView.requestFocus();
 
+
+        // TODO: Hide the Button previous if it's the first Direction from the list
+        if (mDirectionNumber == 0) {
+            mPreviousStep.setVisibility(View.INVISIBLE);
+        }
+
+
+
+        mPreviousStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return rootView;
     }
 
@@ -178,6 +213,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
+        // Set appropriate behaviour for Landscape and Portrait orientation for the ViewPlayer
+        // used guidance from the following StackOverflow post: https://stackoverflow.com/a/46736838/8132331
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // Hide System UI components
             hideSystemUi();
@@ -215,6 +252,24 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+    }
+
+    /**
+     * Setter method for keeping track of the list of Directions(Steps) this Fragment can display
+     *
+     * @param directions is the list of Directions being displayed
+     */
+    public void setDirection(ArrayList<Step> directions) {
+        mDirectionList = directions;
+    }
+
+    /**
+     * Setter method for keeping track of the Direction number in the list is currently being displayed
+     *
+     * @param position is the integer of the list that is being displayed
+     */
+    public void setPosition(int position) {
+        mDirectionNumber = position;
     }
 
     @Override

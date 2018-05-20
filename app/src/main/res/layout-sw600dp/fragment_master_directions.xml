@@ -44,28 +44,15 @@
         android:layout_height="match_parent" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/two_pane_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-            android:id="@+id/player_view"
+        <FrameLayout
+            android:id="@+id/direction_video_container"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp">
-
-            <TextView
-                android:id="@+id/direction_description_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Description of the Directions here" />
-
-        </android.support.v7.widget.CardView>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

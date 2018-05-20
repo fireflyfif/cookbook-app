@@ -40,6 +40,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
@@ -79,6 +80,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
     RecyclerView mDirectionsRv;
     @BindView(R.id.directions_card_view)
     CardView mDirectionsCard;
+
 
 
     // Mandatory empty constructor
@@ -121,6 +123,16 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
             mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
 
             loadDirections();
+
+            // Check if the device is tablet so that the two pane layout is visible
+            if (getActivity().findViewById(R.id.two_pane_layout) != null) {
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                DirectionDetailFragment videoFragment = DirectionDetailFragment.newInstance(mDirectionsList);
+
+
+            }
         }
 
         return rootView;
@@ -156,6 +168,9 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
 
             // Handle two pane case
             DirectionDetailFragment detailFragment = new DirectionDetailFragment();
+
+//            detailFragment.getActivity().getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.)
 
         }
 
