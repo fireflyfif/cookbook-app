@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
@@ -48,13 +48,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.cookbook.R;
-import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.model.Step;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -79,7 +78,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -90,7 +88,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     private static final String LOG_TAG = DirectionDetailFragment.class.getSimpleName();
 
     // Saved instance state keys
-    private static final String RECIPE_PARCEL_KEY = "recipe_key";
+    private static final String CURRENT_POSITION_KEY = "current_position";
     private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
     private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
     private static final String KEY_POSITION = "position";
@@ -104,6 +102,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     private Step mDirections;
     private ArrayList<Step> mDirectionList;
     private int mDirectionNumber;
+    private int mPosition;
 
     @BindView(R.id.direction_description_tv)
     TextView mLongDescription;
@@ -114,9 +113,9 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     @BindView(R.id.description_card_view)
     CardView mDescriptionCardView;
     @BindView(R.id.button_previous)
-    Button mPreviousStep;
+    ImageButton mPreviousStep;
     @BindView(R.id.button_next)
-    Button mNextStep;
+    ImageButton mNextStep;
 
     // Media Player Views
     @BindView(R.id.player_view)
@@ -128,12 +127,12 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     // Mandatory empty constructor
     public DirectionDetailFragment() {}
 
-    public static DirectionDetailFragment newInstance(ArrayList<Step> stepsList) {
+    public static DirectionDetailFragment newInstance(ArrayList<Step> stepsList, int position) {
 
         DirectionDetailFragment videoFragment = new DirectionDetailFragment();
 
         Bundle arguments = new Bundle();
-        //arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
+        arguments.putInt(CURRENT_POSITION_KEY, position);
         arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepsList);
         videoFragment.setArguments(arguments);
 
@@ -149,6 +148,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
             mPlaybackPosition = savedInstanceState.getLong(KEY_POSITION);
             mCurrentWindow = savedInstanceState.getInt(KEY_WINDOW);
             mPlayWhenReady = savedInstanceState.getBoolean(KEY_PLAY_WHEN_READY);
+            mPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
         }
     }
 
@@ -162,6 +162,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         outState.putLong(KEY_POSITION, mPlaybackPosition);
         outState.putInt(KEY_WINDOW, mCurrentWindow);
         outState.putBoolean(KEY_PLAY_WHEN_READY, mPlayWhenReady);
+        outState.putInt(CURRENT_POSITION_KEY, mPosition);
     }
 
     @Nullable
@@ -176,6 +177,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
             Bundle bundle = getActivity().getIntent().getExtras();
             mDirectionList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
             mDirections = bundle.getParcelable(DIRECTION_CURRENT_KEY);
+            mPosition = bundle.getInt(CURRENT_POSITION_KEY);
 
             if (mDirections != null) {
                 mShortDescription.setText(mDirections.getShortDescription());
@@ -191,20 +193,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         mPlayerView.setControllerVisibilityListener(this);
         mPlayerView.requestFocus();
 
-
-        // TODO: Hide the Button previous if it's the first Direction from the list
-        if (mDirectionNumber == 0) {
-            mPreviousStep.setVisibility(View.INVISIBLE);
-        }
-
-
-
-        mPreviousStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         return rootView;
     }
@@ -234,7 +222,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mPlayerView.getLayoutParams();
             params.width = params.MATCH_PARENT;
-            // The size here is in pixels, so in order to have 300dp for xhdpi screens
+            // The size here is in pixels, so in order to have 300dp for xhdpi screens we set to 600px
             params.height = 600;
             mPlayerView.setLayoutParams(params);
         }
@@ -269,7 +257,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
      * @param position is the integer of the list that is being displayed
      */
     public void setPosition(int position) {
-        mDirectionNumber = position;
+        mPosition = position;
     }
 
     @Override

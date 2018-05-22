@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,21 +24,21 @@
         </activity>
 
         <activity
-            android:name=".ui.RecipeDetailsActivity"
-            android:parentActivityName=".ui.MainActivity">
+            android:name=".ui.activities.RecipeDetailsActivity"
+            android:parentActivityName=".ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity"/>
+                android:value=".ui.activities.MainActivity"/>
         </activity>
 
         <!-- Saving the state of the media position upon configuration changes  -->
-        <activity android:name=".ui.DirectionDetailActivity"
-            android:parentActivityName=".ui.RecipeDetailsActivity"
+        <activity android:name=".ui.activities.DirectionDetailActivity"
+            android:parentActivityName=".ui.activities.RecipeDetailsActivity"
             android:launchMode="singleTop"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.RecipeDetailsActivity"/>
+                android:value=".ui.activities.RecipeDetailsActivity"/>
         </activity>
 
     </application>

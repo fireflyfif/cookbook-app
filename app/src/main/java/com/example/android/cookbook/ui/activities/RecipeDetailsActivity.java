@@ -32,10 +32,9 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.activities;
 
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +52,8 @@ import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
 import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.model.Step;
+import com.example.android.cookbook.ui.fragments.DirectionsMasterFragment;
+import com.example.android.cookbook.ui.fragments.IngredientsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

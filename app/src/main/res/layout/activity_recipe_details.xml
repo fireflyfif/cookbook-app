@@ -43,7 +43,7 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.RecipeDetailsActivity">
+    tools:context=".ui.activities.RecipeDetailsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

@@ -32,13 +32,11 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,13 +50,12 @@ import android.widget.TextView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
-import com.example.android.cookbook.model.JSONResponse;
 import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.remote.MainApplication;
+import com.example.android.cookbook.ui.adapters.MasterRecipesAdapter;
+import com.example.android.cookbook.ui.activities.RecipeDetailsActivity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;

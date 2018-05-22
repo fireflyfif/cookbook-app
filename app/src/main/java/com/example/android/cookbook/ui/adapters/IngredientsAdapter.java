@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -44,9 +44,7 @@ import android.widget.TextView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
-import com.example.android.cookbook.model.RecipesResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder> {

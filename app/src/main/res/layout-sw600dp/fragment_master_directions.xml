@@ -39,7 +39,7 @@
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/master_directions_container"
-        android:name="com.example.android.cookbook.ui.DirectionsMasterFragment"
+        android:name="com.example.android.cookbook.ui.fragments.DirectionsMasterFragment"
         android:layout_width="400dp"
         android:layout_height="match_parent" />
 

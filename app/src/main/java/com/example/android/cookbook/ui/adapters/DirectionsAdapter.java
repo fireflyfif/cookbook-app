@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -48,7 +48,6 @@ import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Step;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

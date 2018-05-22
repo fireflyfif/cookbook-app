@@ -32,14 +32,12 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,11 +45,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.android.cookbook.R;
+import com.example.android.cookbook.model.Ingredient;
 import com.example.android.cookbook.model.RecipesResponse;
-import com.example.android.cookbook.model.Step;
+import com.example.android.cookbook.ui.adapters.IngredientsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,40 +57,51 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DirectionsMasterFragment extends Fragment {
+public class IngredientsFragment extends Fragment {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
-    private static final String DIRECTION_PARCEL_KEY = "direction_key";
-
+    private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
 
     private static RecipesResponse sRecipes;
-    private ArrayList<Step> mDirectionsList;
+    private static Ingredient sIngredient;
+    private List<RecipesResponse> mRecipesList;
+    private List<Ingredient> mIngredientsList;
+    // private ArrayList<Ingredient> mIngredientsArrayList;
+    private IngredientsAdapter mIngredientsAdapter;
 
-    @BindView(R.id.directions_rv)
-    RecyclerView mDirectionsRv;
-    @BindView(R.id.directions_card_view)
-    CardView mDirectionsCard;
+    @BindView(R.id.ingredients_rv)
+    RecyclerView mIngredientsRv;
+    @BindView(R.id.ingredients_card_view)
+    CardView mIngredientCardView;
 
-    // Mandatory empty constructor
-    public DirectionsMasterFragment() { }
-
-    public static DirectionsMasterFragment newInstance(RecipesResponse recipes, ArrayList<Step> stepsList) {
-        DirectionsMasterFragment directionsFragment = new DirectionsMasterFragment();
+    /**
+     * New Instance constructor for creating Fragment with arguments
+     *
+     * Followed example from Codepath: https://guides.codepath.com/android/viewpager-with-fragmentpageradapter
+     *
+     * @param recipes
+     * @return
+     */
+    public static IngredientsFragment newInstance(RecipesResponse recipes, ArrayList<Ingredient> ingredientsList) {
+        IngredientsFragment ingredientsFragment = new IngredientsFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
-        arguments.putParcelableArrayList(DIRECTION_PARCEL_KEY, stepsList);
-        directionsFragment.setArguments(arguments);
+        arguments.putParcelableArrayList(INGREDIENT_PARCEL_KEY, ingredientsList);
+        ingredientsFragment.setArguments(arguments);
 
-        return directionsFragment;
+        return ingredientsFragment;
     }
 
+    public IngredientsFragment() {}
+
+    // Store instance variables based on arguments passed
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
             sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
-            mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_PARCEL_KEY);
+            mIngredientsList = getArguments().getParcelableArrayList(INGREDIENT_PARCEL_KEY);
         }
     }
 
@@ -100,19 +109,45 @@ public class DirectionsMasterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_master_directions, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_ingredients, container, false);
 
         ButterKnife.bind(this, rootView);
 
-        if (getActivity().getIntent().getExtras() != null) {
-            Bundle bundle = getActivity().getIntent().getExtras();
-
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if (bundle != null) {
             sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
-            mDirectionsList = bundle.getParcelableArrayList(DIRECTION_PARCEL_KEY);
+            mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
 
-            mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
+            loadIngredients(sRecipes);
         }
 
         return rootView;
+    }
+
+    private void loadIngredients(RecipesResponse recipes) {
+
+        getActivity().setTitle(recipes.getName());
+        // mRecipesList = new ArrayList<>();
+        mIngredientsList = recipes.getIngredients();
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mIngredientsRv.setLayoutManager(layoutManager);
+
+        // Add divider between each item in the RecyclerView,
+        // help from this SO post: https://stackoverflow.com/a/40217754/8132331
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                mIngredientsRv.getContext(),
+                layoutManager.getOrientation());
+
+        if (mIngredientsAdapter == null) {
+            mIngredientsAdapter = new IngredientsAdapter(getContext(), mIngredientsList);
+            mIngredientsRv.setAdapter(mIngredientsAdapter);
+            mIngredientsRv.setHasFixedSize(true);
+            mIngredientsRv.addItemDecoration(dividerItemDecoration);
+
+        } else {
+            mIngredientsAdapter.setIngredientsData(mIngredientsList);
+            mIngredientsAdapter.notifyDataSetChanged();
+        }
     }
 }

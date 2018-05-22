@@ -32,16 +32,13 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,9 +51,10 @@ import android.widget.Toast;
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.model.Step;
+import com.example.android.cookbook.ui.adapters.DirectionsAdapter;
+import com.example.android.cookbook.ui.activities.DirectionDetailActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,6 +67,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
     private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
+    private static final String CURRENT_POSITION_KEY = "current_position";
 
     private static RecipesResponse sRecipes;
     private static Step sDirections;
@@ -124,15 +123,14 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
 
             loadDirections();
 
-            // Check if the device is tablet so that the two pane layout is visible
+           /* // TODO: Check if the device is tablet so that the two pane layout is visible
             if (getActivity().findViewById(R.id.two_pane_layout) != null) {
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
                 DirectionDetailFragment videoFragment = DirectionDetailFragment.newInstance(mDirectionsList);
 
-
-            }
+            }*/
         }
 
         return rootView;
@@ -166,7 +164,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
 
         if (mTwoPane) {
 
-            // Handle two pane case
+            // TODO: Handle two pane case
             DirectionDetailFragment detailFragment = new DirectionDetailFragment();
 
 //            detailFragment.getActivity().getSupportFragmentManager().beginTransaction()
@@ -179,6 +177,8 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
         //arguments.putParcelable(RECIPE_PARCEL_KEY, sRecipes);
         arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepList);
         arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
+        // TODO: How to put the current clicked Direction in this Bundle
+        //arguments.putInt(CURRENT_POSITION_KEY)
 
         Intent intent = new Intent(getActivity(), DirectionDetailActivity.class);
         intent.putExtras(arguments);

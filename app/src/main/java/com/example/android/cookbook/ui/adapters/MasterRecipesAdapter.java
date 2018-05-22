@@ -32,7 +32,7 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook.ui;
+package com.example.android.cookbook.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
