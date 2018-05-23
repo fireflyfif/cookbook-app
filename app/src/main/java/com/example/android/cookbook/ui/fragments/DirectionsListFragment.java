@@ -112,6 +112,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
 
         ButterKnife.bind(this, rootView);
 
+        // Taking the Intent from previous Activity only if the DirectionsMasterFragment exists
         if (getActivity().getIntent().getExtras() != null) {
             Bundle bundle = getActivity().getIntent().getExtras();
 
@@ -159,7 +160,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
 
     @Override
     public void onStepClick(Step step, ArrayList<Step> stepList) {
-        Toast.makeText(getContext(), "Clicked Step " + step, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Clicked step: " + step, Toast.LENGTH_SHORT).show();
 
         if (mTwoPane) {
 
@@ -175,8 +176,6 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
         Bundle arguments = new Bundle();
         arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepList);
         arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
-        // TODO: How to put the current clicked Direction in this Bundle
-        //arguments.putInt(CURRENT_POSITION_KEY)
 
         Intent intent = new Intent(getActivity(), DirectionDetailActivity.class);
         intent.putExtras(arguments);

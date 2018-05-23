@@ -126,7 +126,8 @@ public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.Di
 
         @Override
         public void onClick(View v) {
-            Step currentStep = mDirectionsList.get(getAdapterPosition());
+            int clickedPosition = getAdapterPosition();
+            Step currentStep = mDirectionsList.get(clickedPosition);
             mCallback.onStepClick(currentStep, mDirectionsList);
         }
     }

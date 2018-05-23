@@ -113,12 +113,14 @@ public class IngredientsFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
 
-        Bundle bundle = getActivity().getIntent().getExtras();
-        if (bundle != null) {
-            sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
-            mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
+        if (getActivity().getIntent() != null) {
+            Bundle bundle = getActivity().getIntent().getExtras();
+            if (bundle != null) {
+                sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
+                mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
 
-            loadIngredients(sRecipes);
+                loadIngredients(sRecipes);
+            }
         }
 
         return rootView;

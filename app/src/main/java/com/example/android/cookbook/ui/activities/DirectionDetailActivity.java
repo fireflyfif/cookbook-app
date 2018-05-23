@@ -66,7 +66,7 @@ public class DirectionDetailActivity extends AppCompatActivity {
     PagerTitleStrip mPagerTitleStrip;
 
     private ArrayList<Step> mDirectionsList;
-    private Step mDirection;
+    private static Step sDirection;
     private int mPosition;
 
     @Override
@@ -79,21 +79,21 @@ public class DirectionDetailActivity extends AppCompatActivity {
         // TODO: Set the Toolbar first
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (getIntent() != null) {
-            Intent intent = getIntent();
-            mDirectionsList = intent.getParcelableArrayListExtra(DIRECTION_LIST_PARCEL_KEY);
-            mDirection = intent.getParcelableExtra(DIRECTION_CURRENT_KEY);
+        if (getIntent().getExtras() != null) {
 
-            if (mDirection != null) {
-                mPosition = mDirection.getId();
+            Bundle bundle = getIntent().getExtras();
 
-                // TODO: Issue!!! The ViewPager doesn't update when is sliding
-                DirectionsPagerAdapter adapter = new DirectionsPagerAdapter(
-                        getSupportFragmentManager(), mDirectionsList, mPosition);
+            mDirectionsList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
+            Step direction = bundle.getParcelable(DIRECTION_CURRENT_KEY);
 
-                mDirectionsViewPager.setAdapter(adapter);
+            // This works now when it's a local variable, but before as mPosition didn't work!!!
+            int position = direction.getId();
 
-            }
+            DirectionsPagerAdapter adapter = new DirectionsPagerAdapter(
+                    getSupportFragmentManager(), mDirectionsList, position);
+
+            mDirectionsViewPager.setAdapter(adapter);
+
         }
     }
 
@@ -104,8 +104,7 @@ public class DirectionDetailActivity extends AppCompatActivity {
     static class DirectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         private ArrayList<Step> mDirectionsList;
-        //private Step mDirection;
-        private int mCurrentDirection;
+        private int mCurrentDirection; // this shows the correct position
 
         // Default constructor
         public DirectionsPagerAdapter(FragmentManager fm, ArrayList<Step> directionList, int position) {
@@ -117,22 +116,11 @@ public class DirectionDetailActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
 
-//            Bundle bundle = new Bundle();
-//            bundle.putInt(CURRENT_POSITION_KEY, position);
-//            bundle.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, mDirectionsList);
-
+            // This position is always 0!!!
             DirectionDetailFragment videoFragment = DirectionDetailFragment
                     .newInstance(mDirectionsList, position);
 
-            //videoFragment.setArguments(bundle);
-
             return videoFragment;
-        }
-
-        // Supposed to update the view with new Steps/Directions but it doesn't work
-        @Override
-        public int getItemPosition(@NonNull Object object) {
-            return POSITION_NONE;
         }
 
         @Override

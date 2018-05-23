@@ -88,7 +88,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     private static final String LOG_TAG = DirectionDetailFragment.class.getSimpleName();
 
     // Saved instance state keys
-    private static final String CURRENT_POSITION_KEY = "current_position";
+    private static final String CLICKED_KEY = "clicked_position";
     private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
     private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
     private static final String KEY_POSITION = "position";
@@ -132,19 +132,12 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         DirectionDetailFragment videoFragment = new DirectionDetailFragment();
 
         Bundle arguments = new Bundle();
-        arguments.putInt(CURRENT_POSITION_KEY, position);
+        arguments.putInt(CLICKED_KEY, position);
         arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepsList);
         videoFragment.setArguments(arguments);
 
         return videoFragment;
     }
-
-    /*private void readBundle(Bundle bundle) {
-        if (bundle != null) {
-            mDirectionList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
-            mPosition = bundle.getInt(CURRENT_POSITION_KEY);
-        }
-    }*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -152,7 +145,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
         if (getArguments() != null) {
             mDirectionList = getArguments().getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
-            mPosition = getArguments().getInt(CURRENT_POSITION_KEY);
+            mPosition = getArguments().getInt(CLICKED_KEY);
         }
 
         if (savedInstanceState != null) {
@@ -175,7 +168,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         outState.putLong(KEY_POSITION, mPlaybackPosition);
         outState.putInt(KEY_WINDOW, mCurrentWindow);
         outState.putBoolean(KEY_PLAY_WHEN_READY, mPlayWhenReady);
-        outState.putInt(CURRENT_POSITION_KEY, mPosition);
+        outState.putInt(CLICKED_KEY, mPosition);
     }
 
     @Nullable
@@ -186,8 +179,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
         ButterKnife.bind(this, rootView);
 
-//        Bundle arguments = getArguments();
-//        readBundle(arguments);
 
         mDirections = mDirectionList.get(mPosition);
         if (mDirections != null) {
