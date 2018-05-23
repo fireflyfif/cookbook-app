@@ -34,6 +34,7 @@
 
 package com.example.android.cookbook.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -78,10 +79,10 @@ public class DirectionDetailActivity extends AppCompatActivity {
         // TODO: Set the Toolbar first
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (getIntent().getExtras() != null) {
-            Bundle bundle = getIntent().getExtras();
-            mDirectionsList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
-            mDirection = bundle.getParcelable(DIRECTION_CURRENT_KEY);
+        if (getIntent() != null) {
+            Intent intent = getIntent();
+            mDirectionsList = intent.getParcelableArrayListExtra(DIRECTION_LIST_PARCEL_KEY);
+            mDirection = intent.getParcelableExtra(DIRECTION_CURRENT_KEY);
 
             if (mDirection != null) {
                 mPosition = mDirection.getId();
@@ -103,24 +104,27 @@ public class DirectionDetailActivity extends AppCompatActivity {
     static class DirectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         private ArrayList<Step> mDirectionsList;
+        //private Step mDirection;
         private int mCurrentDirection;
 
         // Default constructor
-        public DirectionsPagerAdapter(FragmentManager fm, ArrayList<Step> directionsList, int position) {
+        public DirectionsPagerAdapter(FragmentManager fm, ArrayList<Step> directionList, int position) {
             super(fm);
-            mDirectionsList = directionsList;
+            mDirectionsList = directionList;
             mCurrentDirection = position;
         }
 
         @Override
         public Fragment getItem(int position) {
 
-            DirectionDetailFragment videoFragment = new DirectionDetailFragment();
+//            Bundle bundle = new Bundle();
+//            bundle.putInt(CURRENT_POSITION_KEY, position);
+//            bundle.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, mDirectionsList);
 
-            Bundle bundle = new Bundle();
-            bundle.putInt(CURRENT_POSITION_KEY, position + 1);
+            DirectionDetailFragment videoFragment = DirectionDetailFragment
+                    .newInstance(mDirectionsList, position);
 
-            videoFragment.setArguments(bundle);
+            //videoFragment.setArguments(bundle);
 
             return videoFragment;
         }

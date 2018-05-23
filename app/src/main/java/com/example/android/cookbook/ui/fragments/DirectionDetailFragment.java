@@ -139,16 +139,29 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         return videoFragment;
     }
 
+    /*private void readBundle(Bundle bundle) {
+        if (bundle != null) {
+            mDirectionList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
+            mPosition = bundle.getInt(CURRENT_POSITION_KEY);
+        }
+    }*/
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (getArguments() != null) {
+            mDirectionList = getArguments().getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
+            mPosition = getArguments().getInt(CURRENT_POSITION_KEY);
+        }
+
         if (savedInstanceState != null) {
-            mDirections = savedInstanceState.getParcelable(DIRECTION_CURRENT_KEY);
             mPlaybackPosition = savedInstanceState.getLong(KEY_POSITION);
             mCurrentWindow = savedInstanceState.getInt(KEY_WINDOW);
             mPlayWhenReady = savedInstanceState.getBoolean(KEY_PLAY_WHEN_READY);
-            mPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
+
+            // mDirections = savedInstanceState.getParcelable(DIRECTION_CURRENT_KEY);
+            // mPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
         }
     }
 
@@ -158,7 +171,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
         updateStartPosition();
 
-        outState.putParcelable(DIRECTION_CURRENT_KEY, mDirections);
+        //outState.putParcelable(DIRECTION_CURRENT_KEY, mDirections);
         outState.putLong(KEY_POSITION, mPlaybackPosition);
         outState.putInt(KEY_WINDOW, mCurrentWindow);
         outState.putBoolean(KEY_PLAY_WHEN_READY, mPlayWhenReady);
@@ -173,7 +186,20 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
         ButterKnife.bind(this, rootView);
 
-        if (getActivity().getIntent().getExtras() != null) {
+//        Bundle arguments = getArguments();
+//        readBundle(arguments);
+
+        mDirections = mDirectionList.get(mPosition);
+        if (mDirections != null) {
+            mShortDescription.setText(mDirections.getShortDescription());
+            mLongDescription.setText(mDirections.getDescription());
+            mVideoUrl = mDirections.getVideoURL();
+
+            //mVideoUrl = (mDirectionList.get(mDirectionNumber).getVideoURL());
+        }
+        Log.d(LOG_TAG, "videoUrl: " + mVideoUrl);
+
+        /*if (getActivity().getIntent().getExtras() != null) {
             Bundle bundle = getActivity().getIntent().getExtras();
             mDirectionList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
             mDirections = bundle.getParcelable(DIRECTION_CURRENT_KEY);
@@ -188,7 +214,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
             }
             Log.d(LOG_TAG, "videoUrl: " + mVideoUrl);
 
-        }
+        }*/
 
         mPlayerView.setControllerVisibilityListener(this);
         mPlayerView.requestFocus();

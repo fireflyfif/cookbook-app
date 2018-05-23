@@ -81,7 +81,6 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
     CardView mDirectionsCard;
 
 
-
     // Mandatory empty constructor
     public DirectionsListFragment() {}
 
@@ -174,7 +173,6 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
 
         // Start new Activity via Intent with arguments
         Bundle arguments = new Bundle();
-        //arguments.putParcelable(RECIPE_PARCEL_KEY, sRecipes);
         arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepList);
         arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
         // TODO: How to put the current clicked Direction in this Bundle

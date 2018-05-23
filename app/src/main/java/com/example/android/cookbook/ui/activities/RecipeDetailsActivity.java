@@ -98,20 +98,19 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        setupViewPager(viewPager);
+        if (viewPager != null) {
+            setupViewPager(viewPager);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tabs.setupWithViewPager(viewPager);
 
-        if (getIntent().getExtras().get(RECIPE_PARCEL_KEY) != null) {
+        if (getIntent().getExtras() != null) {
 
             Bundle bundle = getIntent().getExtras();
             sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
-
-            if (bundle.get(INGREDIENT_PARCEL_KEY) != null) {
-                mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
-                mIngredientsList = sRecipes.getIngredients();
-            }
+            mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
+            mIngredientsList = sRecipes.getIngredients();
 
             //recipeTitle.setText(sRecipes.getName());
             servingsTextView.setText(String.valueOf(sRecipes.getServings()));

@@ -53,10 +53,16 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Master Fragment that will hold the DirectionListFragment
+ *
+ * TODO: This Fragment is only needed if it's going to hold the Master Detail Flow,
+ * otherwise - must be deleted!!
+ */
 public class DirectionsMasterFragment extends Fragment {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
-    private static final String DIRECTION_PARCEL_KEY = "direction_key";
+    private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
 
 
     private static RecipesResponse sRecipes;
@@ -71,14 +77,17 @@ public class DirectionsMasterFragment extends Fragment {
     public DirectionsMasterFragment() { }
 
     public static DirectionsMasterFragment newInstance(RecipesResponse recipes, ArrayList<Step> stepsList) {
-        DirectionsMasterFragment directionsFragment = new DirectionsMasterFragment();
+
         Bundle arguments = new Bundle();
         arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
-        arguments.putParcelableArrayList(DIRECTION_PARCEL_KEY, stepsList);
+        arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepsList);
+
+        DirectionsMasterFragment directionsFragment = new DirectionsMasterFragment();
         directionsFragment.setArguments(arguments);
 
         return directionsFragment;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +95,7 @@ public class DirectionsMasterFragment extends Fragment {
 
         if (getArguments() != null) {
             sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
-            mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_PARCEL_KEY);
+            mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
         }
     }
 
@@ -97,15 +106,6 @@ public class DirectionsMasterFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_master_directions, container, false);
 
         ButterKnife.bind(this, rootView);
-
-        if (getActivity().getIntent().getExtras() != null) {
-            Bundle bundle = getActivity().getIntent().getExtras();
-
-            sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
-            mDirectionsList = bundle.getParcelableArrayList(DIRECTION_PARCEL_KEY);
-
-            mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
-        }
 
         return rootView;
     }
