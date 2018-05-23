@@ -93,6 +93,7 @@ public class DirectionDetailActivity extends AppCompatActivity {
                     getSupportFragmentManager(), mDirectionsList, position);
 
             mDirectionsViewPager.setAdapter(adapter);
+            mDirectionsViewPager.setCurrentItem(position);
 
         }
     }
