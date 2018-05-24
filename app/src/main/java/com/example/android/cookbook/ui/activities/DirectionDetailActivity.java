@@ -44,6 +44,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Step;
@@ -56,7 +59,8 @@ import butterknife.ButterKnife;
 
 public class DirectionDetailActivity extends AppCompatActivity {
 
-    private static final String CURRENT_POSITION_KEY = "current_position";
+    private static final String LOG_TAG = DirectionDetailActivity.class.getSimpleName();
+
     private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
     private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
 
@@ -66,6 +70,7 @@ public class DirectionDetailActivity extends AppCompatActivity {
     PagerTitleStrip mPagerTitleStrip;
 
     private ArrayList<Step> mDirectionsList;
+    private DirectionsPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,12 +92,29 @@ public class DirectionDetailActivity extends AppCompatActivity {
             // Get the position by getting the Id of the current Step
             int position = direction.getId();
 
-            DirectionsPagerAdapter adapter = new DirectionsPagerAdapter(
+            mAdapter = new DirectionsPagerAdapter(
                     getSupportFragmentManager(), mDirectionsList, position);
 
-            mDirectionsViewPager.setAdapter(adapter);
+            mDirectionsViewPager.setAdapter(mAdapter);
             // Set the current Item to the position of the ViewPager
             mDirectionsViewPager.setCurrentItem(position);
+
+            mDirectionsViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
 
         }
     }
@@ -105,12 +127,14 @@ public class DirectionDetailActivity extends AppCompatActivity {
 
         private ArrayList<Step> mDirectionsList;
         private int mCurrentDirection;
+        //private OnItemSetListener mListener;
 
         // Default constructor
         public DirectionsPagerAdapter(FragmentManager fm, ArrayList<Step> directionList, int position) {
             super(fm);
             mDirectionsList = directionList;
             mCurrentDirection = position;
+            //mListener = listener;
         }
 
         @Override
@@ -123,6 +147,13 @@ public class DirectionDetailActivity extends AppCompatActivity {
         public int getCount() {
 
             return mDirectionsList.size();
+        }
+
+        // Method to track down when the item is being destroyed
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+            Log.i(LOG_TAG, "destroyItem() [position: " + position + "]" + " childCount:" + container.getChildCount());
         }
     }
 }

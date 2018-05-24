@@ -313,6 +313,14 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(LOG_TAG, "onDestroy is called");
+
+        releasePlayer();
+    }
+
     private void initializePlayer(Uri mediaUri) {
 
         // Check if the video url is empty
@@ -341,7 +349,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
                         .createMediaSource(mediaUri);
 
                 mExoPlayer.prepare(mediaSource);
-                mExoPlayer.setPlayWhenReady(mPlayWhenReady);
+                // Set the Player to play automatically
+                //mExoPlayer.setPlayWhenReady(mPlayWhenReady);
                 mExoPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
 
             }
