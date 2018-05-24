@@ -47,6 +47,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Step;
@@ -68,6 +70,10 @@ public class DirectionDetailActivity extends AppCompatActivity {
     ViewPager mDirectionsViewPager;
     @BindView(R.id.pager_title_strip)
     PagerTitleStrip mPagerTitleStrip;
+    @BindView(R.id.previous_step)
+    ImageButton previousStep;
+    @BindView(R.id.next_step)
+    ImageButton nextStep;
 
     private ArrayList<Step> mDirectionsList;
     private DirectionsPagerAdapter mAdapter;
@@ -90,32 +96,80 @@ public class DirectionDetailActivity extends AppCompatActivity {
             mDirectionsList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
             Step direction = bundle.getParcelable(DIRECTION_CURRENT_KEY);
             // Get the position by getting the Id of the current Step
-            int position = direction.getId();
+            final int currentPosition = direction.getId();
 
             mAdapter = new DirectionsPagerAdapter(
-                    getSupportFragmentManager(), mDirectionsList, position);
+                    getSupportFragmentManager(), mDirectionsList, currentPosition);
 
             mDirectionsViewPager.setAdapter(mAdapter);
             // Set the current Item to the position of the ViewPager
-            mDirectionsViewPager.setCurrentItem(position);
+            mDirectionsViewPager.setCurrentItem(currentPosition);
 
             mDirectionsViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+                    Log.d(LOG_TAG, "onPageScrolled called");
                 }
 
                 @Override
                 public void onPageSelected(int position) {
 
+                    Log.d(LOG_TAG, "onPageSelected called");
                 }
 
                 @Override
                 public void onPageScrollStateChanged(int state) {
 
+                    Log.d(LOG_TAG, "onPageScrollStateChanged called");
                 }
             });
 
+
+            if (currentPosition == 0) {
+                previousStep.setVisibility(View.INVISIBLE);
+            }
+
+            if (currentPosition == mDirectionsList.size() - 1) {
+                nextStep.setVisibility(View.INVISIBLE);
+            }
+
+            previousStep.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int currentStep = mDirectionsViewPager.getCurrentItem();
+                    if (currentStep > 0) {
+                        currentStep--;
+                        mDirectionsViewPager.setCurrentItem(currentStep);
+                        previousStep.setVisibility(View.VISIBLE);
+
+                    }
+
+                    nextStep.setVisibility(View.VISIBLE);
+
+                    if (currentStep == 0){
+                        mDirectionsViewPager.setCurrentItem(currentStep);
+                        previousStep.setVisibility(View.INVISIBLE);
+                    }
+                }
+            });
+
+            nextStep.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int currentStep = mDirectionsViewPager.getCurrentItem();
+                    if (currentStep < mDirectionsList.size() - 1) {
+                        currentStep++;
+                    }
+                    nextStep.setVisibility(View.VISIBLE);
+                    previousStep.setVisibility(View.VISIBLE);
+                    mDirectionsViewPager.setCurrentItem(currentStep);
+
+                    if (currentStep == mDirectionsList.size() - 1) {
+                        nextStep.setVisibility(View.INVISIBLE);
+                    }
+                }
+            });
         }
     }
 
@@ -149,10 +203,18 @@ public class DirectionDetailActivity extends AppCompatActivity {
             return mDirectionsList.size();
         }
 
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return "Step " + (position + 1);
+        }
+
         // Method to track down when the item is being destroyed
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             super.destroyItem(container, position, object);
+            //container.removeView((LinearLayout) object);
             Log.i(LOG_TAG, "destroyItem() [position: " + position + "]" + " childCount:" + container.getChildCount());
         }
     }

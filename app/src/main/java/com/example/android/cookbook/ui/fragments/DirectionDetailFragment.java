@@ -112,10 +112,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     TextView mShortDescription;
     @BindView(R.id.description_card_view)
     CardView mDescriptionCardView;
-    @BindView(R.id.button_previous)
-    ImageButton mPreviousStep;
-    @BindView(R.id.button_next)
-    ImageButton mNextStep;
+
 
     // Media Player Views
     @BindView(R.id.player_view)
