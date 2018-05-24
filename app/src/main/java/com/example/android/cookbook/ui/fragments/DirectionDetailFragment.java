@@ -171,6 +171,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         outState.putInt(CLICKED_KEY, mPosition);
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -190,22 +192,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         }
         Log.d(LOG_TAG, "videoUrl: " + mVideoUrl);
 
-        /*if (getActivity().getIntent().getExtras() != null) {
-            Bundle bundle = getActivity().getIntent().getExtras();
-            mDirectionList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
-            mDirections = bundle.getParcelable(DIRECTION_CURRENT_KEY);
-            mPosition = bundle.getInt(CURRENT_POSITION_KEY);
-
-            if (mDirections != null) {
-                mShortDescription.setText(mDirections.getShortDescription());
-                mLongDescription.setText(mDirections.getDescription());
-                mVideoUrl = mDirections.getVideoURL();
-
-                //mVideoUrl = (mDirectionList.get(mDirectionNumber).getVideoURL());
-            }
-            Log.d(LOG_TAG, "videoUrl: " + mVideoUrl);
-
-        }*/
 
         mPlayerView.setControllerVisibilityListener(this);
         mPlayerView.requestFocus();
@@ -281,6 +267,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     public void onStart() {
         super.onStart();
 
+        Log.d(LOG_TAG, "onStart is called");
+
         if (Util.SDK_INT > 23) {
             if (mExoPlayer != null) {
                 initializePlayer(Uri.parse(mVideoUrl));
@@ -292,6 +280,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     public void onResume() {
         super.onResume();
 
+        Log.d(LOG_TAG, "onResume is called");
+
         if ((Util.SDK_INT <= 23 || mExoPlayer == null)) {
             initializePlayer(Uri.parse(mVideoUrl));
         }
@@ -300,6 +290,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     @Override
     public void onPause() {
         super.onPause();
+
+        Log.d(LOG_TAG, "onPause is called");
 
         if (Util.SDK_INT <= 23) {
             if (mExoPlayer != null) {
@@ -311,6 +303,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     @Override
     public void onStop() {
         super.onStop();
+
+        Log.d(LOG_TAG, "onStop is called");
 
         if (Util.SDK_INT > 23) {
             if (mExoPlayer != null) {

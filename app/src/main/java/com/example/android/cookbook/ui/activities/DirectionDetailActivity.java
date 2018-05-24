@@ -66,8 +66,6 @@ public class DirectionDetailActivity extends AppCompatActivity {
     PagerTitleStrip mPagerTitleStrip;
 
     private ArrayList<Step> mDirectionsList;
-    private static Step sDirection;
-    private int mPosition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,20 +77,21 @@ public class DirectionDetailActivity extends AppCompatActivity {
         // TODO: Set the Toolbar first
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Get the extra from the Intent
         if (getIntent().getExtras() != null) {
 
             Bundle bundle = getIntent().getExtras();
 
             mDirectionsList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
             Step direction = bundle.getParcelable(DIRECTION_CURRENT_KEY);
-
-            // This works now when it's a local variable, but before as mPosition didn't work!!!
+            // Get the position by getting the Id of the current Step
             int position = direction.getId();
 
             DirectionsPagerAdapter adapter = new DirectionsPagerAdapter(
                     getSupportFragmentManager(), mDirectionsList, position);
 
             mDirectionsViewPager.setAdapter(adapter);
+            // Set the current Item to the position of the ViewPager
             mDirectionsViewPager.setCurrentItem(position);
 
         }
@@ -105,7 +104,7 @@ public class DirectionDetailActivity extends AppCompatActivity {
     static class DirectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         private ArrayList<Step> mDirectionsList;
-        private int mCurrentDirection; // this shows the correct position
+        private int mCurrentDirection;
 
         // Default constructor
         public DirectionsPagerAdapter(FragmentManager fm, ArrayList<Step> directionList, int position) {
@@ -117,11 +116,7 @@ public class DirectionDetailActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
 
-            // This position is always 0!!!
-            DirectionDetailFragment videoFragment = DirectionDetailFragment
-                    .newInstance(mDirectionsList, position);
-
-            return videoFragment;
+            return DirectionDetailFragment.newInstance(mDirectionsList, position);
         }
 
         @Override
