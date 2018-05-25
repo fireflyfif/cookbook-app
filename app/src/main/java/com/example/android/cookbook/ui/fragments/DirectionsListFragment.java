@@ -34,6 +34,7 @@
 
 package com.example.android.cookbook.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -62,12 +63,13 @@ import butterknife.ButterKnife;
 /*
 Dynamic Fragment that displays the list of Steps
  */
-public class DirectionsListFragment extends Fragment implements DirectionsAdapter.StepOnClickHandler {
+public class DirectionsListFragment extends Fragment {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
     private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
     private static final String CURRENT_POSITION_KEY = "current_position";
+    private static final String TWO_PANE_KEY = "two_pane_key";
 
     private static RecipesResponse sRecipes;
     private static Step sDirections;
@@ -80,6 +82,24 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
     @BindView(R.id.directions_card_view)
     CardView mDirectionsCard;
 
+    private StepOnClickHandler mCallback;
+
+    public interface StepOnClickHandler {
+        void onStepClick (Step step, ArrayList<Step> stepList);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // Make sure that the host activity has implemented the callback
+        try {
+            mCallback = (StepOnClickHandler) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
+                    " must implement StepOnClickHandler");
+        }
+    }
 
     // Mandatory empty constructor
     public DirectionsListFragment() {}
@@ -104,6 +124,21 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
         }
     }
 
+    public static Intent clickStepIntent(Context context, Step step, ArrayList<Step> stepList) {
+        // Start new Activity via Intent with arguments
+        Bundle arguments = new Bundle();
+        arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepList);
+        arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
+
+        Intent intent = new Intent(context, DirectionDetailActivity.class);
+        intent.putExtras(arguments);
+        if (context != null) {
+            context.startActivity(intent);
+        }
+
+        return intent;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -111,6 +146,12 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
         View rootView = inflater.inflate(R.layout.fragment_directions_list, container, false);
 
         ButterKnife.bind(this, rootView);
+
+        // Get the boolean value from the underlying Master Fragment {@DirectionsMasterFragment}
+        if (getArguments() != null) {
+            mTwoPane = getArguments().getBoolean(TWO_PANE_KEY);
+        }
+
 
         // Taking the Intent from previous Activity only if the DirectionsMasterFragment exists
         if (getActivity().getIntent().getExtras() != null) {
@@ -148,7 +189,7 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
                 layoutManager.getOrientation());
 
         if (mDirectionsAdapter == null) {
-            mDirectionsAdapter = new DirectionsAdapter(getContext(), mDirectionsList, this);
+            mDirectionsAdapter = new DirectionsAdapter(getContext(), mDirectionsList, mCallback);
             mDirectionsRv.setHasFixedSize(true);
             mDirectionsRv.setAdapter(mDirectionsAdapter);
             mDirectionsRv.addItemDecoration(dividerItemDecoration);
@@ -158,30 +199,30 @@ public class DirectionsListFragment extends Fragment implements DirectionsAdapte
         }
     }
 
-    @Override
+    /*@Override
     public void onStepClick(Step step, ArrayList<Step> stepList) {
         Toast.makeText(getContext(), "Clicked step: " + step, Toast.LENGTH_SHORT).show();
 
         if (mTwoPane) {
-
             // TODO: Handle two pane case
-            DirectionDetailFragment detailFragment = new DirectionDetailFragment();
+            DirectionDetailFragment videoFragment = DirectionDetailFragment.newInstance(stepList, step.getId());
 
-//            detailFragment.getActivity().getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.two_pane_layout, videoFragment)
+                    .commit();
 
+        } else {
+
+            // Start new Activity via Intent with arguments
+            Bundle arguments = new Bundle();
+            arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepList);
+            arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
+
+            Intent intent = new Intent(getActivity(), DirectionDetailActivity.class);
+            intent.putExtras(arguments);
+            if (getActivity() != null) {
+                getActivity().startActivity(intent);
+            }
         }
-
-        // Start new Activity via Intent with arguments
-        Bundle arguments = new Bundle();
-        arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepList);
-        arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
-
-        Intent intent = new Intent(getActivity(), DirectionDetailActivity.class);
-        intent.putExtras(arguments);
-        if (getActivity() != null) {
-            getActivity().startActivity(intent);
-        }
-
-    }
+    }*/
 }

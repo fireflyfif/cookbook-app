@@ -46,6 +46,7 @@ import android.widget.TextView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Step;
+import com.example.android.cookbook.ui.fragments.DirectionsListFragment;
 
 import java.util.ArrayList;
 
@@ -57,14 +58,11 @@ public class DirectionsAdapter extends RecyclerView.Adapter<DirectionsAdapter.Di
     private ArrayList<Step> mDirectionsList;
     private Context mContext;
 
-    private StepOnClickHandler mCallback;
-
-    public interface StepOnClickHandler {
-        void onStepClick (Step step, ArrayList<Step> stepList);
-    }
+    private DirectionsListFragment.StepOnClickHandler mCallback;
 
 
-    public DirectionsAdapter(Context context, ArrayList<Step> directionsList, StepOnClickHandler callback) {
+    public DirectionsAdapter(Context context, ArrayList<Step> directionsList,
+                             DirectionsListFragment.StepOnClickHandler callback) {
         mContext = context;
         mDirectionsList = directionsList;
         mCallback = callback;

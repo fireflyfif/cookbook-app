@@ -47,12 +47,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
 import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.model.Step;
-import com.example.android.cookbook.ui.fragments.DirectionsMasterFragment;
+import com.example.android.cookbook.ui.fragments.DirectionsListFragment;
 import com.example.android.cookbook.ui.fragments.IngredientsFragment;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ import butterknife.ButterKnife;
  * The XML Layout with the ViewPager is made with the help of this Tutorial by Codelabs:
  * https://codelabs.developers.google.com/codelabs/material-design-style/index.html?index=..%2F..%2Findex#0
  */
-public class RecipeDetailsActivity extends AppCompatActivity {
+public class RecipeDetailsActivity extends AppCompatActivity implements DirectionsListFragment.StepOnClickHandler {
 
     private static final String LOG_TAG = RecipeDetailsActivity.class.getSimpleName();
 
@@ -76,6 +77,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     private static RecipesResponse sRecipes;
     private List<Ingredient> mIngredientsList;
+    private boolean mTwoPane;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -125,8 +127,16 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), sRecipes);
         adapter.addFragment(new IngredientsFragment(), "Ingredients");
-        adapter.addFragment(new DirectionsMasterFragment(), "Directions");
+        adapter.addFragment(new DirectionsListFragment(), "Directions");
         viewPager.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void onStepClick(Step step, ArrayList<Step> stepList) {
+        Toast.makeText(this, "Clicked step: " + step, Toast.LENGTH_SHORT).show();
+
+        DirectionsListFragment.clickStepIntent(this, step, stepList);
     }
 
     /**
@@ -151,12 +161,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 case 0:
                     return IngredientsFragment.newInstance(mRecipes, mIngredientsList);
                 case 1:
-                    return DirectionsMasterFragment.newInstance(mRecipes, mStepsList);
+                    return DirectionsListFragment.newInstance(mRecipes, mStepsList);
                 default:
                     return IngredientsFragment.newInstance(mRecipes, mIngredientsList);
             }
 
-            // return mFragmentLst.get(position);
         }
 
         @Override
