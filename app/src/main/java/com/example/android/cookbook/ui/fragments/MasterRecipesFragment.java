@@ -39,6 +39,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -104,8 +105,16 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
 
         ButterKnife.bind(this, rootView);
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mRecipesRv.setLayoutManager(layoutManager);
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if (isTablet) {
+            final GridLayoutManager gridLayoutManager = new GridLayoutManager(
+                    getActivity(), 3);
+            mRecipesRv.setLayoutManager(gridLayoutManager);
+        } else {
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            mRecipesRv.setLayoutManager(layoutManager);
+        }
+
         mRecipeList = new ArrayList<>();
         mIngredientsList = new ArrayList<>();
 
@@ -116,6 +125,7 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
 
         return rootView;
     }
+
 
     private void loadRecipes() {
 
