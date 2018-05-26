@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ PROJECT LICENSE
   ~
   ~ This project was submitted by Iva Ivanova as part of the Nanodegree at Udacity.
@@ -43,23 +42,27 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.activities.RecipeDetailsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="?android:attr/colorPrimary"
-            app:layout_collapseMode="pin"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="center"
+            app:expandedTitleMarginEnd="@dimen/expanded_title_margin"
+            app:expandedTitleMarginStart="@dimen/expanded_title_margin"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <!--
           Image with two text views within the Toolbar
@@ -71,18 +74,11 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
                 <ImageView
                     android:id="@+id/recipe_image_iv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="120dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/temp"
                     app:layout_collapseMode="parallax" />
 
-                <TextView
-                    android:id="@+id/recipe_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    tools:text="Recipe Name" />
 
                 <TextView
                     android:id="@+id/servings_tv"
@@ -92,18 +88,32 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
                     android:drawableLeft="@drawable/ic_tag_faces_black_24dp"
                     android:drawablePadding="6dp"
                     android:drawableStart="@drawable/ic_tag_faces_black_24dp"
+                    android:drawableTint="@color/colorPrimary"
                     android:gravity="center"
                     android:padding="6dp"
+                    android:textColor="@color/colorPrimary"
                     tools:text="8" />
 
             </FrameLayout>
 
-        </android.support.v7.widget.Toolbar>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorHeight="3dp"
+            app:tabSelectedTextColor="@color/colorAccentDark"
+            app:tabTextColor="@color/colorGray" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -111,6 +121,6 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

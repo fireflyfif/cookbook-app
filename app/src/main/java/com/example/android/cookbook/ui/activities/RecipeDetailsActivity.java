@@ -34,8 +34,11 @@
 
 package com.example.android.cookbook.ui.activities;
 
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -83,6 +86,9 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
     private boolean mTwoPane;
 
     @Nullable
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+    @Nullable
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @Nullable
@@ -91,9 +97,6 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
     @Nullable
     @BindView(R.id.tabs)
     TabLayout tabs;
-    @Nullable
-    @BindView(R.id.recipe_name)
-    TextView recipeTitle;
     @Nullable
     @BindView(R.id.servings_tv)
     TextView servingsTextView;
@@ -105,6 +108,14 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
         setContentView(R.layout.activity_recipe_details);
 
         ButterKnife.bind(this);
+
+        // First set the Action Bar
+        setSupportActionBar(toolbar);
+
+        // Check if there is an Action Bar and then set the Home Up Button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
 
         if (getIntent().getExtras() != null) {
@@ -122,9 +133,16 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
 
             Log.d(LOG_TAG, "Name of the Recipe: " + sRecipes.getName());
 
-            assert recipeTitle != null;
-            recipeTitle.setText(sRecipes.getName());
+            // Set the title of the Recipe on the Collapsing Toolbar
+            if (collapsingToolbar != null) {
+                collapsingToolbar.setTitle(sRecipes.getName());
+            }
 
+            // Set font to the expandable title
+            Typeface font = ResourcesCompat.getFont(this, R.font.dosis_medium);
+            collapsingToolbar.setCollapsedTitleTypeface(font);
+            collapsingToolbar.setExpandedTitleTypeface(font);
+            collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
 
             if (findViewById(R.id.two_pane_layout) != null) {
                 mTwoPane = true;
@@ -154,18 +172,24 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
                             .add(R.id.direction_video_container, videoFragment)
                             .commit();
 
-                } else {
+                }
 
-                    mTwoPane = false;
+            } else {
+                mTwoPane = false;
 
-                    // Set up the ViewPager for a phone layout
-                    setSupportActionBar(toolbar);
-                    if (viewPager != null) {
-                        setupViewPager(viewPager);
-                    }
+                // Set up the ViewPager for a phone layout
 
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                if (viewPager != null) {
+                    setupViewPager(viewPager);
+                }
+
+                if (tabs != null) {
                     tabs.setupWithViewPager(viewPager);
+                }
+
+                // Set the title of the Recipe on the Collapsing Toolbar
+                if (collapsingToolbar != null) {
+                    collapsingToolbar.setTitle(sRecipes.getName());
                 }
             }
         }
@@ -186,7 +210,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
 
     @Override
     public void onStepClick(Step step, ArrayList<Step> stepList) {
-        Toast.makeText(this, "Step " + step.getId(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Step " + step.getId() , Toast.LENGTH_SHORT).show();
 
         if (mTwoPane) {
             DirectionDetailFragment videoFragment = DirectionDetailFragment.newInstance(stepList, step.getId());

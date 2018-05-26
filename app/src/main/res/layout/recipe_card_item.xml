@@ -39,18 +39,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    android:padding="6dp">
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="3dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/recipe_picture_iv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/temp" />
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/temp"
+            app:layout_constraintBottom_toTopOf="@+id/recipe_name_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/recipe_name_tv"
@@ -63,15 +69,16 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@android:color/white"
-            app:fontFamily="sans-serif-smallcaps"
+            android:textColor="@color/colorAccentDark"
+            app:fontFamily="@font/dosis_semibold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/recipe_serving_tv"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.04000002"
+            app:layout_constraintVertical_bias="1.0"
             tools:text="Name of the Recipe" />
 
         <TextView
@@ -83,11 +90,11 @@
             android:drawableLeft="@drawable/ic_tag_faces_black_24dp"
             android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_tag_faces_black_24dp"
-            android:drawableTint="@android:color/white"
-            android:backgroundTint="@android:color/white"
+            android:drawableTint="@color/colorAccent"
+            android:fontFamily="@font/dosis_medium"
             android:gravity="center"
             android:padding="6dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/recipe_name_tv"
             tools:text="8" />
