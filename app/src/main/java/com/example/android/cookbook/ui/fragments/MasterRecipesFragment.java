@@ -127,6 +127,9 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
     }
 
 
+    /**
+     * Method for loading Recipes from the JSON, using Retrofit asynchronously
+     */
     private void loadRecipes() {
 
         MainApplication.sManager.getRecipes(new Callback<List<RecipesResponse>>() {

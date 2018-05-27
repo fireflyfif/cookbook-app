@@ -34,6 +34,8 @@
 
 package com.example.android.cookbook.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,13 +47,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
 import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.ui.adapters.IngredientsAdapter;
+import com.google.gson.Gson;
 
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,6 +67,11 @@ public class IngredientsFragment extends Fragment {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
+
+    // Constants for Shared Preference
+    private static final String PREFERENCE_NAME = "ingredients_prefs";
+    private static final String INGREDIENTS_PREFS = "ingredients_favorite";
+    private static final String RECIPE_NAME_PREFS = "recipe_name_prefs";
 
     private static RecipesResponse sRecipes;
     private static Ingredient sIngredient;
@@ -120,6 +131,9 @@ public class IngredientsFragment extends Fragment {
                 mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
 
                 loadIngredients(sRecipes);
+
+                // Save the ingredients list into SharedPreferences
+                saveIngredients(getContext(), mIngredientsList, sRecipes);
             }
         }
 
@@ -151,5 +165,51 @@ public class IngredientsFragment extends Fragment {
             mIngredientsAdapter.setIngredientsData(mIngredientsList);
             mIngredientsAdapter.notifyDataSetChanged();
         }
+    }
+
+    /**
+     * Method for saving the list of ingredients into SharedPreferences,
+     * using Gson for retrieving it from the JSON
+     *
+     * help resource: http://androidopentutorials.com/android-sharedpreferences-tutorial-and-example/
+     *
+     * @param context
+     * @param ingredientsList
+     */
+    public void saveIngredients(Context context, List<Ingredient> ingredientsList, RecipesResponse recipe) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                PREFERENCE_NAME, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Gson gson = new Gson();
+        String jsonIngredients = gson.toJson(ingredientsList);
+        String jsonRecipeName = gson.toJson(recipe);
+
+        editor.putString(INGREDIENTS_PREFS, jsonIngredients);
+        editor.putString(RECIPE_NAME_PREFS, jsonRecipeName);
+        editor.apply();
+    }
+
+    public ArrayList<Ingredient> getIngredients(Context context) {
+        List<Ingredient> ingredientList;
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                PREFERENCE_NAME, Context.MODE_PRIVATE);
+
+        if (sharedPreferences.contains(INGREDIENTS_PREFS)) {
+            String jsonIngredients = sharedPreferences.getString(INGREDIENTS_PREFS, null);
+            Gson gson = new Gson();
+            Ingredient[] ingredientItems = gson.fromJson(jsonIngredients,
+                    Ingredient[].class);
+
+            ingredientList = Arrays.asList(ingredientItems);
+            ingredientList = new ArrayList<>(ingredientList);
+        } else {
+            return null;
+        }
+
+        return (ArrayList<Ingredient>) ingredientList;
     }
 }

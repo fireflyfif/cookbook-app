@@ -21,6 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".utilities.IngredientsWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
         <activity
             android:name=".ui.activities.RecipeDetailsActivity"
             android:parentActivityName=".ui.activities.MainActivity">

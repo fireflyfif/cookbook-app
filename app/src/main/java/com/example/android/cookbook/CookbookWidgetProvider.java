@@ -34,23 +34,70 @@
 
 package com.example.android.cookbook;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
+
+import com.example.android.cookbook.model.Ingredient;
+import com.example.android.cookbook.ui.activities.MainActivity;
+import com.example.android.cookbook.utilities.IngredientsWidgetService;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class CookbookWidgetProvider extends AppWidgetProvider {
 
+    // Constants for Shared Preference
+    private static final String PREFERENCE_NAME = "ingredients_prefs";
+    private static final String INGREDIENTS_PREFS = "ingredients_favorite";
+    private static final String RECIPE_NAME_PREFS = "recipe_name_prefs";
+
+    //private List<Ingredient> mIngredientsList;
+
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
+        List<Ingredient> ingredientList;
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                PREFERENCE_NAME, Context.MODE_PRIVATE);
+
+        //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        if (sharedPreferences.contains(INGREDIENTS_PREFS)) {
+            String jsonIngredients = sharedPreferences.getString(INGREDIENTS_PREFS, null);
+            Gson gson = new Gson();
+            Ingredient[] ingredientItems = gson.fromJson(jsonIngredients,
+                    Ingredient[].class);
+
+            ingredientList = Arrays.asList(ingredientItems);
+            ingredientList = new ArrayList<>(ingredientList);
+        }
+
+        String recipeName = sharedPreferences.getString(RECIPE_NAME_PREFS, "");
+
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.cookbook_widget_provider);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients_list);
+        views.setTextViewText(R.id.widget_recipe_name, recipeName);
+
+        // Set the IngredientsWidgetService intent to act as the adapter for the ListView
+        Intent intent = new Intent(context, IngredientsWidgetService.class);
+        views.setRemoteAdapter(R.id.appwidget_ingredient_list, intent);
+
+        // TODO: Set the Pending Intent to launch the Activity with the Recipe when clicked
+
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

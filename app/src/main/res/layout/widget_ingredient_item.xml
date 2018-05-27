@@ -33,12 +33,9 @@
   ~ SOFTWARE.
   -->
 
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialKeyguardLayout="@layout/widget_ingredients_list"
-    android:initialLayout="@layout/widget_ingredients_list"
-    android:minHeight="180dp"
-    android:minWidth="180dp"
-    android:previewImage="@drawable/example_appwidget_preview"
-    android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="86400000"
-    android:widgetCategory="home_screen"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+</LinearLayout>
