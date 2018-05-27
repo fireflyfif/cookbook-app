@@ -8,13 +8,12 @@
     <application
         android:name=".remote.MainApplication"
         android:allowBackup="true"
-        android:launchMode="singleTop"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:launchMode="singleTop"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,28 +21,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activities.RecipeDetailsActivity"
             android:parentActivityName=".ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.MainActivity"/>
+                android:value=".ui.activities.MainActivity" />
         </activity>
 
-        <!-- Saving the state of the media position upon configuration changes  -->
-        <activity android:name=".ui.activities.DirectionDetailActivity"
-            android:parentActivityName=".ui.activities.RecipeDetailsActivity"
+        <!-- Saving the state of the media position upon configuration changes -->
+        <activity
+            android:name=".ui.activities.DirectionDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode">
+            android:parentActivityName=".ui.activities.RecipeDetailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.RecipeDetailsActivity"/>
+                android:value=".ui.activities.RecipeDetailsActivity" />
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <receiver android:name=".CookbookWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/cookbook_widget_provider_info" />
+        </receiver>
     </application>
 
 </manifest>

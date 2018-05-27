@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ PROJECT LICENSE
   ~
   ~ This project was submitted by Iva Ivanova as part of the Nanodegree at Udacity.
@@ -35,4 +34,10 @@
 
 <resources>
     <dimen name="expanded_title_margin">16dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

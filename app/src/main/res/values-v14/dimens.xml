@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ PROJECT LICENSE
   ~
@@ -33,10 +34,11 @@
   -->
 
 <resources>
-    <string name="app_name">Cook Book</string>
-    <string name="step_label">Step</string>
-    <string name="no_connectivity_text">An error has occurred. \nPlease check your internet connection.</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">0dp</dimen>
 
 </resources>
