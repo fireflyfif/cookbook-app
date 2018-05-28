@@ -36,14 +36,24 @@ package com.example.android.cookbook.utilities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.example.android.cookbook.CookbookWidgetProvider;
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.android.cookbook.CookbookWidgetProvider.INGREDIENTS_PREFS;
+import static com.example.android.cookbook.CookbookWidgetProvider.PREFERENCE_NAME;
 
 /**
  * Class that is an interface for an adapter between a remote collection view
@@ -61,11 +71,41 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
     @Override
     public void onCreate() {
 
+        Log.d("RemoteAdapter", "onCreate triggered now");
+
+        List<Ingredient> ingredientList;
+
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(
+                PREFERENCE_NAME, Context.MODE_PRIVATE);
+
+
+        if (sharedPreferences.contains(INGREDIENTS_PREFS)) {
+
+
+            String jsonIngredients = sharedPreferences.getString(INGREDIENTS_PREFS, null);
+            Gson gson = new Gson();
+//            Ingredient[] ingredientItems = gson.fromJson(jsonIngredients,
+//                    Ingredient[].class);
+//
+//            ingredientList = Arrays.asList(ingredientItems);
+//            ingredientList = new ArrayList<>(ingredientList);
+
+            Type type = new TypeToken<ArrayList<Ingredient>>(){}.getType();
+            ingredientList = gson.fromJson(jsonIngredients, type);
+
+            if (ingredientList == null) {
+                return;
+            }
+
+            mIngredientsList = ingredientList;
+
+        }
     }
 
     @Override
     public void onDataSetChanged() {
 
+        Log.d("RemoteAdapter", "onDataSetChanged triggered now");
     }
 
     @Override
@@ -84,27 +124,17 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
     @Override
     public RemoteViews getViewAt(int position) {
 
-        Ingredient currentIngredient = mIngredientsList.get(position);
-        long ingredientId = getItemId(position);
-
         RemoteViews views = new RemoteViews(mContext.getPackageName(),
                 R.layout.ingredient_item);
 
-        String ingredientName = currentIngredient.getIngredient();
+        String ingredientName = mIngredientsList.get(position).getIngredient();
         views.setTextViewText(R.id.ingredient_name_tv, ingredientName);
 
-        String ingredientQuantity = String.valueOf(currentIngredient.getQuantity());
+        String ingredientQuantity = String.valueOf(mIngredientsList.get(position).getQuantity());
         views.setTextViewText(R.id.quantity_tv, ingredientQuantity);
 
-        String ingredientMeasure = currentIngredient.getMeasure();
+        String ingredientMeasure = mIngredientsList.get(position).getMeasure();
         views.setTextViewText(R.id.measure_tv, ingredientMeasure);
-
-//        Bundle extras = new Bundle();
-//        extras.putLong("current_ingredient", ingredientId);
-//
-//        Intent intent = new Intent();
-//        intent.putExtras(extras);
-//        views.setOnClickFillInIntent(R.id.ingredient_name_tv, intent);
 
         return views;
     }
@@ -116,7 +146,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override

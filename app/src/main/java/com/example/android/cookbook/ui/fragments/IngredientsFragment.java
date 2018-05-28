@@ -44,6 +44,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class IngredientsFragment extends Fragment {
+
+    private static final String LOG_TAG = IngredientsFragment.class.getSimpleName();
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
@@ -185,31 +188,12 @@ public class IngredientsFragment extends Fragment {
 
         Gson gson = new Gson();
         String jsonIngredients = gson.toJson(ingredientsList);
-        String jsonRecipeName = gson.toJson(recipe);
+        Log.d(LOG_TAG, "Ingredients saved: " + jsonIngredients);
+        //String jsonRecipeObject = gson.toJson(recipe);
+        String recipeName = recipe.getName();
 
         editor.putString(INGREDIENTS_PREFS, jsonIngredients);
-        editor.putString(RECIPE_NAME_PREFS, jsonRecipeName);
+        editor.putString(RECIPE_NAME_PREFS, recipeName);
         editor.apply();
-    }
-
-    public ArrayList<Ingredient> getIngredients(Context context) {
-        List<Ingredient> ingredientList;
-
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                PREFERENCE_NAME, Context.MODE_PRIVATE);
-
-        if (sharedPreferences.contains(INGREDIENTS_PREFS)) {
-            String jsonIngredients = sharedPreferences.getString(INGREDIENTS_PREFS, null);
-            Gson gson = new Gson();
-            Ingredient[] ingredientItems = gson.fromJson(jsonIngredients,
-                    Ingredient[].class);
-
-            ingredientList = Arrays.asList(ingredientItems);
-            ingredientList = new ArrayList<>(ingredientList);
-        } else {
-            return null;
-        }
-
-        return (ArrayList<Ingredient>) ingredientList;
     }
 }
