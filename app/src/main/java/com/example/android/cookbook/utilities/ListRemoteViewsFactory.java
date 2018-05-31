@@ -73,6 +73,13 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
         Log.d("RemoteAdapter", "onCreate triggered now");
 
+    }
+
+    @Override
+    public void onDataSetChanged() {
+
+        Log.d("RemoteAdapter", "onDataSetChanged triggered now");
+
         List<Ingredient> ingredientList;
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(
@@ -103,12 +110,6 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
     }
 
     @Override
-    public void onDataSetChanged() {
-
-        Log.d("RemoteAdapter", "onDataSetChanged triggered now");
-    }
-
-    @Override
     public void onDestroy() {
 
     }
@@ -125,7 +126,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
     public RemoteViews getViewAt(int position) {
 
         RemoteViews views = new RemoteViews(mContext.getPackageName(),
-                R.layout.ingredient_item);
+                R.layout.widget_ingredient_item);
 
         String ingredientName = mIngredientsList.get(position).getIngredient();
         views.setTextViewText(R.id.ingredient_name_tv, ingredientName);

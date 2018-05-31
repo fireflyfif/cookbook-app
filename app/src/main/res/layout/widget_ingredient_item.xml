@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ PROJECT LICENSE
   ~
   ~ This project was submitted by Iva Ivanova as part of the Nanodegree at Udacity.
@@ -34,8 +33,46 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:tint="@color/colorAccent"
+        app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+
+    <TextView
+        android:id="@+id/ingredient_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:fontFamily="@font/dosis_medium"
+        tools:text="Ingredient Name" />
+
+    <TextView
+        android:id="@+id/quantity_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:fontFamily="@font/dosis_semibold"
+        tools:text="1.5" />
+
+    <TextView
+        android:id="@+id/measure_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_margin="8dp"
+        app:fontFamily="@font/dosis_semibold"
+        tools:text="TBSP" />
 
 
 </LinearLayout>
