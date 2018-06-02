@@ -55,6 +55,7 @@ import android.widget.TextView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Step;
+import com.example.android.cookbook.ui.activities.DirectionDetailActivity;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -104,6 +105,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     private int mDirectionNumber;
     private int mPosition;
 
+
     @BindView(R.id.direction_description_tv)
     TextView mLongDescription;
     @BindView(R.id.no_video_iv)
@@ -120,6 +122,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     private SimpleExoPlayer mExoPlayer;
     private NotificationManager mNotificationManager;
     private String mVideoUrl;
+
+    private boolean mVisibleToUser;
 
     // Mandatory empty constructor
     public DirectionDetailFragment() {}
@@ -242,23 +246,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
     }
 
-    /**
-     * Setter method for keeping track of the list of Directions(Steps) this Fragment can display
-     *
-     * @param directions is the list of Directions being displayed
-     */
-    public void setDirection(ArrayList<Step> directions) {
-        mDirectionList = directions;
-    }
-
-    /**
-     * Setter method for keeping track of the Direction number in the list is currently being displayed
-     *
-     * @param position is the integer of the list that is being displayed
-     */
-    public void setPosition(int position) {
-        mPosition = position;
-    }
 
     @Override
     public void onStart() {
@@ -282,6 +269,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         if ((Util.SDK_INT <= 23 || mExoPlayer == null)) {
             initializePlayer(Uri.parse(mVideoUrl));
         }
+
     }
 
     @Override
@@ -319,6 +307,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     }
 
     private void initializePlayer(Uri mediaUri) {
+
+        mVisibleToUser = true;
 
         // Check if the video url is empty
         if (!TextUtils.isEmpty(mVideoUrl)) {
@@ -380,6 +370,8 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
      * Release ExoPlayer
      */
     private void releasePlayer() {
+
+        mVisibleToUser = false;
 
         if (mExoPlayer != null) {
             //mNotificationManager.cancelAll();
@@ -467,4 +459,20 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        mVisibleToUser = isVisibleToUser;
+        if (isVisibleToUser) {
+            Log.d(LOG_TAG, "Visible to the user ");
+
+            if (!TextUtils.isEmpty(mVideoUrl)) {
+                initializePlayer(Uri.parse(mVideoUrl));
+            }
+
+        } else {
+            Log.d(LOG_TAG, "Not visible to the user ");
+            releasePlayer();
+        }
+    }
 }

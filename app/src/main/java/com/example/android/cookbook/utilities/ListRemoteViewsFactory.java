@@ -35,14 +35,11 @@
 package com.example.android.cookbook.utilities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.example.android.cookbook.CookbookWidgetProvider;
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
 import com.google.gson.Gson;
@@ -52,8 +49,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.android.cookbook.CookbookWidgetProvider.INGREDIENTS_PREFS;
-import static com.example.android.cookbook.CookbookWidgetProvider.PREFERENCE_NAME;
+import static com.example.android.cookbook.utilities.CookbookWidgetProvider.INGREDIENTS_PREFS;
+import static com.example.android.cookbook.utilities.CookbookWidgetProvider.PREFERENCE_NAME;
 
 /**
  * Class that is an interface for an adapter between a remote collection view

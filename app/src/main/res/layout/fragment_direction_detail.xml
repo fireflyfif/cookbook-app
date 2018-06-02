@@ -33,63 +33,59 @@
   -->
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/video_layout"
+    android:id="@+id/description_card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_margin="10dp"
+    app:cardCornerRadius="3dp"
+    app:cardBackgroundColor="@color/colorBackground">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/player_view"
-            android:layout_width="match_parent"
-            android:layout_gravity="top"
-            android:layout_height="300dp" />
-
-        <ImageView
-            android:id="@+id/no_video_iv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-
-    </FrameLayout>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/description_card_view"
+    <LinearLayout
+        android:id="@+id/video_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/short_description_tv"
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/player_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-smallcaps"
-                android:padding="10dp"
-                android:textStyle="bold"
-                tools:text="Description" />
+                android:layout_height="300dp"
+                android:layout_gravity="top" />
 
-            <TextView
-                android:id="@+id/direction_description_tv"
+            <ImageView
+                android:id="@+id/no_video_iv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-smallcaps"
-                android:padding="10dp"
-                tools:text="Description of the Directions here" />
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/no_video_content_descr" />
 
+        </FrameLayout>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/short_description_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/dosis_semibold"
+            android:padding="10dp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            tools:text="Description" />
 
-    </android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/direction_description_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/dosis_medium"
+            android:padding="10dp"
+            tools:text="Description of the Directions here" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

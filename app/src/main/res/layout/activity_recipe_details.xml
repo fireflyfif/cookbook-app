@@ -56,7 +56,7 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="center"
             app:expandedTitleMarginEnd="@dimen/expanded_title_margin"
@@ -99,10 +99,12 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="?android:actionBarSize"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                app:titleTextColor="@color/colorAccentDark"
+                android:theme="@style/MyToolbarTheme"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

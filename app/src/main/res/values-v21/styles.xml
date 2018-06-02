@@ -36,8 +36,28 @@
 <resources>
 
     <style name="AppTheme" parent="AppTheme.Base">
+
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--
+        <item name="android:statusBarColor">@android:color/transparent</item> -->
+
+        <item name="android:windowBackground">@color/colorBackground</item>
+
+        <item name="android:textColorPrimary">@color/colorGray</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/slide_right</item>
+        <item name="android:windowExitTransition">@android:transition/slide_left</item>
 
     </style>
+
+    <style name="MyToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+
+        <item name="android:colorPrimary">@color/colorAccentDark</item>
+        <item name="android:textColorPrimary">@color/colorAccentDark</item>
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/colorAccentDark</item>
+
+    </style>
+
 </resources>

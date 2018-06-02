@@ -32,6 +32,10 @@
   ~ SOFTWARE.
   -->
 
+<!--
+The XML Layout with the ViewPager is made with the help of this Tutorial by Codelabs:
+https://codelabs.developers.google.com/codelabs/material-design-style/index.html?index=..%2F..%2Findex#0
+-->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -53,11 +57,11 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
-            app:contentScrim="?android:colorPrimary"
+            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="center"
             app:expandedTitleMarginEnd="@dimen/expanded_title_margin"
             app:expandedTitleMarginStart="@dimen/expanded_title_margin"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Display2"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <!--
@@ -81,6 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
+                    android:drawableLeft="@drawable/ic_tag_faces_black_24dp"
                     android:drawablePadding="6dp"
                     android:drawableStart="@drawable/ic_tag_faces_black_24dp"
                     android:drawableTint="@color/colorPrimary"
@@ -96,29 +101,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
                 app:layout_collapseMode="pin"
-                app:titleTextColor="@color/colorAccentDark"
-                app:subtitleTextColor="@color/colorAccentDark"
                 app:layout_scrollFlags="scroll|enterAlways"
+                app:titleTextColor="@color/colorAccentDark"
                 android:theme="@style/MyToolbarTheme"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorAccent"
-            app:tabIndicatorHeight="3dp"
-            app:tabSelectedTextColor="@color/colorAccentDark"
-            app:tabTextColor="@color/colorGray" />
-
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/two_pane_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/directions_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/direction_video_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"/>
+
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/ingredients_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

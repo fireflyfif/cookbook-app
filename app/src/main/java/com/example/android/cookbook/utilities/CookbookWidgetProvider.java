@@ -32,30 +32,18 @@
  * SOFTWARE.
  */
 
-package com.example.android.cookbook;
+package com.example.android.cookbook.utilities;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.RemoteViewsService;
 
-import com.example.android.cookbook.model.Ingredient;
-import com.example.android.cookbook.ui.activities.MainActivity;
-import com.example.android.cookbook.utilities.IngredientsWidgetService;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.example.android.cookbook.R;
 
 /**
  * Implementation of App Widget functionality.

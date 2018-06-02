@@ -61,10 +61,11 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
     }
 
     /**
+     * Constructor of the adapter
      *
-     * @param context
-     * @param recipeList
-     * @param clickHandler
+     * @param context      the current context
+     * @param recipeList   displays the list of recipes
+     * @param clickHandler is the on recipe click handler
      */
     public MasterRecipesAdapter(Context context, List<RecipesResponse> recipeList,
                                 OnRecipeClickListener clickHandler) {
@@ -91,7 +92,7 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
         String recipeServing = String.valueOf(currentRecipe.getServings());
         holder.recipeServings.setText(recipeServing);
 
-        // TODO: Prepare the image to display recipe picture if any
+        // Prepare the image to display recipe picture if any
         if (!currentRecipe.getImage().equals("")) {
             String recipeImage = currentRecipe.getImage();
 

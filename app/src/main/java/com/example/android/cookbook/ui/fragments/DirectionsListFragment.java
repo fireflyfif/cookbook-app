@@ -164,14 +164,6 @@ public class DirectionsListFragment extends Fragment {
 
             loadDirections();
 
-           /* // TODO: Check if the device is tablet so that the two pane layout is visible
-            if (getActivity().findViewById(R.id.two_pane_layout) != null) {
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-                DirectionDetailFragment videoFragment = DirectionDetailFragment.newInstance(mDirectionsList);
-
-            }*/
         }
 
         return rootView;
@@ -198,31 +190,4 @@ public class DirectionsListFragment extends Fragment {
             mDirectionsAdapter.notifyDataSetChanged();
         }
     }
-
-    /*@Override
-    public void onStepClick(Step step, ArrayList<Step> stepList) {
-        Toast.makeText(getContext(), "Clicked step: " + step, Toast.LENGTH_SHORT).show();
-
-        if (mTwoPane) {
-            // TODO: Handle two pane case
-            DirectionDetailFragment videoFragment = DirectionDetailFragment.newInstance(stepList, step.getId());
-
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.two_pane_layout, videoFragment)
-                    .commit();
-
-        } else {
-
-            // Start new Activity via Intent with arguments
-            Bundle arguments = new Bundle();
-            arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepList);
-            arguments.putParcelable(DIRECTION_CURRENT_KEY, step);
-
-            Intent intent = new Intent(getActivity(), DirectionDetailActivity.class);
-            intent.putExtras(arguments);
-            if (getActivity() != null) {
-                getActivity().startActivity(intent);
-            }
-        }
-    }*/
 }

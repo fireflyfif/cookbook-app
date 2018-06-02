@@ -49,6 +49,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.cookbook.IdlingResource.SimpleIdlingResource;
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
 import com.example.android.cookbook.model.RecipesResponse;
@@ -73,8 +74,8 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
 
     private MasterRecipesAdapter mAdapter;
     private List<RecipesResponse> mRecipeList;
-    private ArrayList<Ingredient> mIngredientsList;
-    private RecipesResponse mRecipe;
+    public static ArrayList<Ingredient> mIngredientsList;
+    public static RecipesResponse mRecipe;
     private Ingredient mIngredient;
 
     @BindView(R.id.recipes_rv)
@@ -137,6 +138,10 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
             @Override
             public void onResponse(Call<List<RecipesResponse>> call, Response<List<RecipesResponse>> response) {
                 if (response.isSuccessful()) {
+
+                    // Idle state for testing
+                    idleStateReady(true);
+
                     // Hide the Progress Bar
                     mLoadingIndicator.setVisibility(View.INVISIBLE);
 
@@ -167,6 +172,9 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
                 // Hide the Progress Bar
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
 
+                // Idle state for testing
+                idleStateReady(false);
+
                 // Show the error message for no Connectivity
                 showErrorMessage();
                 Log.d(LOG_TAG, t.toString());
@@ -196,5 +204,17 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
         Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
         intent.putExtras(bundle);
         getContext().startActivity(intent);
+    }
+
+    /**
+     * Idle state for testing
+     *
+     * @param isTrue is false there are tasks or events that are happening and any testing
+     *               should be on halt until these processes finish.
+     *               if it's true - it means that Espresso gets the green light and continues
+     *               any action in the test that was queued.
+     */
+    private void idleStateReady(boolean isTrue) {
+        SimpleIdlingResource.setIdleState(isTrue);
     }
 }

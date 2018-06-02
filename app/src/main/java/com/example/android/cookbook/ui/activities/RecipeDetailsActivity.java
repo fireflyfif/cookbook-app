@@ -35,9 +35,13 @@
 package com.example.android.cookbook.ui.activities;
 
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -49,9 +53,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.cookbook.IdlingResource.SimpleIdlingResource;
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
 import com.example.android.cookbook.model.RecipesResponse;
@@ -59,6 +65,7 @@ import com.example.android.cookbook.model.Step;
 import com.example.android.cookbook.ui.fragments.DirectionDetailFragment;
 import com.example.android.cookbook.ui.fragments.DirectionsListFragment;
 import com.example.android.cookbook.ui.fragments.IngredientsFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +93,9 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
     private boolean mTwoPane;
 
     @Nullable
+    private static SimpleIdlingResource mIdlingResource;
+
+    @Nullable
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
     @Nullable
@@ -100,6 +110,25 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
     @Nullable
     @BindView(R.id.servings_tv)
     TextView servingsTextView;
+    @BindView(R.id.recipe_image_iv)
+    ImageView recipeImage;
+
+
+    /**
+     * This method will only be called from test.
+     * It will
+     * instantiate a new instance of SimpleIdlingResource if the IdlingResource is null.
+     *
+     * @return the IdlingResource
+     */
+    @VisibleForTesting
+    @NonNull
+    public static IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
 
     @Override
@@ -126,23 +155,8 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
             mIngredientsList = (ArrayList<Ingredient>) sRecipes.getIngredients();
             mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
 
-            //recipeTitle.setText(sRecipes.getName());
-            assert servingsTextView != null;
-            servingsTextView.setText(String.valueOf(sRecipes.getServings()));
-            // Set the Title of the Recipe
-
-            Log.d(LOG_TAG, "Name of the Recipe: " + sRecipes.getName());
-
-            // Set the title of the Recipe on the Collapsing Toolbar
-            if (collapsingToolbar != null) {
-                collapsingToolbar.setTitle(sRecipes.getName());
-            }
-
-            // Set font to the expandable title
-            Typeface font = ResourcesCompat.getFont(this, R.font.dosis_medium);
-            collapsingToolbar.setCollapsedTitleTypeface(font);
-            collapsingToolbar.setExpandedTitleTypeface(font);
-            collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
+            // Populate the UI with details of the current recipe
+            populateUi(sRecipes);
 
             if (findViewById(R.id.two_pane_layout) != null) {
                 mTwoPane = true;
@@ -193,6 +207,40 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
                 }
             }
         }
+    }
+
+    private void populateUi(RecipesResponse recipes) {
+
+        //Set the servings of the current recipe
+        assert servingsTextView != null;
+        servingsTextView.setText(String.valueOf(recipes.getServings()));
+
+        Log.d(LOG_TAG, "Name of the Recipe: " + recipes.getName());
+
+        // Set the title of the Recipe on the Collapsing Toolbar
+        if (collapsingToolbar != null) {
+            collapsingToolbar.setTitle(recipes.getName());
+        }
+
+        // Set font to the expandable title
+        Typeface font = ResourcesCompat.getFont(this, R.font.dosis_medium);
+        collapsingToolbar.setCollapsedTitleTypeface(font);
+        collapsingToolbar.setExpandedTitleTypeface(font);
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
+
+        // Set the image of the current recipe
+        String recipeImageString = recipes.getImage();
+        if (recipeImageString.isEmpty()) {
+            recipeImageString = String.valueOf(getResources().getDrawable(R.drawable.temp));
+        }
+
+        Log.d(LOG_TAG, "Path to the current Recipe: " + recipeImageString);
+
+        Picasso.with(recipeImage.getContext())
+                .load(recipeImageString)
+                .placeholder(R.drawable.temp)
+                .error(R.drawable.temp)
+                .into(recipeImage);
     }
 
     /**

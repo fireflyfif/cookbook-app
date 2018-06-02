@@ -49,6 +49,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Step;
@@ -85,9 +86,6 @@ public class DirectionDetailActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // TODO: Set the Toolbar first
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         // Get the extra from the Intent
         if (getIntent().getExtras() != null) {
 
@@ -122,6 +120,7 @@ public class DirectionDetailActivity extends AppCompatActivity {
                 public void onPageScrollStateChanged(int state) {
 
                     Log.d(LOG_TAG, "onPageScrollStateChanged called");
+
                 }
             });
 
@@ -177,18 +176,19 @@ public class DirectionDetailActivity extends AppCompatActivity {
     /**
      * FragmentStatePagerAdapter that inflates the Fragment with different Directions of the Recipes
      */
-    static class DirectionsPagerAdapter extends FragmentStatePagerAdapter {
+    public static class DirectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         private ArrayList<Step> mDirectionsList;
         private int mCurrentDirection;
-        //private OnItemSetListener mListener;
+
+        private Boolean mVisible;
+        private Fragment mPrimaryFragment;
 
         // Default constructor
         public DirectionsPagerAdapter(FragmentManager fm, ArrayList<Step> directionList, int position) {
             super(fm);
             mDirectionsList = directionList;
             mCurrentDirection = position;
-            //mListener = listener;
         }
 
         @Override
@@ -208,6 +208,30 @@ public class DirectionDetailActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
 
             return "Step " + (position + 1);
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            super.setPrimaryItem(container, position, object);
+
+            if (object instanceof Fragment) {
+                mPrimaryFragment = (Fragment) object;
+            }
+            if (mPrimaryFragment != null) {
+                if (mVisible != null) {
+                    mPrimaryFragment.setUserVisibleHint(mVisible);
+                    mVisible = null;
+                }
+            }
+        }
+
+        public void setUserVisibleHint(boolean visible) {
+            if (mPrimaryFragment != null) {
+                mPrimaryFragment.setUserVisibleHint(visible);
+                mVisible = null;
+            } else {
+                mVisible = visible;
+            }
         }
 
         // Method to track down when the item is being destroyed
