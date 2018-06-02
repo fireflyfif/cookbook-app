@@ -34,6 +34,7 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/directions_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -44,7 +45,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/colorBackground">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/directions_rv"

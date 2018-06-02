@@ -15,7 +15,6 @@
 
     <style name="MyToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
 
-        <item name="android:colorPrimary">@color/colorAccentDark</item>
         <item name="android:textColorPrimary">@color/colorAccentDark</item>
         <item name="android:textColorSecondary">@color/colorAccentDark</item>
     </style>

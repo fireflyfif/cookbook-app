@@ -78,6 +78,11 @@
             android:textStyle="bold"
             tools:text="Description" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGray"/>
+
         <TextView
             android:id="@+id/direction_description_tv"
             android:layout_width="match_parent"

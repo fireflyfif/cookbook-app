@@ -95,12 +95,12 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
-                app:layout_collapseMode="pin"
-                app:titleTextColor="@color/colorAccentDark"
-                app:subtitleTextColor="@color/colorAccentDark"
-                app:layout_scrollFlags="scroll|enterAlways"
                 android:theme="@style/MyToolbarTheme"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:subtitleTextColor="@color/colorAccentDark"
+                app:titleTextColor="@color/colorAccentDark" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

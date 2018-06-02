@@ -100,11 +100,11 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
+                android:theme="@style/MyToolbarTheme"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:titleTextColor="@color/colorAccentDark"
-                android:theme="@style/MyToolbarTheme"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:titleTextColor="@color/colorAccentDark" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

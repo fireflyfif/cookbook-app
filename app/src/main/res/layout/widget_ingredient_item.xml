@@ -37,42 +37,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/plus_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:contentDescription="@string/plus_icon_ingredient"
         android:tint="@color/colorAccent"
         app:srcCompat="@drawable/ic_add_circle_black_24dp" />
 
-    <TextView
-        android:id="@+id/ingredient_name_tv"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center_vertical"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:fontFamily="@font/dosis_medium"
-        tools:text="Ingredient Name" />
+        android:orientation="vertical"
+        android:padding="6dp">
 
-    <TextView
-        android:id="@+id/quantity_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:fontFamily="@font/dosis_semibold"
-        tools:text="1.5" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/measure_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_margin="8dp"
-        app:fontFamily="@font/dosis_semibold"
-        tools:text="TBSP" />
+            <TextView
+                android:id="@+id/quantity_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/colorAccentDark"
+                app:fontFamily="@font/dosis_bold"
+                tools:text="1.5" />
 
+            <TextView
+                android:id="@+id/measure_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textColor="@color/colorAccentDark"
+                app:fontFamily="@font/dosis_bold"
+                tools:text="TBSP" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ingredient_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:gravity="center_vertical"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorGray"
+            app:fontFamily="@font/dosis_semibold"
+            tools:text="Ingredient Name" />
+
+    </LinearLayout>
 
 </LinearLayout>

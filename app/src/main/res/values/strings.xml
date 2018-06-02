@@ -41,5 +41,7 @@
     <string name="no_video_content_descr">No video image placeholder</string>
     <string name="previous_button_description">Button for going one step back</string>
     <string name="button_next_description">Button for going one step forward</string>
+    <string name="recipe_image_description">Image of a recipe</string>
+    <string name="plus_icon_ingredient">Plus icon infront of each ingredient</string>
 
 </resources>
