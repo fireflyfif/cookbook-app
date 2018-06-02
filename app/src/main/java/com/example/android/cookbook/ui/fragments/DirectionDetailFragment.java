@@ -201,7 +201,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
         return rootView;
     }
 
-    @Override
+    /*@Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
@@ -230,7 +230,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
             params.height = 600;
             mPlayerView.setLayoutParams(params);
         }
-    }
+    }*/
 
     /**
      * Hide System UI for immersive full screen media play

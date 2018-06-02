@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ PROJECT LICENSE
   ~
   ~ This project was submitted by Iva Ivanova as part of the Nanodegree at Udacity.
@@ -35,9 +34,9 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="6dp">
 
     <TextView
@@ -49,7 +48,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/step_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/colorGray"
+        app:fontFamily="@font/dosis_semibold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,7 +63,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/colorGray"
+        app:fontFamily="@font/dosis_semibold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/step_title_label"
         app:layout_constraintTop_toTopOf="parent"
@@ -79,7 +80,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-smallcaps"
+        android:fontFamily="@font/dosis_semibold"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

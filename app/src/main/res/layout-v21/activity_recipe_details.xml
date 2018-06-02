@@ -71,22 +71,22 @@
                     android:id="@+id/recipe_image_iv"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
+                    android:contentDescription="@string/recipe_image_description"
                     android:scaleType="centerCrop"
                     android:src="@drawable/temp"
                     app:layout_collapseMode="parallax" />
-
 
                 <TextView
                     android:id="@+id/servings_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
+                    android:layout_gravity="bottom|end"
                     android:drawablePadding="6dp"
                     android:drawableStart="@drawable/ic_tag_faces_black_24dp"
-                    android:drawableTint="@color/colorPrimary"
+                    android:drawableTint="@color/colorAccent"
                     android:gravity="center"
                     android:padding="6dp"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     tools:text="8" />
 
             </FrameLayout>
