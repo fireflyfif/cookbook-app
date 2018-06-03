@@ -52,24 +52,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/widget_refresh_button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_margin="8dp"
-                    android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/ic_refresh_24dp"
-                    android:drawableStart="@drawable/ic_refresh_24dp"/>
 
                 <TextView
                     android:id="@+id/widget_recipe_name"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:fontFamily="@font/dosis_semibold"
@@ -80,8 +69,7 @@
 
                 <Button
                     android:id="@+id/widget_launch_button"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:layout_margin="8dp"

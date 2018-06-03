@@ -41,7 +41,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -101,35 +100,21 @@ public class CookbookWidgetProvider extends AppWidgetProvider {
             // Set empty view
             views.setEmptyView(R.id.appwidget_ingredient_list, R.id.empty_recipe_text);
 
+
             // Setup the Pending Intent to launch the Activity with the Recipe when clicked
             Intent openRecipeIntent = new Intent(context, RecipeDetailsActivity.class);
             openRecipeIntent.putExtra(RECIPE_ID_KEY, recipeId);
+
+            // Update the current widget instance only, by creating an array
+            // that contains the widget's unique ID
+            int[] idArray = new int[]{appWidgetId};
+            openRecipeIntent.putExtra(RECIPE_ID_KEY, idArray);
             openRecipeIntent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
             PendingIntent pendingIntent = PendingIntent.getActivity(
                     context, 0, openRecipeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.widget_launch_button, pendingIntent);
 
-
-            ///////------Intent for refreshing the list --------//////
-            // Refresh the widget by tapping the Refresh button
-            Intent refreshIntent = new Intent();
-            refreshIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-
-            // Update the current widget instance only, by creating an array
-            // that contains the widget's unique ID
-            int[] idArray = new int[]{appWidgetId};
-            refreshIntent.putExtra(RECIPE_ID_KEY, idArray);
-            refreshIntent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-
-            // Wrap the intent as a PendingIntent, using PendingIntent.getBroadcast
-            /*PendingIntent pendingRefresh = PendingIntent.getActivity(
-                    context, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT);*/
-            PendingIntent pendingRefresh = PendingIntent.getBroadcast(
-                    context, 0, refreshIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-
-            views.setOnClickPendingIntent(R.id.widget_refresh_button, pendingRefresh);
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
