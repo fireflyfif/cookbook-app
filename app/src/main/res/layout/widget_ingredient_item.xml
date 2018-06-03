@@ -44,7 +44,7 @@
         android:id="@+id/plus_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:contentDescription="@string/plus_icon_ingredient"
         android:tint="@color/colorAccent"
         app:srcCompat="@drawable/ic_add_circle_black_24dp" />
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="4dp">
+        android:padding="@dimen/padding_4dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,19 +64,19 @@
                 android:id="@+id/quantity_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
                 android:textColor="@color/colorAccentDark"
-                android:textSize="14sp"
+                android:textSize="@dimen/widget_measuring_text_size"
                 app:fontFamily="@font/dosis_bold"
                 tools:text="1.5" />
 
             <TextView
                 android:id="@+id/measure_tv"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:textColor="@color/colorAccentDark"
-                android:textSize="14sp"
+                android:textSize="@dimen/widget_measuring_text_size"
                 app:fontFamily="@font/dosis_bold"
                 tools:text="TBSP" />
 
@@ -90,7 +90,7 @@
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorGray"
-            android:textSize="12sp"
+            android:textSize="@dimen/widget_ingredient_text_size"
             app:fontFamily="@font/dosis_semibold"
             tools:text="Ingredient Name" />
 

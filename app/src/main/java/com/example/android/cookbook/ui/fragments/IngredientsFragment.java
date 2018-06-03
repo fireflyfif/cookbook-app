@@ -77,7 +77,6 @@ public class IngredientsFragment extends Fragment {
     private static Ingredient sIngredient;
     private List<RecipesResponse> mRecipesList;
     private List<Ingredient> mIngredientsList;
-    // private ArrayList<Ingredient> mIngredientsArrayList;
     private IngredientsAdapter mIngredientsAdapter;
 
     @BindView(R.id.ingredients_rv)
@@ -132,8 +131,6 @@ public class IngredientsFragment extends Fragment {
 
                 loadIngredients(sRecipes);
 
-                // Save the ingredients list into SharedPreferences
-                //saveIngredients(getContext(), mIngredientsList, sRecipes);
             }
         }
 
@@ -143,7 +140,6 @@ public class IngredientsFragment extends Fragment {
     private void loadIngredients(RecipesResponse recipes) {
 
         getActivity().setTitle(recipes.getName());
-        // mRecipesList = new ArrayList<>();
         mIngredientsList = recipes.getIngredients();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -165,34 +161,5 @@ public class IngredientsFragment extends Fragment {
             mIngredientsAdapter.setIngredientsData(mIngredientsList);
             mIngredientsAdapter.notifyDataSetChanged();
         }
-    }
-
-    /**
-     * Method for saving the list of ingredients into SharedPreferences,
-     * using Gson for retrieving it from the JSON
-     *
-     * help resource: http://androidopentutorials.com/android-sharedpreferences-tutorial-and-example/
-     *
-     * @param context
-     * @param ingredientsList
-     */
-    public void saveIngredients(Context context, List<Ingredient> ingredientsList, RecipesResponse recipe) {
-
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                PREFERENCE_NAME, Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        Gson gson = new Gson();
-        String jsonIngredients = gson.toJson(ingredientsList);
-        Log.d(LOG_TAG, "Ingredients saved: " + jsonIngredients);
-
-        String recipeName = recipe.getName();
-        int recipeId = recipe.getId();
-
-        editor.putString(INGREDIENTS_PREFS, jsonIngredients);
-        editor.putString(RECIPE_NAME_PREFS, recipeName);
-        editor.putInt(PREFERENCE_RECIPE_ID, recipeId);
-        editor.apply();
     }
 }

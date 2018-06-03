@@ -74,10 +74,9 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
                 <ImageView
                     android:id="@+id/recipe_image_iv"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="@dimen/collapsing_image_height"
                     android:contentDescription="@string/recipe_image_description"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/temp"
                     app:layout_collapseMode="parallax" />
 
                 <TextView
@@ -86,12 +85,12 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
                     android:drawableLeft="@drawable/ic_tag_faces_black_24dp"
-                    android:drawablePadding="6dp"
+                    android:drawablePadding="@dimen/padding_6dp"
                     android:drawableStart="@drawable/ic_tag_faces_black_24dp"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableTint="@color/colorGray"
                     android:gravity="center"
-                    android:padding="6dp"
-                    android:textColor="@color/colorAccent"
+                    android:padding="@dimen/padding_6dp"
+                    android:textColor="@color/colorGray"
                     tools:text="8" />
 
             </FrameLayout>
@@ -113,7 +112,7 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="@color/colorAccent"
-            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorHeight="@dimen/tab_indicator_height"
             app:tabSelectedTextColor="@color/colorAccentDark"
             app:tabTextColor="@color/colorGray" />
 
@@ -130,7 +129,7 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="12dp"
+        android:layout_margin="@dimen/floating_button_margin"
         android:background="@color/colorAccent"
         android:tint="@color/colorGray"
         app:srcCompat="@drawable/ic_add_24dp"/>

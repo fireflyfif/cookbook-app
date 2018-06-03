@@ -74,10 +74,9 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
                 <ImageView
                     android:id="@+id/recipe_image_iv"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="@dimen/collapsing_image_height"
                     android:contentDescription="@string/recipe_image_description"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/temp"
                     app:layout_collapseMode="parallax" />
 
                 <TextView
@@ -85,13 +84,13 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
-                    android:drawablePadding="6dp"
-                    android:drawableStart="@drawable/ic_tag_faces_black_24dp"
                     android:drawableLeft="@drawable/ic_tag_faces_black_24dp"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawablePadding="@dimen/padding_6dp"
+                    android:drawableStart="@drawable/ic_tag_faces_black_24dp"
+                    android:drawableTint="@color/colorGray"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:textColor="@color/colorAccent"
+                    android:padding="@dimen/padding_10dp"
+                    android:textColor="@color/colorGray"
                     tools:text="8" />
 
             </FrameLayout>
@@ -123,7 +122,7 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="6dp">
+            android:padding="@dimen/padding_6dp">
 
             <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/directions_container"
@@ -142,7 +141,7 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
                 android:id="@+id/direction_video_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"/>
+                android:paddingBottom="@dimen/padding_10dp"/>
 
             <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/ingredients_container"
@@ -157,7 +156,7 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="12dp"
+        android:layout_margin="@dimen/floating_button_margin"
         android:background="@color/colorAccent"
         android:tint="@color/colorGray"
         app:srcCompat="@drawable/ic_add_24dp"/>

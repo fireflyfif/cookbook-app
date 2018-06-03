@@ -37,7 +37,7 @@ package com.example.android.cookbook.ui.activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -47,14 +47,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.test.espresso.IdlingResource;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -252,20 +251,20 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
         Typeface font = ResourcesCompat.getFont(this, R.font.dosis_medium);
         collapsingToolbar.setCollapsedTitleTypeface(font);
         collapsingToolbar.setExpandedTitleTypeface(font);
-        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorGray));
 
         // Set the image of the current recipe
         String recipeImageString = recipes.getImage();
         if (recipeImageString.isEmpty()) {
-            recipeImageString = String.valueOf(getResources().getDrawable(R.drawable.temp));
+            recipeImageString = String.valueOf(getResources().getDrawable(R.drawable.cookbook_bg_1));
         }
 
         Log.d(LOG_TAG, "Path to the current Recipe: " + recipeImageString);
 
         Picasso.with(recipeImage.getContext())
                 .load(recipeImageString)
-                .placeholder(R.drawable.temp)
-                .error(R.drawable.temp)
+                .placeholder(R.drawable.cookbook_bg_1)
+                .error(R.drawable.cookbook_bg_1)
                 .into(recipeImage);
     }
 
@@ -303,8 +302,8 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
      *
      * help resource: http://androidopentutorials.com/android-sharedpreferences-tutorial-and-example/
      *
-     * @param context
-     * @param ingredientsList
+     * @param context is the current context
+     * @param ingredientsList is the list of ingredients
      */
     public void saveIngredients(Context context, List<Ingredient> ingredientsList, RecipesResponse recipe) {
 

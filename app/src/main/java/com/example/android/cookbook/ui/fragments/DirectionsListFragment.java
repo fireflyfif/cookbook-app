@@ -47,13 +47,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.model.Step;
-import com.example.android.cookbook.ui.adapters.DirectionsAdapter;
 import com.example.android.cookbook.ui.activities.DirectionDetailActivity;
+import com.example.android.cookbook.ui.adapters.DirectionsAdapter;
 
 import java.util.ArrayList;
 

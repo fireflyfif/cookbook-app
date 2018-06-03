@@ -40,4 +40,33 @@ Refer to App Widget Documentation for margin information
 http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     -->
     <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_height">180dp</dimen>
+    <dimen name="widget_width">180dp</dimen>
+    <dimen name="pager_title_padding">4dp</dimen>
+    <dimen name="navigation_buttons_padding">16dp</dimen>
+    <dimen name="collapsing_image_height">120dp</dimen>
+    <dimen name="padding_6dp">6dp</dimen>
+    <dimen name="padding_10dp">10dp</dimen>
+    <dimen name="tab_indicator_height">3dp</dimen>
+    <dimen name="floating_button_margin">12dp</dimen>
+    <dimen name="margin_6dp">6dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="step_description_text">18sp</dimen>
+    <dimen name="player_control_margin">4dp</dimen>
+    <dimen name="exo_position_text">14sp</dimen>
+    <dimen name="padding_4dp">4dp</dimen>
+    <dimen name="time_bar_height">32dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="card_corner_radius">3dp</dimen>
+    <dimen name="exo_player_height">300dp</dimen>
+    <dimen name="no_video_image_height">300dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="error_text_size">20sp</dimen>
+    <dimen name="progress_bar_dimens">42dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="measure_text_size">20dp</dimen>
+    <dimen name="recipe_card_img_height">200dp</dimen>
+    <dimen name="widget_measuring_text_size">14sp</dimen>
+    <dimen name="widget_ingredient_text_size">12sp</dimen>
+    <dimen name="widget_launch_button_width">25dp</dimen>
 </resources>

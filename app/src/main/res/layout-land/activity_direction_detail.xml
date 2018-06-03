@@ -49,8 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:background="@color/colorPrimary"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
+            android:paddingBottom="@dimen/pager_title_padding"
+            android:paddingTop="@dimen/pager_title_padding"
             android:textColor="@color/colorAccentDark" />
 
     </android.support.v4.view.ViewPager>
@@ -62,7 +62,7 @@
         android:layout_gravity="center|start"
         android:background="@android:color/transparent"
         android:contentDescription="@string/previous_button_description"
-        android:padding="16dp"
+        android:padding="@dimen/navigation_buttons_padding"
         app:srcCompat="@drawable/ic_arrow_left_24dp" />
 
     <ImageButton
@@ -72,7 +72,7 @@
         android:layout_gravity="center|end"
         android:background="@android:color/transparent"
         android:contentDescription="@string/button_next_description"
-        android:padding="16dp"
+        android:padding="@dimen/navigation_buttons_padding"
         app:srcCompat="@drawable/ic_arrow_right_24dp" />
 
 </FrameLayout>

@@ -39,9 +39,9 @@
     android:id="@+id/description_card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="3dp"
-    app:cardBackgroundColor="@color/colorBackground">
+    android:layout_margin="@dimen/margin_10dp"
+    app:cardBackgroundColor="@color/colorBackground"
+    app:cardCornerRadius="@dimen/card_corner_radius">
 
     <LinearLayout
         android:id="@+id/video_layout"
@@ -56,15 +56,15 @@
             <com.google.android.exoplayer2.ui.PlayerView
                 android:id="@+id/player_view"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="@dimen/exo_player_height"
                 android:layout_gravity="top" />
 
             <ImageView
                 android:id="@+id/no_video_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/no_video_content_descr" />
+                android:contentDescription="@string/no_video_content_descr"
+                android:scaleType="centerCrop" />
 
         </FrameLayout>
 
@@ -73,14 +73,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/dosis_semibold"
-            android:padding="10dp"
+            android:padding="@dimen/padding_10dp"
             android:textAllCaps="true"
             android:textStyle="bold"
             tools:text="Description" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/colorGray"/>
 
         <TextView
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/dosis_medium"
-            android:padding="10dp"
+            android:padding="@dimen/padding_10dp"
             tools:text="Description of the Directions here" />
 
     </LinearLayout>

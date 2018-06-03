@@ -98,14 +98,14 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
 
             Picasso.with(mContext)
                     .load(recipeImage)
-                    .placeholder(R.drawable.temp)
-                    .error(R.drawable.temp)
+                    .placeholder(R.drawable.cookbook_bg_1)
+                    .error(R.drawable.cookbook_bg_1)
                     .into(holder.recipeImage);
         } else {
             Picasso.with(mContext)
-                    .load(R.drawable.temp)
-                    .placeholder(R.drawable.temp)
-                    .error(R.drawable.temp)
+                    .load(R.drawable.cookbook_bg_1)
+                    .placeholder(R.drawable.cookbook_bg_1)
+                    .error(R.drawable.cookbook_bg_1)
                     .into(holder.recipeImage);
         }
 

@@ -34,9 +34,7 @@
 
 package com.example.android.cookbook.ui.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationManager;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -48,14 +46,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Step;
-import com.example.android.cookbook.ui.activities.DirectionDetailActivity;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -120,7 +115,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
     @BindView(R.id.player_view)
     PlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;
-    private NotificationManager mNotificationManager;
     private String mVideoUrl;
 
     private boolean mVisibleToUser;
@@ -154,8 +148,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
             mCurrentWindow = savedInstanceState.getInt(KEY_WINDOW);
             mPlayWhenReady = savedInstanceState.getBoolean(KEY_PLAY_WHEN_READY);
 
-            // mDirections = savedInstanceState.getParcelable(DIRECTION_CURRENT_KEY);
-            // mPosition = savedInstanceState.getInt(CURRENT_POSITION_KEY);
         }
     }
 
@@ -165,7 +157,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
         updateStartPosition();
 
-        //outState.putParcelable(DIRECTION_CURRENT_KEY, mDirections);
         outState.putLong(KEY_POSITION, mPlaybackPosition);
         outState.putInt(KEY_WINDOW, mCurrentWindow);
         outState.putBoolean(KEY_PLAY_WHEN_READY, mPlayWhenReady);
@@ -188,7 +179,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
             mLongDescription.setText(mDirections.getDescription());
             mVideoUrl = mDirections.getVideoURL();
 
-            //mVideoUrl = (mDirectionList.get(mDirectionNumber).getVideoURL());
         }
         Log.d(LOG_TAG, "videoUrl: " + mVideoUrl);
 
@@ -307,14 +297,14 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
             if (!TextUtils.isEmpty(videoThumbnailUrlString)) {
                 Picasso.with(getContext())
                         .load(mDirections.getThumbnailURL())
-                        .placeholder(R.drawable.temp)
-                        .error(R.drawable.temp)
+                        .placeholder(R.drawable.cookbook_bg_2)
+                        .error(R.drawable.cookbook_bg_2)
                         .into(mNoVideoImage);
             }
 
             // Show the Image for no video available
             mNoVideoImage.setVisibility(View.VISIBLE);
-            mNoVideoImage.setImageResource(R.drawable.temp);
+            mNoVideoImage.setImageResource(R.drawable.cookbook_bg_2);
 
         }
     }
@@ -412,6 +402,11 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
     }
 
+    /**
+     * Method that helps the exo player to be stopped when a tab is being changed/swiped from the ViewPager
+     *
+     * @param isVisibleToUser that indicates whether the item is visible to the user or not
+     */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

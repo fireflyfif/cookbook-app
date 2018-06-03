@@ -56,7 +56,7 @@
         <item name="android:colorPrimary">@color/colorAccentDark</item>
         <item name="android:textColorPrimary">@color/colorAccentDark</item>
         <item name="android:colorAccent">@color/colorPrimary</item>
-        <item name="android:textColorSecondary">@color/colorAccentDark</item>
+        <item name="android:textColorSecondary">@color/colorGray</item>
 
     </style>
 

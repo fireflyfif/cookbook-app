@@ -42,7 +42,7 @@
     <string name="previous_button_description">Button for going one step back</string>
     <string name="button_next_description">Button for going one step forward</string>
     <string name="recipe_image_description">Image of a recipe</string>
-    <string name="plus_icon_ingredient">Plus icon infront of each ingredient</string>
-    <string name="widget_empty_recipe_view">Please select a Recipe   The Ingredients will be displayed here</string>
+    <string name="plus_icon_ingredient">Plus icon in front of each ingredient</string>
+    <string name="widget_empty_recipe_view">Please select a Recipe \nThe Ingredients will be displayed here</string>
 
 </resources>

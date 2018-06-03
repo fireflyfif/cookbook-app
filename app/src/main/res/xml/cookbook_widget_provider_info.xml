@@ -36,9 +36,9 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/widget_ingredients_list"
     android:initialLayout="@layout/widget_ingredients_list"
-    android:minHeight="180dp"
-    android:minWidth="180dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:minHeight="@dimen/widget_height"
+    android:minWidth="@dimen/widget_width"
+    android:previewImage="@drawable/cookbook_icon"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="86400000"
     android:widgetCategory="home_screen"/>

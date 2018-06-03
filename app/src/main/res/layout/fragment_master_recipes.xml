@@ -49,15 +49,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:padding="10dp"
+        android:padding="@dimen/padding_10dp"
         android:text="@string/no_connectivity_text"
-        android:textSize="20sp"
+        android:textSize="@dimen/error_text_size"
         android:visibility="invisible" />
 
     <ProgressBar
         android:id="@+id/loading_indicator"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+        android:layout_width="@dimen/progress_bar_dimens"
+        android:layout_height="@dimen/progress_bar_dimens"
         android:layout_gravity="center" />
 
 </FrameLayout>

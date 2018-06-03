@@ -48,9 +48,4 @@ public class JSONResponse {
         return mRecipesList;
     }
 
-//    private RecipesResponse[] mRecipes;
-//
-//    public RecipesResponse[] getRecipes() {
-//        return mRecipes;
-//    }
 }
