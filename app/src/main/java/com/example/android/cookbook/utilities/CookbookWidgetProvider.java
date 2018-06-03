@@ -34,16 +34,25 @@
 
 package com.example.android.cookbook.utilities;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.example.android.cookbook.R;
+import com.example.android.cookbook.ui.activities.RecipeDetailsActivity;
+
+import static com.example.android.cookbook.utilities.Utils.INGREDIENTS_PREFS;
+import static com.example.android.cookbook.utilities.Utils.PREFERENCE_NAME;
+import static com.example.android.cookbook.utilities.Utils.PREFERENCE_RECIPE_ID;
+import static com.example.android.cookbook.utilities.Utils.RECIPE_NAME_PREFS;
 
 /**
  * Implementation of App Widget functionality.
@@ -52,10 +61,8 @@ public class CookbookWidgetProvider extends AppWidgetProvider {
 
     private static final String LOG_TAG = CookbookWidgetProvider.class.getSimpleName();
 
-    // Constants for Shared Preference
-    public static final String PREFERENCE_NAME = "ingredients_prefs";
-    public static final String INGREDIENTS_PREFS = "ingredients_favorite";
-    public static final String RECIPE_NAME_PREFS = "recipe_name_prefs";
+    public static final String RECIPE_ID_KEY = "com.example.android.cookbook.RECIPE_ID_KEY";
+    public static final String ACTION_REFRESH_RECIPE = "com.example.android.cookbook.action.refresh_recipe";
 
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
@@ -69,8 +76,11 @@ public class CookbookWidgetProvider extends AppWidgetProvider {
             String recipeName = sharedPreferences.getString(RECIPE_NAME_PREFS, "Recipe Name");
             Log.d(LOG_TAG, "Title of the Recipe: " + recipeName);
 
+            int recipeId = sharedPreferences.getInt(PREFERENCE_RECIPE_ID, -1);
+
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients_list);
+            // Set the name of the Recipe
             views.setTextViewText(R.id.widget_recipe_name, recipeName);
 
             AppWidgetManager.getInstance(context);
@@ -88,7 +98,38 @@ public class CookbookWidgetProvider extends AppWidgetProvider {
             // Set the remote adapter for the ListView with ingredients
             views.setRemoteAdapter(R.id.appwidget_ingredient_list, intent);
 
-            // TODO: Setup the Pending Intent to launch the Activity with the Recipe when clicked
+            // Set empty view
+            views.setEmptyView(R.id.appwidget_ingredient_list, R.id.empty_recipe_text);
+
+            // Setup the Pending Intent to launch the Activity with the Recipe when clicked
+            Intent openRecipeIntent = new Intent(context, RecipeDetailsActivity.class);
+            openRecipeIntent.putExtra(RECIPE_ID_KEY, recipeId);
+            openRecipeIntent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    context, 0, openRecipeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            views.setOnClickPendingIntent(R.id.widget_launch_button, pendingIntent);
+
+
+            ///////------Intent for refreshing the list --------//////
+            // Refresh the widget by tapping the Refresh button
+            Intent refreshIntent = new Intent();
+            refreshIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+            // Update the current widget instance only, by creating an array
+            // that contains the widget's unique ID
+            int[] idArray = new int[]{appWidgetId};
+            refreshIntent.putExtra(RECIPE_ID_KEY, idArray);
+            refreshIntent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+
+            // Wrap the intent as a PendingIntent, using PendingIntent.getBroadcast
+            /*PendingIntent pendingRefresh = PendingIntent.getActivity(
+                    context, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT);*/
+            PendingIntent pendingRefresh = PendingIntent.getBroadcast(
+                    context, 0, refreshIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            views.setOnClickPendingIntent(R.id.widget_refresh_button, pendingRefresh);
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -104,6 +145,7 @@ public class CookbookWidgetProvider extends AppWidgetProvider {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
+            Toast.makeText(context, "Widget has been updated! ", Toast.LENGTH_SHORT).show();
         }
     }
 

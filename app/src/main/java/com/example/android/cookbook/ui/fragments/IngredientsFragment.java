@@ -48,7 +48,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.example.android.cookbook.R;
 import com.example.android.cookbook.model.Ingredient;
@@ -56,13 +55,16 @@ import com.example.android.cookbook.model.RecipesResponse;
 import com.example.android.cookbook.ui.adapters.IngredientsAdapter;
 import com.google.gson.Gson;
 
-import java.security.ProtectionDomain;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.android.cookbook.utilities.Utils.INGREDIENTS_PREFS;
+import static com.example.android.cookbook.utilities.Utils.PREFERENCE_NAME;
+import static com.example.android.cookbook.utilities.Utils.PREFERENCE_RECIPE_ID;
+import static com.example.android.cookbook.utilities.Utils.RECIPE_NAME_PREFS;
 
 public class IngredientsFragment extends Fragment {
 
@@ -70,11 +72,6 @@ public class IngredientsFragment extends Fragment {
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
-
-    // Constants for Shared Preference
-    private static final String PREFERENCE_NAME = "ingredients_prefs";
-    private static final String INGREDIENTS_PREFS = "ingredients_favorite";
-    private static final String RECIPE_NAME_PREFS = "recipe_name_prefs";
 
     private static RecipesResponse sRecipes;
     private static Ingredient sIngredient;
@@ -136,7 +133,7 @@ public class IngredientsFragment extends Fragment {
                 loadIngredients(sRecipes);
 
                 // Save the ingredients list into SharedPreferences
-                saveIngredients(getContext(), mIngredientsList, sRecipes);
+                //saveIngredients(getContext(), mIngredientsList, sRecipes);
             }
         }
 
@@ -189,11 +186,13 @@ public class IngredientsFragment extends Fragment {
         Gson gson = new Gson();
         String jsonIngredients = gson.toJson(ingredientsList);
         Log.d(LOG_TAG, "Ingredients saved: " + jsonIngredients);
-        //String jsonRecipeObject = gson.toJson(recipe);
+
         String recipeName = recipe.getName();
+        int recipeId = recipe.getId();
 
         editor.putString(INGREDIENTS_PREFS, jsonIngredients);
         editor.putString(RECIPE_NAME_PREFS, recipeName);
+        editor.putInt(PREFERENCE_RECIPE_ID, recipeId);
         editor.apply();
     }
 }

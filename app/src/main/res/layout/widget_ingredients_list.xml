@@ -44,28 +44,76 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_margin="8dp"
             android:background="@drawable/layout_bg"
             android:backgroundTint="@color/colorBackground"
-            android:layout_margin="8dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/widget_recipe_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/dosis_semibold"
-                android:gravity="center_horizontal"
-                android:padding="6dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@color/colorGray"
-                tools:text="Recipe Name" />
+                android:orientation="horizontal">
 
-            <ListView
-                android:id="@+id/appwidget_ingredient_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
+                <Button
+                    android:id="@+id/widget_refresh_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_margin="8dp"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_refresh_24dp"
+                    android:drawableStart="@drawable/ic_refresh_24dp"/>
+
+                <TextView
+                    android:id="@+id/widget_recipe_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/dosis_semibold"
+                    android:padding="6dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="@color/colorAccentDark"
+                    tools:text="Recipe Name" />
+
+                <Button
+                    android:id="@+id/widget_launch_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_margin="8dp"
+                    android:background="@android:color/transparent"
+                    android:drawableRight="@drawable/ic_launch_24dp"
+                    android:drawableEnd="@drawable/ic_launch_24dp"/>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/empty_recipe_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/dosis_semibold"
+                    android:gravity="center"
+                    android:text="@string/widget_empty_recipe_view"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="@color/colorAccentDark"/>
+
+                <ListView
+                    android:id="@+id/appwidget_ingredient_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"/>
+
+            </FrameLayout>
 
         </LinearLayout>
 

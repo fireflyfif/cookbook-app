@@ -34,8 +34,14 @@
 
 package com.example.android.cookbook.utilities;
 
-public class NetworkUtils {
+public class Utils {
 
     public static final String RECIPES_URL =
             "https://d17h27t6h515a5.cloudfront.net";
+
+    // Constants for Shared Preference
+    public static final String PREFERENCE_NAME = "ingredients_prefs";
+    public static final String INGREDIENTS_PREFS = "ingredients_favorite";
+    public static final String RECIPE_NAME_PREFS = "recipe_name_prefs";
+    public static final String PREFERENCE_RECIPE_ID = "recipe_id_prefs";
 }

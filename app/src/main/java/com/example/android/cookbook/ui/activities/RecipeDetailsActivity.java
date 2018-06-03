@@ -34,12 +34,17 @@
 
 package com.example.android.cookbook.ui.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.test.espresso.IdlingResource;
 import android.support.v4.content.res.ResourcesCompat;
@@ -53,6 +58,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +71,7 @@ import com.example.android.cookbook.model.Step;
 import com.example.android.cookbook.ui.fragments.DirectionDetailFragment;
 import com.example.android.cookbook.ui.fragments.DirectionsListFragment;
 import com.example.android.cookbook.ui.fragments.IngredientsFragment;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -72,6 +79,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.android.cookbook.utilities.Utils.INGREDIENTS_PREFS;
+import static com.example.android.cookbook.utilities.Utils.PREFERENCE_NAME;
+import static com.example.android.cookbook.utilities.Utils.PREFERENCE_RECIPE_ID;
+import static com.example.android.cookbook.utilities.Utils.RECIPE_NAME_PREFS;
 
 /**
  * Detail Activity for a selected Recipe
@@ -112,6 +124,10 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
     TextView servingsTextView;
     @BindView(R.id.recipe_image_iv)
     ImageView recipeImage;
+    @BindView(R.id.main_layout)
+    CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.add_recipe_to_widget_button)
+    FloatingActionButton addRecipeToWidget;
 
 
     /**
@@ -158,6 +174,17 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
             // Populate the UI with details of the current recipe
             populateUi(sRecipes);
 
+            addRecipeToWidget.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    saveIngredients(RecipeDetailsActivity.this, mIngredientsList, sRecipes);
+                    Snackbar snackbar = Snackbar.make(coordinatorLayout, "Ingredients added to the widget.",
+                            Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+            });
+
+
             if (findViewById(R.id.two_pane_layout) != null) {
                 mTwoPane = true;
 
@@ -185,7 +212,6 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
                     fragmentManager.beginTransaction()
                             .add(R.id.direction_video_container, videoFragment)
                             .commit();
-
                 }
 
             } else {
@@ -269,7 +295,35 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
         } else {
             DirectionsListFragment.clickStepIntent(this, step, stepList);
         }
+    }
 
+    /**
+     * Method for saving the list of ingredients into SharedPreferences,
+     * using Gson for retrieving it from the JSON
+     *
+     * help resource: http://androidopentutorials.com/android-sharedpreferences-tutorial-and-example/
+     *
+     * @param context
+     * @param ingredientsList
+     */
+    public void saveIngredients(Context context, List<Ingredient> ingredientsList, RecipesResponse recipe) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                PREFERENCE_NAME, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Gson gson = new Gson();
+        String jsonIngredients = gson.toJson(ingredientsList);
+        Log.d(LOG_TAG, "Ingredients saved: " + jsonIngredients);
+
+        String recipeName = recipe.getName();
+        int recipeId = recipe.getId();
+
+        editor.putString(INGREDIENTS_PREFS, jsonIngredients);
+        editor.putString(RECIPE_NAME_PREFS, recipeName);
+        editor.putInt(PREFERENCE_RECIPE_ID, recipeId);
+        editor.apply();
     }
 
     /**

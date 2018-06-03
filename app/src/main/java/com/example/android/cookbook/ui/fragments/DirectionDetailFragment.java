@@ -182,7 +182,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
         ButterKnife.bind(this, rootView);
 
-
         mDirections = mDirectionList.get(mPosition);
         if (mDirections != null) {
             mShortDescription.setText(mDirections.getShortDescription());
@@ -200,52 +199,6 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
         return rootView;
     }
-
-    /*@Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Set appropriate behaviour for Landscape and Portrait orientation for the ViewPlayer
-        // used guidance from the following StackOverflow post: https://stackoverflow.com/a/46736838/8132331
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // Hide System UI components
-            hideSystemUi();
-
-            // Hide elements that we don't need on Landscape
-            mDescriptionCardView.setVisibility(View.GONE);
-
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mPlayerView.getLayoutParams();
-            params.width = params.MATCH_PARENT;
-            params.height = params.MATCH_PARENT;
-            mPlayerView.setLayoutParams(params);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mPlayerView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-             mDescriptionCardView.setVisibility(View.VISIBLE);
-
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mPlayerView.getLayoutParams();
-            params.width = params.MATCH_PARENT;
-            // The size here is in pixels, so in order to have 300dp for xhdpi screens we set to 600px
-            params.height = 600;
-            mPlayerView.setLayoutParams(params);
-        }
-    }*/
-
-    /**
-     * Hide System UI for immersive full screen media play
-     */
-    @SuppressLint("InlinedApi")
-    private void hideSystemUi() {
-        mPlayerView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LOW_PROFILE
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-    }
-
 
     @Override
     public void onStart() {

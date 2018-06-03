@@ -49,8 +49,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.android.cookbook.utilities.CookbookWidgetProvider.INGREDIENTS_PREFS;
-import static com.example.android.cookbook.utilities.CookbookWidgetProvider.PREFERENCE_NAME;
+import static com.example.android.cookbook.utilities.Utils.INGREDIENTS_PREFS;
+import static com.example.android.cookbook.utilities.Utils.PREFERENCE_NAME;
 
 /**
  * Class that is an interface for an adapter between a remote collection view
@@ -85,14 +85,8 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
         if (sharedPreferences.contains(INGREDIENTS_PREFS)) {
 
-
             String jsonIngredients = sharedPreferences.getString(INGREDIENTS_PREFS, null);
             Gson gson = new Gson();
-//            Ingredient[] ingredientItems = gson.fromJson(jsonIngredients,
-//                    Ingredient[].class);
-//
-//            ingredientList = Arrays.asList(ingredientItems);
-//            ingredientList = new ArrayList<>(ingredientList);
 
             Type type = new TypeToken<ArrayList<Ingredient>>(){}.getType();
             ingredientList = gson.fromJson(jsonIngredients, type);

@@ -34,12 +34,8 @@
 
 package com.example.android.cookbook.remote;
 
-import android.util.Log;
-
-import com.example.android.cookbook.model.Ingredient;
-import com.example.android.cookbook.model.JSONResponse;
 import com.example.android.cookbook.model.RecipesResponse;
-import com.example.android.cookbook.utilities.NetworkUtils;
+import com.example.android.cookbook.utilities.Utils;
 
 import java.util.List;
 
@@ -57,7 +53,7 @@ public class RecipesJsonManager {
     private RecipesJsonManager() {
         if (sRetrofit == null) {
             sRetrofit = new Retrofit.Builder()
-                    .baseUrl(NetworkUtils.RECIPES_URL)
+                    .baseUrl(Utils.RECIPES_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

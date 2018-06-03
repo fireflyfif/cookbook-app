@@ -150,4 +150,15 @@ https://codelabs.developers.google.com/codelabs/material-design-style/index.html
 
         </LinearLayout>
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_recipe_to_widget_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="12dp"
+        android:background="@color/colorAccent"
+        android:tint="@color/colorGray"
+        app:srcCompat="@drawable/ic_add_24dp"/>
+
 </android.support.design.widget.CoordinatorLayout>
