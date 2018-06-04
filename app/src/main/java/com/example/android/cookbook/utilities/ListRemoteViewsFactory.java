@@ -128,6 +128,8 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         String ingredientMeasure = mIngredientsList.get(position).getMeasure();
         views.setTextViewText(R.id.measure_tv, ingredientMeasure);
 
+        views.setImageViewResource(R.id.widget_plus_icon, R.drawable.ic_add_circle_black_24dp);
+
         return views;
     }
 

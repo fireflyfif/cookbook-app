@@ -97,7 +97,8 @@
             android:textColor="@color/colorAccentDark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/recipe_name_tv"
-            tools:text="8" />
+            tools:text="8"
+            tools:targetApi="m" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

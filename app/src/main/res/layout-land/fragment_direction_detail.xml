@@ -62,7 +62,7 @@
             <ImageView
                 android:id="@+id/no_video_iv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/no_video_image_height"
                 android:contentDescription="@string/no_video_content_descr"
                 android:scaleType="centerCrop" />
 

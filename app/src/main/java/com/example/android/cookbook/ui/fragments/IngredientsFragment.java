@@ -96,7 +96,7 @@ public class IngredientsFragment extends Fragment {
         IngredientsFragment ingredientsFragment = new IngredientsFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
-        arguments.putParcelableArrayList(INGREDIENT_PARCEL_KEY, ingredientsList);
+        //arguments.putParcelableArrayList(INGREDIENT_PARCEL_KEY, ingredientsList);
         ingredientsFragment.setArguments(arguments);
 
         return ingredientsFragment;
@@ -111,7 +111,8 @@ public class IngredientsFragment extends Fragment {
 
         if (getArguments() != null) {
             sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
-            mIngredientsList = getArguments().getParcelableArrayList(INGREDIENT_PARCEL_KEY);
+            //mIngredientsList = getArguments().getParcelableArrayList(INGREDIENT_PARCEL_KEY);
+            //Log.d(LOG_TAG, "Ingredients list: " + mIngredientsList.size());
         }
     }
 
@@ -127,10 +128,11 @@ public class IngredientsFragment extends Fragment {
             Bundle bundle = getActivity().getIntent().getExtras();
             if (bundle != null) {
                 sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
-                mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
 
-                loadIngredients(sRecipes);
 
+                if (sRecipes != null) {
+                    loadIngredients(sRecipes);
+                }
             }
         }
 

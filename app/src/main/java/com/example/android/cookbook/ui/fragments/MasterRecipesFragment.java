@@ -70,13 +70,11 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
 
     private static final String LOG_TAG = "MasterRecipesFragment";
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
-    private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
 
     private MasterRecipesAdapter mAdapter;
     private List<RecipesResponse> mRecipeList;
     public static ArrayList<Ingredient> mIngredientsList;
     public static RecipesResponse mRecipe;
-    private Ingredient mIngredient;
 
     @BindView(R.id.recipes_rv)
     RecyclerView mRecipesRv;
@@ -199,7 +197,6 @@ public class MasterRecipesFragment extends Fragment implements MasterRecipesAdap
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(RECIPE_PARCEL_KEY, mRecipe);
-        bundle.putParcelableArrayList(INGREDIENT_PARCEL_KEY, mIngredientsList);
 
         Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
         intent.putExtras(bundle);

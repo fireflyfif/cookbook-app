@@ -181,8 +181,6 @@ public class DirectionDetailActivity extends AppCompatActivity {
         private ArrayList<Step> mDirectionsList;
         private int mCurrentDirection;
 
-        private Boolean mVisible;
-        private Fragment mPrimaryFragment;
 
         // Default constructor
         public DirectionsPagerAdapter(FragmentManager fm, ArrayList<Step> directionList, int position) {
@@ -207,32 +205,10 @@ public class DirectionDetailActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            return "Step " + (position + 1);
+            // Set the title of the PagerTitleStrip on each Step
+            return "Step " + (position);
         }
 
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            super.setPrimaryItem(container, position, object);
-
-            if (object instanceof Fragment) {
-                mPrimaryFragment = (Fragment) object;
-            }
-            if (mPrimaryFragment != null) {
-                if (mVisible != null) {
-                    mPrimaryFragment.setUserVisibleHint(mVisible);
-                    mVisible = null;
-                }
-            }
-        }
-
-        public void setUserVisibleHint(boolean visible) {
-            if (mPrimaryFragment != null) {
-                mPrimaryFragment.setUserVisibleHint(visible);
-                mVisible = null;
-            } else {
-                mVisible = visible;
-            }
-        }
 
         // Method to track down when the item is being destroyed
         @Override

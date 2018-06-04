@@ -107,7 +107,7 @@ public class DirectionsListFragment extends Fragment {
         DirectionsListFragment directionsListFragment = new DirectionsListFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
-        arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepsList);
+        //arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepsList);
         directionsListFragment.setArguments(arguments);
 
         return directionsListFragment;
@@ -119,7 +119,7 @@ public class DirectionsListFragment extends Fragment {
 
         if (getArguments() != null) {
             sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
-            mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
+            //mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
         }
     }
 
@@ -157,9 +157,11 @@ public class DirectionsListFragment extends Fragment {
             Bundle bundle = getActivity().getIntent().getExtras();
 
             sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
-            mDirectionsList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
+            //mDirectionsList = bundle.getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
 
-            mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
+            if (sRecipes != null) {
+                mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
+            }
 
             loadDirections();
 

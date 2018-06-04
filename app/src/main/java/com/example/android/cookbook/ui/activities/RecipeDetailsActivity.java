@@ -95,7 +95,6 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
     private static final String LOG_TAG = RecipeDetailsActivity.class.getSimpleName();
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
-    private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
 
     private static RecipesResponse sRecipes;
     private ArrayList<Ingredient> mIngredientsList;
@@ -166,22 +165,24 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
 
             Bundle bundle = getIntent().getExtras();
             sRecipes = bundle.getParcelable(RECIPE_PARCEL_KEY);
-            mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
-            mIngredientsList = (ArrayList<Ingredient>) sRecipes.getIngredients();
-            mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
+            //mIngredientsList = bundle.getParcelableArrayList(INGREDIENT_PARCEL_KEY);
+            if (sRecipes != null) {
+                mIngredientsList = (ArrayList<Ingredient>) sRecipes.getIngredients();
+                mDirectionsList = (ArrayList<Step>) sRecipes.getSteps();
 
-            // Populate the UI with details of the current recipe
-            populateUi(sRecipes);
+                // Populate the UI with details of the current recipe
+                populateUi(sRecipes);
 
-            addRecipeToWidget.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    saveIngredients(RecipeDetailsActivity.this, mIngredientsList, sRecipes);
-                    Snackbar snackbar = Snackbar.make(coordinatorLayout, "Ingredients added to the widget.",
-                            Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-            });
+                addRecipeToWidget.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        saveIngredients(RecipeDetailsActivity.this, mIngredientsList, sRecipes);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Ingredients added to the widget.",
+                                Snackbar.LENGTH_SHORT);
+                        snackbar.show();
+                    }
+                });
+            }
 
 
             if (findViewById(R.id.two_pane_layout) != null) {
@@ -195,7 +196,6 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
                     IngredientsFragment ingredientsFragment = IngredientsFragment.newInstance(sRecipes, mIngredientsList);
                     fragmentManager.beginTransaction()
                             .add(R.id.ingredients_container, ingredientsFragment)
-                            //.addToBackStack()
                             .commit();
 
                     // Create new Direction/Step Fragment
@@ -227,7 +227,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
                 }
 
                 // Set the title of the Recipe on the Collapsing Toolbar
-                if (collapsingToolbar != null) {
+                if ((collapsingToolbar != null) && (sRecipes != null)) {
                     collapsingToolbar.setTitle(sRecipes.getName());
                 }
             }
@@ -248,6 +248,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
         }
 
         // Set font to the expandable title
+        // used resource: https://stackoverflow.com/a/33174619/8132331
         Typeface font = ResourcesCompat.getFont(this, R.font.dosis_medium);
         collapsingToolbar.setCollapsedTitleTypeface(font);
         collapsingToolbar.setExpandedTitleTypeface(font);
@@ -317,7 +318,9 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
         Log.d(LOG_TAG, "Ingredients saved: " + jsonIngredients);
 
         String recipeName = recipe.getName();
+        Log.d(LOG_TAG, "Recipe name saved: " + recipeName);
         int recipeId = recipe.getId();
+        Log.d(LOG_TAG, "Recipe id saved: " + recipeId);
 
         editor.putString(INGREDIENTS_PREFS, jsonIngredients);
         editor.putString(RECIPE_NAME_PREFS, recipeName);
@@ -332,7 +335,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
         private final List<Fragment> mFragmentLst = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
         private RecipesResponse mRecipes;
-        // Not sure about those variables
+
         private ArrayList<Ingredient> mIngredientsList;
         private ArrayList<Step> mStepsList;
 

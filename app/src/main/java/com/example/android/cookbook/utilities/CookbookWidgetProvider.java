@@ -41,12 +41,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.example.android.cookbook.R;
+import com.example.android.cookbook.ui.activities.MainActivity;
 import com.example.android.cookbook.ui.activities.RecipeDetailsActivity;
+import com.example.android.cookbook.ui.fragments.IngredientsFragment;
+import com.example.android.cookbook.ui.fragments.MasterRecipesFragment;
 
 import static com.example.android.cookbook.utilities.Utils.INGREDIENTS_PREFS;
 import static com.example.android.cookbook.utilities.Utils.PREFERENCE_NAME;
@@ -61,10 +66,10 @@ public class CookbookWidgetProvider extends AppWidgetProvider {
     private static final String LOG_TAG = CookbookWidgetProvider.class.getSimpleName();
 
     public static final String RECIPE_ID_KEY = "com.example.android.cookbook.RECIPE_ID_KEY";
-    public static final String ACTION_REFRESH_RECIPE = "com.example.android.cookbook.action.refresh_recipe";
 
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(
@@ -75,10 +80,14 @@ public class CookbookWidgetProvider extends AppWidgetProvider {
             String recipeName = sharedPreferences.getString(RECIPE_NAME_PREFS, "Recipe Name");
             Log.d(LOG_TAG, "Title of the Recipe: " + recipeName);
 
+            // If the app is in the Recipe List activity, the Widget won't open the right recipe,
+            // because they are not saved in any db locally
             int recipeId = sharedPreferences.getInt(PREFERENCE_RECIPE_ID, -1);
+            Log.d(LOG_TAG, "ID of the Recipe: " + recipeId);
 
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients_list);
+
             // Set the name of the Recipe
             views.setTextViewText(R.id.widget_recipe_name, recipeName);
 
@@ -101,18 +110,14 @@ public class CookbookWidgetProvider extends AppWidgetProvider {
             views.setEmptyView(R.id.appwidget_ingredient_list, R.id.empty_recipe_text);
 
 
-            // Setup the Pending Intent to launch the Activity with the Recipe when clicked
-            Intent openRecipeIntent = new Intent(context, RecipeDetailsActivity.class);
+            // Setup the Pending Intent to launch the Activity with All Recipe when clicked
+            // TODO: Make the launch button open the current recipe
+            Intent openRecipeIntent = new Intent(context, MainActivity.class);
             openRecipeIntent.putExtra(RECIPE_ID_KEY, recipeId);
-
-            // Update the current widget instance only, by creating an array
-            // that contains the widget's unique ID
-            int[] idArray = new int[]{appWidgetId};
-            openRecipeIntent.putExtra(RECIPE_ID_KEY, idArray);
             openRecipeIntent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
             PendingIntent pendingIntent = PendingIntent.getActivity(
-                    context, 0, openRecipeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    context, appWidgetId, openRecipeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.widget_launch_button, pendingIntent);
 
 
