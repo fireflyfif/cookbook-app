@@ -68,7 +68,6 @@
                 android:layout_marginRight="@dimen/margin_8dp"
                 android:textColor="@color/colorAccentDark"
                 android:textSize="@dimen/widget_measuring_text_size"
-                app:fontFamily="@font/dosis_bold"
                 tools:text="1.5" />
 
             <TextView

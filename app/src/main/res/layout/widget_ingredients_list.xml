@@ -60,7 +60,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/dosis_semibold"
                 android:gravity="center"
                 android:padding="@dimen/padding_6dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -88,10 +87,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/dosis_semibold"
                 android:gravity="center"
                 android:text="@string/widget_empty_recipe_view"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorAccentDark" />
 
             <ListView
