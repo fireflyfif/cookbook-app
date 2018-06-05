@@ -54,6 +54,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.BundleMatchers.hasEntry;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtras;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.AllOf.allOf;
@@ -64,7 +65,6 @@ public class RecipeListIntentTest {
     private static final int ITEM_TO_BE_CLICKED = 2;
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
-    private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
 
     @Rule
     public IntentsTestRule<MainActivity> mActivityRule =
@@ -73,13 +73,19 @@ public class RecipeListIntentTest {
     @Test
     public void clickItem_OpensNewActivity() {
 
+        // Wait the list to be displayed first, before starting the test
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView(withId(R.id.recipes_rv))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(ITEM_TO_BE_CLICKED, click()));
 
         intended(allOf(
                 hasExtras(allOf(
-                        hasEntry(equalTo(RECIPE_PARCEL_KEY), equalTo(MasterRecipesFragment.mRecipe)),
-                        hasEntry(equalTo(INGREDIENT_PARCEL_KEY), equalTo(MasterRecipesFragment.mIngredientsList))))
+                        hasEntry(equalTo(RECIPE_PARCEL_KEY), equalTo(MasterRecipesFragment.mRecipe))))
         ));
     }
 }

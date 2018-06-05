@@ -64,16 +64,18 @@ public class RecipesRecyclerViewTest {
     @Test
     public void clickRecyclerViewItem_ViewsExists() {
 
-        // Check if the RecyclerView is visible/ is displayed
+        // Check if the RecyclerView is visible/displayed
         onView(withId(R.id.recipes_rv)).check(matches((isDisplayed())));
     }
 
     @Test
     public void recipeName_OnPosition() {
 
+        // Scroll to position within the RecyclerView
         onView(ViewMatchers.withId(R.id.recipes_rv))
                 .perform(RecyclerViewActions.scrollToPosition(ITEM_TO_BE_CLICKED));
 
+        // Check if the current item is displayed with the current name
         onView(withText(RECIPE_NAME)).check(matches(isDisplayed()));
 
     }
