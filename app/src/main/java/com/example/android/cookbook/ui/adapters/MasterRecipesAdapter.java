@@ -56,7 +56,7 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
 
     private OnRecipeClickListener mClickHandler;
 
-        public interface OnRecipeClickListener {
+    public interface OnRecipeClickListener {
         void onRecipeClick(RecipesResponse recipe);
     }
 
@@ -96,13 +96,13 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
         if (!currentRecipe.getImage().equals("")) {
             String recipeImage = currentRecipe.getImage();
 
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(recipeImage)
                     .placeholder(R.drawable.cookbook_bg_1)
                     .error(R.drawable.cookbook_bg_1)
                     .into(holder.recipeImage);
         } else {
-            Picasso.with(mContext)
+            Picasso.get()
                     .load(R.drawable.cookbook_bg_1)
                     .placeholder(R.drawable.cookbook_bg_1)
                     .error(R.drawable.cookbook_bg_1)

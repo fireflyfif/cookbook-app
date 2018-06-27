@@ -280,7 +280,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
                 mExoPlayer.prepare(mediaSource);
                 // Set the Player to play automatically
-                //mExoPlayer.setPlayWhenReady(mPlayWhenReady);
+                mExoPlayer.setPlayWhenReady(mPlayWhenReady);
                 mExoPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
 
             }
@@ -295,7 +295,7 @@ public class DirectionDetailFragment extends Fragment implements PlayerControlVi
 
             // Check if there is a video Thumbnail Url
             if (!TextUtils.isEmpty(videoThumbnailUrlString)) {
-                Picasso.with(getContext())
+                Picasso.get()
                         .load(mDirections.getThumbnailURL())
                         .placeholder(R.drawable.cookbook_bg_2)
                         .error(R.drawable.cookbook_bg_2)

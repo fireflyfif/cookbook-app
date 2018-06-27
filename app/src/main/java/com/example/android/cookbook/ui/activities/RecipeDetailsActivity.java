@@ -262,7 +262,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
 
         Log.d(LOG_TAG, "Path to the current Recipe: " + recipeImageString);
 
-        Picasso.with(recipeImage.getContext())
+        Picasso.get()
                 .load(recipeImageString)
                 .placeholder(R.drawable.cookbook_bg_1)
                 .error(R.drawable.cookbook_bg_1)

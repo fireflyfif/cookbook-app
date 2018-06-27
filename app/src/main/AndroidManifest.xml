@@ -38,7 +38,7 @@
         <!-- Saving the state of the media position upon configuration changes -->
         <activity
             android:name=".ui.activities.DirectionDetailActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+
             android:launchMode="singleTop"
             android:parentActivityName=".ui.activities.RecipeDetailsActivity">
             <meta-data

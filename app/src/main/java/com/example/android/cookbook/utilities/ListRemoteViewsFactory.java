@@ -82,7 +82,6 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(
                 PREFERENCE_NAME, Context.MODE_PRIVATE);
 
-
         if (sharedPreferences.contains(INGREDIENTS_PREFS)) {
 
             String jsonIngredients = sharedPreferences.getString(INGREDIENTS_PREFS, null);
@@ -96,7 +95,6 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
             }
 
             mIngredientsList = ingredientList;
-
         }
     }
 

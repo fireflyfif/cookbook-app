@@ -67,11 +67,9 @@ public class DirectionsListFragment extends Fragment {
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
     private static final String DIRECTION_LIST_PARCEL_KEY = "direction_key";
     private static final String DIRECTION_CURRENT_KEY = "current_direction_key";
-    private static final String CURRENT_POSITION_KEY = "current_position";
     private static final String TWO_PANE_KEY = "two_pane_key";
 
     private static RecipesResponse sRecipes;
-    private static Step sDirections;
     private ArrayList<Step> mDirectionsList;
     private DirectionsAdapter mDirectionsAdapter;
     private boolean mTwoPane;
@@ -107,7 +105,6 @@ public class DirectionsListFragment extends Fragment {
         DirectionsListFragment directionsListFragment = new DirectionsListFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(RECIPE_PARCEL_KEY, recipes);
-        //arguments.putParcelableArrayList(DIRECTION_LIST_PARCEL_KEY, stepsList);
         directionsListFragment.setArguments(arguments);
 
         return directionsListFragment;
@@ -119,7 +116,6 @@ public class DirectionsListFragment extends Fragment {
 
         if (getArguments() != null) {
             sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
-            //mDirectionsList = getArguments().getParcelableArrayList(DIRECTION_LIST_PARCEL_KEY);
         }
     }
 

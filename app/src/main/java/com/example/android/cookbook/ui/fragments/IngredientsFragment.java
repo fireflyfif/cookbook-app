@@ -71,11 +71,8 @@ public class IngredientsFragment extends Fragment {
     private static final String LOG_TAG = IngredientsFragment.class.getSimpleName();
 
     private static final String RECIPE_PARCEL_KEY = "recipe_key";
-    private static final String INGREDIENT_PARCEL_KEY = "ingredient_key";
 
     private static RecipesResponse sRecipes;
-    private static Ingredient sIngredient;
-    private List<RecipesResponse> mRecipesList;
     private List<Ingredient> mIngredientsList;
     private IngredientsAdapter mIngredientsAdapter;
 
@@ -111,8 +108,6 @@ public class IngredientsFragment extends Fragment {
 
         if (getArguments() != null) {
             sRecipes = getArguments().getParcelable(RECIPE_PARCEL_KEY);
-            //mIngredientsList = getArguments().getParcelableArrayList(INGREDIENT_PARCEL_KEY);
-            //Log.d(LOG_TAG, "Ingredients list: " + mIngredientsList.size());
         }
     }
 
