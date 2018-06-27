@@ -3,8 +3,38 @@
 
 ![alt text][logo]
 
-[logo]: 
+[logo]: https://github.com/fireflyfif/cookbook-app/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
 
+### App Description
+App fetches data from the Internet with the help of Retrofit2 library. App allows a user to select a recipe and see video-guided steps for how to complete it. The recipe listing is located [here](https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json).
+
+The JSON file contains the recipes' instructions, ingredients, videos and images that need to be displayed. 
+This projects demonstrates a situation that professional developers often experience - how to handle unexpected input in an data.
+
+
+## What I Learned
+
+- Use MediaPlayer/Exoplayer to display videos.
+- Handle error cases in Android.
+- Add a widget to app experience.
+- Leverage a third-party library.
+- Use Fragments to create a responsive design that works on phones and tablets.
+- Application makes use of Espresso to test aspects of the UI.
+
+## Libraries
+
+- [Retrofit2](https://github.com/square/retrofit)
+- [Picasso](https://github.com/square/picasso)
+- [ExoPlayer](https://github.com/google/ExoPlayer)
+- [Butterknife](https://github.com/JakeWharton/butterknife)
+
+## Screenshots
+
+![text](https://github.com/fireflyfif/cookbook-app/blob/master/art/device-artwork-01.png)
+
+![text](https://github.com/fireflyfif/cookbook-app/blob/master/art/device-artwork-02.png)
+
+![text](https://github.com/fireflyfif/cookbook-app/blob/master/art/device-artwork-03.png)
 
 # License
 ```
