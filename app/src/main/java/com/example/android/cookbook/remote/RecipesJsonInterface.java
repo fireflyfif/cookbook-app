@@ -34,7 +34,6 @@
 
 package com.example.android.cookbook.remote;
 
-import com.example.android.cookbook.model.JSONResponse;
 import com.example.android.cookbook.model.RecipesResponse;
 
 import java.util.List;
