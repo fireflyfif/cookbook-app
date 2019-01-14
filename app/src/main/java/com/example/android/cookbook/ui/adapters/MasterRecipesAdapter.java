@@ -87,7 +87,8 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
     public void onBindViewHolder(@NonNull RecipesViewHolder holder, int position) {
 
         RecipesResponse currentRecipe = mRecipeList.get(position);
-        holder.recipeName.setText(currentRecipe.getName());
+        String recipeName = currentRecipe.getName();
+        holder.recipeName.setText(recipeName);
 
         String recipeServing = String.valueOf(currentRecipe.getServings());
         holder.recipeServings.setText(recipeServing);
@@ -97,18 +98,37 @@ public class MasterRecipesAdapter extends RecyclerView.Adapter<MasterRecipesAdap
             String recipeImage = currentRecipe.getImage();
 
             Picasso.get()
-                    .load(recipeImage)
+                    .load(setImage(recipeName))
                     .placeholder(R.drawable.cookbook_bg_1)
                     .error(R.drawable.cookbook_bg_1)
                     .into(holder.recipeImage);
         } else {
             Picasso.get()
-                    .load(R.drawable.cookbook_bg_1)
+                    .load(setImage(recipeName))
                     .placeholder(R.drawable.cookbook_bg_1)
                     .error(R.drawable.cookbook_bg_1)
                     .into(holder.recipeImage);
         }
 
+    }
+
+    /*
+    Temp method that requests a certain image to each object, according to the recipe name
+     */
+    private int setImage(String currentRecipe) {
+        int imageId;
+
+        if (currentRecipe.contains("Pie")) {
+            imageId = R.drawable.nutella_pie;
+        } else if (currentRecipe.contains("Brownies")) {
+            imageId = R.drawable.brownies;
+        } else if (currentRecipe.contains("Yellow")) {
+            imageId = R.drawable.yellow_cake;
+        } else {
+            imageId = R.drawable.cheesecake;
+        }
+
+        return imageId;
     }
 
     @Override

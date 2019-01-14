@@ -44,7 +44,7 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="widget_width">180dp</dimen>
     <dimen name="pager_title_padding">4dp</dimen>
     <dimen name="navigation_buttons_padding">16dp</dimen>
-    <dimen name="collapsing_image_height">120dp</dimen>
+    <dimen name="collapsing_image_height">200dp</dimen>
     <dimen name="padding_6dp">6dp</dimen>
     <dimen name="padding_10dp">10dp</dimen>
     <dimen name="tab_indicator_height">3dp</dimen>

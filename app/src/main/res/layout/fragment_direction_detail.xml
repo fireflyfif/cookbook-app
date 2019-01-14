@@ -75,6 +75,7 @@
             android:fontFamily="@font/dosis_semibold"
             android:textAllCaps="true"
             android:textColor="@color/colorGray"
+            android:textSize="20sp"
             android:textStyle="bold"
             tools:text="Description" />
 
@@ -94,6 +95,7 @@
             android:layout_margin="@dimen/margin_10dp"
             android:fontFamily="@font/dosis_medium"
             android:textColor="@color/colorGray"
+            android:textSize="18sp"
             tools:text="Description of the Directions here" />
 
     </LinearLayout>

@@ -6,6 +6,8 @@
     <color name="colorAccentDark">#42bfa3</color>
 
     <color name="colorGray">#546e7a</color>
+    <color name="colorGrayLight">#8fa4ae</color>
     <color name="colorBackground">#fffffb</color>
+    <color name="colorWhiteTransparent">#b3ffffff</color>
     <color name="colorGrayTransparent">#66000000</color>
 </resources>

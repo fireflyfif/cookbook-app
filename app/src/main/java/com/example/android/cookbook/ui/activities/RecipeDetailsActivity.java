@@ -243,8 +243,10 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
         Log.d(LOG_TAG, "Name of the Recipe: " + recipes.getName());
 
         // Set the title of the Recipe on the Collapsing Toolbar
+        String recipeName = null;
         if (collapsingToolbar != null) {
-            collapsingToolbar.setTitle(recipes.getName());
+            recipeName = recipes.getName();
+            collapsingToolbar.setTitle(recipeName);
         }
 
         // Set font to the expandable title
@@ -263,10 +265,26 @@ public class RecipeDetailsActivity extends AppCompatActivity implements Directio
         Log.d(LOG_TAG, "Path to the current Recipe: " + recipeImageString);
 
         Picasso.get()
-                .load(recipeImageString)
+                .load(setTempImage(recipeName))
                 .placeholder(R.drawable.cookbook_bg_1)
                 .error(R.drawable.cookbook_bg_1)
                 .into(recipeImage);
+    }
+
+    private int setTempImage(String recipeName) {
+        int imageId;
+
+        if (recipeName.contains("Pie")) {
+            imageId = R.drawable.nutella_pie;
+        } else if (recipeName.contains("Brownies")) {
+            imageId = R.drawable.brownies;
+        } else if (recipeName.contains("Yellow")) {
+            imageId = R.drawable.yellow_cake;
+        } else {
+            imageId = R.drawable.cheesecake;
+        }
+
+        return imageId;
     }
 
     /**
